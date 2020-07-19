@@ -16,5 +16,4 @@ def register_blueprints():
     app.register_blueprint(level_views.blueprint)
 
 
-if __name__ == '__main__':
-    main()
+main()
