@@ -1,0 +1,21 @@
+{% extends "shared/_layout.html" %}
+
+{% block main_content %}
+    <div class="instructions">
+        <h1>Enter Code</h1> <br> <br>
+
+        <p>If you have cleared a floor please enter the passphrase for the for it. <br>
+		You will start on the floor above it, so if you have cleared multiple enter the passphrase
+        for the floor below where you would like to start.<br> </p>
+
+        <div class="message">
+            {{ text | safe }}
+        </div>
+
+        <form action="{{url_for('code_entered')}}" method="POST">
+            <input placeholder="Code" type="text" name="user_code" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "main/_layout.html" %}
+
+{% block main_content %}
+    <div class="main">
+        <div class="torch_flanked main_title">
+            <div class="row">
+                <div class="col-lg-2">
+                    <img src="/static/img/torch.jpg">
+                </div>
+                <div class="col-lg-8">
+                    <h1>Dungeon Defender</h1>
+                </div>
+                <div class="col-lg-2">
+                    <img src="/static/img/torch.jpg">
+                </div>
+            </div>
+        </div>
+
+        <div class="torch_flanked main_menu">
+            <div class="row">
+                <div class="col-lg-2">
+                    <img src="/static/img/torch.jpg">
+                </div>
+                <div class="col-lg-8 links">
+                    <a href="{{ url_for('instructions') }}">Instructions</a>
+                    <a href="{{ url_for('test_level') }}">New Game</a>
+                    <a href="{{ url_for('enter_code') }}">Enter Code</a>
+                </div>
+                <div class="col-lg-2">
+                    <img src="/static/img/torch.jpg">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
