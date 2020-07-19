@@ -1,0 +1,40 @@
+div.level_title h1 {
+    font-size: 60px;
+    text-align: center;
+    padding: 25px 0px;
+}
+
+div.level_display {
+    padding: 25px;
+}
+
+div.level_display div.text_display {
+    padding-left: 60px;
+}
+
+div.level_display img {
+    width: 80%;
+}
+
+div.level_display p {
+    font-size: 24px;
+}
+
+div.level_display form {
+    padding: 25px 0px;
+}
+
+div.level_display input {
+    font-size: 24px;
+    background-color: black;
+    border: none;
+    border-bottom: white;
+    color: white;
+}
+
+div.level_display button {
+    background: transparent;
+    border: none !important;
+    font-size: 0px;
+}
+

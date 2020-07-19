@@ -22,7 +22,6 @@ def make_map_image(dungeon_map, player_pos, im_path, tile_size=50):
             top_left = (tile_size * r, tile_size * c)
             draw_tile(im_array, tile, tile_size, top_left)
     im = Image.fromarray(im_array)
-    print(os.getcwd())
     im.save(im_path)
 
 

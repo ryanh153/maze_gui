@@ -8,9 +8,26 @@ from dungeon_classes.playerClass import Player
 
 # These functions are called externally so we make this floor's properties global
 # so they can be called without knowledge of which floor they're being called on
-def move(direction):
+def make_action(command):
     global dungeon_map, player_pos, im_path
-    maze_funcs.move_player(dungeon_map, player_pos, direction)
+    tile = dungeon_map[player_pos[0]][player_pos[1]]
+
+    # key pickup
+    if command == 'pickup key' and tile.hasKey:
+        player.smallKeys += 1
+        tile.hasKey = False
+
+    # move or open
+    else:
+        command = command.split(' ')
+        if len(command) != 2:
+            return "Command not understood"
+        cmd = command[0].lower()
+        direction = command[1].lower()
+        if cmd == 'move':
+            maze_funcs.move_player(dungeon_map, player_pos, direction)
+        elif cmd == 'open':
+            dungeon.openDoor(tile, direction, player)
     maze_funcs.make_map_image(dungeon_map, player_pos, im_path)
 
 
@@ -83,6 +100,10 @@ dungeon_map[4][2].spawn_door('e', 'w')
 dungeon_map[0][1].spawn_door('n', 'w')
 dungeon_map[2][1].spawn_door('w', 'g')
 maze_funcs.make_doors_2_sided(dungeon_map)
+
+# keys
+dungeon_map[5][1].hasKey = True
+dungeon_map[3][4].hasKey = True
 
 # make the map image and designate it as the current level image
 im_path = Path('static/img/curr_level.png').absolute()
