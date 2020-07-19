@@ -12,7 +12,7 @@
             {{ text | safe }}
         </div>
 
-        <form action="{{url_for('code_entered')}}" method="POST">
+        <form action="{{url_for('main.code_entered')}}" method="POST">
             <input placeholder="Code" type="text" name="user_code" required>
             <button type="submit">Submit</button>
         </form>
