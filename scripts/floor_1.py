@@ -32,7 +32,22 @@ def get_adjacent_tile(row, col, direction, dungeon_map):
     return tile
 
 
-start_pos = [5, 0]
+def move(direction):
+    tile = dungeon_map[player_pos[0]][player_pos[1]]
+    if direction in tile.paths:
+        if direction == "n":
+            player_pos[0] += 1
+        elif direction == "e":
+            player_pos[1] += 1
+        elif direction == "s":
+            player_pos[0] -= 1
+        elif direction == "w":
+            player_pos[1] -= 1
+
+        maze_funcs.make_map_image(dungeon_map, player_pos)
+
+
+player_pos = [5, 0]
 passphrases = ["humble beginnings", "good start", "crushing it", "beast mode"]
 
 dungeon_map = [[Tile() for _ in range(6)] for _ in range(6)]
@@ -93,6 +108,21 @@ dungeon_map[0][1].spawn_door('n', 'w')
 dungeon_map[2][1].spawn_door('w', 'g')
 make_doors_2_sided(dungeon_map)
 
-maze_funcs.make_map_image(dungeon_map, start_pos)
+maze_funcs.make_map_image(dungeon_map, player_pos)
+
+# while True:
+#     new_dir = input("Direction").strip().lower()
+#     tile = dungeon_map[player_pos[0]][player_pos[1]]
+#     if new_dir in tile.paths:
+#         if new_dir == "n":
+#             player_pos[0] += 1
+#         elif new_dir == "e":
+#             player_pos[1] += 1
+#         elif new_dir == "s":
+#             player_pos[0] -= 1
+#         elif new_dir == "w":
+#             player_pos[1] -= 1
+#
+#         maze_funcs.make_map_image(dungeon_map, player_pos)
 
 

@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 from pathlib import Path
 
+from scripts.floor_1 import move
+
 app = Flask(__name__)
 
 
@@ -30,10 +32,18 @@ def code_entered():
 
 @app.route('/test_level')
 def test_level():
-    print("Entering test_level")
     im_path = Path('static/img/my_image.png').absolute()
-    print(str(im_path))
     return render_template('levels/test_level.html', im_path=im_path)
+
+
+@app.route('/player_input', methods=['POST'])
+def player_input():
+    if request.method == 'POST':
+        print(request.form['direction'])
+        print(type(request.form['direction']))
+        move(request.form['direction'])
+        im_path = Path('static/img/my_image.png').absolute()
+        return render_template('levels/test_level.html', im_path=im_path)
 
 
 if __name__ == '__main__':

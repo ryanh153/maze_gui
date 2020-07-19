@@ -1,6 +1,7 @@
 from random import shuffle, randrange, seed
 import numpy as np
 from PIL import Image
+import os
 
 from dungeon_classes.tile_class import Tile
 
@@ -75,7 +76,8 @@ def make_map_image(dungeon_map, player_pos, tile_size=50):
             top_corner = (tile_size * r, tile_size * c)
             draw_tile(im_array, tile, tile_size, top_corner)
     im = Image.fromarray(im_array)
-    im.save('../static/img/curr_level.png')
+    print(os.getcwd())
+    im.save('static/img/curr_level.png')
 
 
 def draw_player(im_array, pos, maze_dim, tile_size):
