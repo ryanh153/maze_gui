@@ -4,16 +4,6 @@ import flask
 app = flask.Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
-@app.after_request
-def add_header(request):
-    """
-    Force re-load after any request (forces re-load of map image)
-    """
-    request.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    request.headers["Pragma"] = "no-cache"
-    request.headers["Expires"] = "0"
-    return request
-
 
 def main():
     register_blueprints()
@@ -26,6 +16,17 @@ def register_blueprints():
 
     app.register_blueprint(main_views.blueprint)
     app.register_blueprint(level_views.blueprint)
+
+
+@app.after_request
+def add_header(request):
+    """
+    Force re-load after any request (forces re-load of map image)
+    """
+    request.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    request.headers["Pragma"] = "no-cache"
+    request.headers["Expires"] = "0"
+    return request
 
 
 main()

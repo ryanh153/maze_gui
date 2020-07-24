@@ -28,6 +28,7 @@ def make_action(command):
             maze_funcs.move_player(dungeon_map, player_pos, direction)
         elif cmd == 'open':
             dungeon.openDoor(tile, direction, player)
+    print(f"command entered. Player pos {player_pos}")
     maze_funcs.make_map_image(dungeon_map, player_pos, im_path)
 
 
@@ -36,9 +37,15 @@ def interact():
     return dungeon.interact(player)
 
 
+def check_win():
+    print(player_pos)
+    print(goalPosArr)
+    return player_pos == goalPosArr[0]
+
+
 # Make the map for floor 1
 player_pos = [5, 0]
-goalPosArr = [[2, 0]]
+goalPosArr = [[5, 3]]
 startPosArr = [player_pos]
 passphrases = [None]
 

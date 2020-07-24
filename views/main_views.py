@@ -23,3 +23,8 @@ def enter_code():
 def code_entered():
     if flask.request.method == 'POST':
         return flask.render_template('main/enter_code.html', text="Codes not implemented yet. Sorry.")
+
+
+@blueprint.route('/congratulations')
+def congratulations():
+    return flask.render_template('main/congratulations.html')

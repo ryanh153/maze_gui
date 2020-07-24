@@ -1,6 +1,5 @@
 import numpy as np
 from PIL import Image
-import os
 
 WHITE = (255, 255, 255)
 BROWN = (153, 102, 51)

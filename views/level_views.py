@@ -12,7 +12,8 @@ def test_level():
 
 @blueprint.route('/player_input', methods=['POST'])
 def player_input():
-    if flask.request.method == 'POST':
-        command = flask.request.form['command'].strip().lower()
-        floor_1.make_action(command)
-        return flask.render_template('levels/test_level.html', im_path=floor_1.im_path, text=floor_1.interact())
+    command = flask.request.form['command'].strip().lower()
+    floor_1.make_action(command)
+    if floor_1.check_win():
+        return flask.render_template('main/congratulations.html')
+    return flask.render_template('levels/test_level.html', im_path=floor_1.im_path, text=floor_1.interact())
