@@ -6,7 +6,7 @@ stairDirections = ["u", "d"]
 
 class Tile:
 
-    def __init__(self, paths=[], hasKey=False, doors=[], doorTypes=[], stairs=None):  # empty room
+    def __init__(self, paths=[], has_key=False, doors=[], door_types=[], stairs=None):  # empty room
 
         # Make all the paths
         self.paths = []
@@ -15,19 +15,19 @@ class Tile:
                 self.add_path(direction)
 
         # Check for a key
-        self.hasKey = hasKey
+        self.has_key = has_key
 
         # Make all the doors
         self.doors = []
-        if len(doors) != len(doorTypes):
+        if len(doors) != len(door_types):
             raise ValueError("door directions and door types must be the same length when creating a tile.")
-        if doors != []:
+        if doors is not []:
             for i, direction in enumerate(doors):
-                self.spawn_door(direction, doorTypes[i])
+                self.spawn_door(direction, door_types[i])
 
         # add stairs
         self.stairs = None
-        if stairs != None:
+        if stairs is not None:
             self.spawnStairs(stairs)
 
         # creatures are spawned seperately
@@ -35,7 +35,7 @@ class Tile:
         self.creature = None
 
         # text added after
-        self.specialText = None
+        self.special_text = None
 
     # path functions
     def add_paths(self, directions):
@@ -90,4 +90,4 @@ class Tile:
 
     # unique text functions
     def addSpecialText(self, text):
-        self.specialText = text
+        self.special_text = text

@@ -4,12 +4,37 @@ from PIL import Image
 WHITE = (255, 255, 255)
 BROWN = (153, 102, 51)
 GREEN = (0, 204, 0)
+BLACK = (0, 0, 0)
 
 OPPOSITE_DIRECTIONS = {"n": "s", "e": "w", "s": "n", "w": "e"}
 
+PLAYER_PADDING = 15
+
 
 # Functions for generating an image from a map
-def make_map_image(dungeon_map, player_pos, im_path, tile_size=50):
+def make_black_map(dungeon_map, player_pos, im_path, tile_size=50):
+    im_size = len(dungeon_map) * tile_size
+    im_array = np.zeros([im_size, im_size, 3], dtype=np.uint8)
+
+    im = Image.fromarray(im_array)
+    im.save(im_path)
+
+
+def draw_current_tile(dungeon_map, player_pos, im_path, tile_size):
+    im_array = np.array(Image.open(im_path))
+    maze_dim = len(dungeon_map)
+
+    top_left = (tile_size * (maze_dim - player_pos[0] - 1), tile_size * player_pos[1])
+    tile = dungeon_map[player_pos[0]][player_pos[1]]
+    draw_tile(im_array, tile, tile_size, top_left)
+
+    draw_player(im_array, player_pos, maze_dim, tile_size)
+
+    im = Image.fromarray(im_array)
+    im.save(im_path)
+
+
+def make_full_map(dungeon_map, player_pos, im_path, tile_size=50):
     maze_dim = len(dungeon_map)
     im_size = maze_dim * tile_size
     im_array = np.zeros([im_size, im_size, 3], dtype=np.uint8)
@@ -20,28 +45,46 @@ def make_map_image(dungeon_map, player_pos, im_path, tile_size=50):
         for c, tile in enumerate(row):
             top_left = (tile_size * r, tile_size * c)
             draw_tile(im_array, tile, tile_size, top_left)
+    save_image(im_array, im_path)
+
+
+def save_image(im_array, im_path):
     im = Image.fromarray(im_array)
     im.save(im_path)
 
 
-def draw_player(im_array, pos, maze_dim, tile_size):
+def get_top_left(maze_dim, tile_size, pos):
     row, col = maze_dim - (pos[0] + 1), pos[1]
-    top_left = (tile_size * row, tile_size * col)
-    pad = 15
-    im_array[top_left[0]+pad:top_left[0]+tile_size-pad, top_left[1]+pad:top_left[1]+tile_size-pad, :] = GREEN
+    return tile_size * row, tile_size * col
+
+
+def erase_old_player(im_path, pos, maze_dim, tile_size):
+    im_array = np.array(Image.open(im_path))
+    top_left = get_top_left(maze_dim, tile_size, pos)
+    im_array[top_left[0] + PLAYER_PADDING:top_left[0] + tile_size - PLAYER_PADDING,
+             top_left[1] + PLAYER_PADDING:top_left[1] + tile_size - PLAYER_PADDING, :] = BLACK
+    save_image(im_array, im_path)
+
+
+def draw_player(im_array, pos, maze_dim, tile_size):
+    top_left = get_top_left(maze_dim, tile_size, pos)
+    im_array[top_left[0] + PLAYER_PADDING:top_left[0] + tile_size - PLAYER_PADDING,
+             top_left[1] + PLAYER_PADDING:top_left[1] + tile_size - PLAYER_PADDING, :] = GREEN
 
 
 def draw_tile(im_array, tile, tile_size, top_left):
     directions = ['n', 'e', 's', 'w']
     for direction in directions:
-        if direction not in tile.paths:
+        if direction in tile.paths:
+            draw_tile_side_short(im_array, direction, top_left, tile_size, BLACK)
+        else:
             draw_tile_side(im_array, direction, top_left, tile_size, WHITE)
 
     for door in tile.doors:
         draw_tile_side(im_array, door.direction, top_left, tile_size, BROWN)
 
 
-def draw_tile_side(im_array, direction, top_left, tile_size, color=WHITE):
+def draw_tile_side(im_array, direction, top_left, tile_size, color):
     if direction == 'w':
         im_array[top_left[0]:top_left[0] + tile_size, top_left[1], :] = color
     if direction == 'e':
@@ -50,6 +93,17 @@ def draw_tile_side(im_array, direction, top_left, tile_size, color=WHITE):
         im_array[top_left[0], top_left[1]:top_left[1] + tile_size, :] = color
     if direction == 's':
         im_array[top_left[0] + tile_size - 1, top_left[1]:top_left[1] + tile_size, :] = color
+
+
+def draw_tile_side_short(im_array, direction, top_left, tile_size, color):
+    if direction == 'w':
+        im_array[top_left[0] - 1:top_left[0] + tile_size - 1, top_left[1], :] = color
+    if direction == 'e':
+        im_array[top_left[0] - 1:top_left[0] + tile_size - 1, top_left[1] + tile_size - 1, :] = color
+    if direction == 'n':
+        im_array[top_left[0], top_left[1] - 1:top_left[1] + tile_size - 1, :] = color
+    if direction == 's':
+        im_array[top_left[0] + tile_size - 1, top_left[1] - 1:top_left[1] + tile_size - 1, :] = color
 
 
 # functions to aid in map creation
@@ -91,3 +145,6 @@ def move_player(dungeon_map, player_pos, direction):
             player_pos[0] -= 1
         elif direction == "w":
             player_pos[1] -= 1
+        return True
+    else:
+        return False

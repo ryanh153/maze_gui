@@ -9,20 +9,27 @@ OPPOSITE_DIRECTIONS = {"n": "s", "e": "w", "s": "n", "w": "e"}
 PRINT_DIR = {'n': 'north', 'e': 'east', 's': 'south', 'w': 'west'}
 
 
+def key_interact():
+    text = list()
+    text.append("A silver keys lies on the ground in front of you.")
+    text.append("Enter 'pickup key' to retrieve it")
+    return text
+
+
 class Dungeon:
 
-    def __init__(self, player, goalPosArr, startPosArr, passphrases, mapArr):
-        self.goalPosArr = goalPosArr
-        self.startPosArr = startPosArr
+    def __init__(self, player, goal_pos_arr, start_pos_arr, passphrases, map_arr):
+        self.goal_pos_arr = goal_pos_arr
+        self.start_pos_arr = start_pos_arr
         self.passphrases = passphrases
-        self.mapArr = mapArr
+        self.map_arr = map_arr
         self.level = 0
-        self.map = self.mapArr[self.level]
-        player.pos = self.startPosArr[self.level]
-        if self.goalPosArr[self.level] is None:
+        self.map = self.map_arr[self.level]
+        player.pos = self.start_pos_arr[self.level]
+        if self.goal_pos_arr[self.level] is None:
             self.goalPos = None
         else:
-            self.goalPos = self.goalPosArr[self.level]
+            self.goalPos = self.goal_pos_arr[self.level]
         self.acknowledgeStairs = True
 
     def interact(self, player):
@@ -31,20 +38,14 @@ class Dungeon:
         currTile = self.map[player.pos[0]][player.pos[1]]
         usedStairs = 0
 
-        if currTile.specialText is None:
-            text.append("You enter a dimly lit room.")
-        else:
-            text.append(currTile.specialText)
-            currTile.specialText = None
-
         if currTile.hasCreature:
             self.creatureInteract(currTile, player)
 
-        if currTile.hasKey:
-            text.extend(self.keyInteract())
+        if currTile.has_key:
+            text.extend(key_interact())
 
         if len(currTile.doors) > 0:
-            text.extend(self.doorInteract(currTile, player))
+            text.extend(self.door_interact(player))
 
         if currTile.stairs is not None:
             if self.acknowledgeStairs:
@@ -62,58 +63,33 @@ class Dungeon:
         if currTile.creature.game.won:
             currTile.despawnCreature()
 
-    def keyInteract(self):
-        text = list()
-        text.append("A silver keys lies on the ground in front of you.")
-        text.append("Enter 'pickup key' to retrieve it")
-        return text
-
-    def doorInteract(self, currTile, player):
+    def door_interact(self, player):
         text = []
+        curr_tile = self.map[player.pos[0]][player.pos[1]]
 
-        for door in currTile.doors:
+        for door in curr_tile.doors:
             if door.type == "w":
                 text.append(f"There is a wooden door to the {PRINT_DIR[door.direction]}.")
             elif door.type == "g":
                 text.append(f"There is a large, golden door to the{PRINT_DIR[door.direction]}")
                 text.append("It glows almost hungrily, casting more light than you would think possible.")
 
-        if currTile.doors:
-            if player.smallKeys == 1:
-                text.append(f"You have one small key.")
+        if curr_tile.doors:
+            if not (player.small_keys and player.large_keys):
+                text.extend(["Unfortunately you have no keys.",
+                             "You stand there, your keyless impotence filling the room."])
             else:
-                text.append(f"You have {player.smallKeys} small keys.")
+                if player.small_keys == 1:
+                    text.append(f"You have one small key.")
+                else:
+                    text.append(f"You have {player.small_keys} small keys.")
 
-            if player.largeKeys == 1:
-                text.append("You have one large key.")
-            else:
-                text.append(f"You have {player.largeKeys} large keys.")
+                if player.large_keys == 1:
+                    text.append("You have one large key.")
+                else:
+                    text.append(f"You have {player.large_keys} large keys.")
 
         return text
-
-
-                    #     while not decidedWhere:
-                    #         if len(doorDIRECTIONS) > 1:
-                    #             where = input("Which one (%s)? " % (','.join(doorDIRECTIONS))).strip().lower()
-                    #         else:
-                    #             where = doorDIRECTIONS[0]
-                    #
-                    #         if where in doorDIRECTIONS:
-                    #             numDoors = len(currTile.doors)
-                    #             index = doorDIRECTIONS.index(where)
-                    #             self.openDoor(currTile, currTile.doors[index], player)
-                    #             if len(currTile.doors) < numDoors:  # success!
-                    #                 doorDIRECTIONS.pop(index)
-                    #                 print("The door slides open on rusty hinges.")
-                    #                 print("Your eyes close instinctively at as the grating sound hits your ears.")
-                    #                 print(
-                    #                     "The sound stops and upon opening your eyes again you see it has disappeared.")
-                    #             decidedWhere = True
-                    #         else:
-                    #             print("There is no door in that direction.")
-                    #
-                    #
-                    # print("Unfortunately you have no keys. You stand there, your keyless impotence filling the room.")
 
     def stairInteract(self, currTile, player):
         usedStairs = 0
@@ -161,7 +137,7 @@ class Dungeon:
         cleared = True
         for rowNum, row in enumerate(self.map):
             for colNum, tile in enumerate(row):
-                if tile.hasCreature or len(tile.doors) != 0 or tile.hasKey:
+                if tile.hasCreature or len(tile.doors) != 0 or tile.has_key:
                     cleared = False
                     break
             if cleared == False:
@@ -194,34 +170,38 @@ class Dungeon:
     # this opens the given door and it's companion (door in adjacent tile on the same wall)
     # necesary b/c doors come in pairs to make them 2 sided and tiles are independant.
     def openDoor(self, tile, direction, player):
-        # find door to open
+        text = list()
+
         for door in tile.doors:
             if direction == door.direction:
                 break
         else:
-            door = None
+            text.append("There is no door in that direction.")
+            return text
 
-        # open door
-        if door is not None:
-            canOpen = False
-            if door.type == "w" and player.smallKeys > 0:
-                canOpen = True
-                player.smallKeys = player.smallKeys - 1
-            elif door.type == "g" and player.largeKeys > 0:
-                canOpen = True
-                player.largeKeys = player.largeKeys - 1
-            elif door.type == "t":
-                canOpen = True  # traps need to be despawned. Only done by dungeon.
+        canOpen = False
+        if door.type == "w" and player.small_keys > 0:
+            canOpen = True
+            player.small_keys = player.small_keys - 1
+        elif door.type == "g" and player.large_keys > 0:
+            canOpen = True
+            player.large_keys = player.large_keys - 1
+        elif door.type == "t":
+            canOpen = True  # traps need to be despawned. Only done by dungeon.
 
-            if canOpen:
-                tile.despawn_door(door.direction)
-                adjacentTile = self.getAdjacentTile(player.pos, door.direction)
-                adjacentTile.despawn_door(OPPOSITE_DIRECTIONS[door.direction])
+        if canOpen:
+            tile.despawn_door(door.direction)
+            adjacentTile = self.getAdjacentTile(player.pos, door.direction)
+            adjacentTile.despawn_door(OPPOSITE_DIRECTIONS[door.direction])
+            text.append("The door slides open on rusty hinges.")
+            text.append("Your eyes close instinctively at as the grating sound hits your ears.")
+            text.append("The sound stops and upon opening your eyes again you see it has disappeared.")
 
-            # else:
-            #     print(
-            #         "Your are unable to open the door. It stands there, mocking you. You swear you will return one day to vanquish it.")
-            #     print()
+        else:
+            text.append("Your are unable to open the door. It stands there, mocking you.")
+            text.append("You swear you will return one day to vanquish it.")
+
+        return text
 
     def spawnDoor(self, tile, door, currPos):
         tile.spawnDoor(door.direction, door.type)
@@ -247,21 +227,21 @@ class Dungeon:
     # Setting up after a level change
     def setupNewFloor(self, player):
 
-        self.map = self.mapArr[self.level]  # load new map
-        self.startPosArr[self.level - 1] = player.pos  # if you come back you return to the staris
-        player.pos = self.startPosArr[self.level]  # put the player at the start of the new floor
+        self.map = self.map_arr[self.level]  # load new map
+        self.start_pos_arr[self.level - 1] = player.pos  # if you come back you return to the staris
+        player.pos = self.start_pos_arr[self.level]  # put the player at the start of the new floor
 
         # if the goal is on this floor, set it.
-        if self.goalPosArr[self.level] == None:
+        if self.goal_pos_arr[self.level] == None:
             self.goalPos = None
         else:
-            self.goalPos = self.goalPosArr[self.level]
+            self.goalPos = self.goal_pos_arr[self.level]
 
     # Clear floors, allowing you to warp to a level with all puzzles up to that point completed.
     # This clears floor one, placing player on floor two.
     def clearFloors(self, player, startingFloor):
         self.level = 0
-        self.map = self.mapArr[self.level]
+        self.map = self.map_arr[self.level]
         while self.level != startingFloor:
             # clear creatures and get keys
             for rowNum, row in enumerate(self.map):
@@ -271,9 +251,9 @@ class Dungeon:
                         tile.creature.interact(player, autoWin=True)
                         tile.despawnCreature()
 
-                    if tile.hasKey:
-                        player.smallKeys += 1
-                        tile.hasKey = False
+                    if tile.has_key:
+                        player.small_keys += 1
+                        tile.has_key = False
 
             # clear doors and use keys. Also save stair position so we can set that
             for rowNum, row in enumerate(self.map):
