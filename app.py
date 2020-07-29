@@ -13,9 +13,11 @@ def main():
 def register_blueprints():
     from views import main_views
     from views import level_views
+    from views import mini_game_views
 
     app.register_blueprint(main_views.blueprint)
     app.register_blueprint(level_views.blueprint)
+    app.register_blueprint(mini_game_views.blueprint)
 
 
 @app.after_request

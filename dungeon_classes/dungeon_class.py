@@ -1,19 +1,35 @@
 import numpy as np
 
-from dungeon_classes.door_class import Door
-
-import dungeon_floors.floor_1 as floor_1
-
 DIRECTIONS = ["n", "e", "s", "w"]
 OPPOSITE_DIRECTIONS = {"n": "s", "e": "w", "s": "n", "w": "e"}
 PRINT_DIR = {'n': 'north', 'e': 'east', 's': 'south', 'w': 'west'}
 
 
 def key_interact():
-    text = list()
-    text.append("A silver keys lies on the ground in front of you.")
-    text.append("Enter 'pickup key' to retrieve it")
+    text = ["A silver keys lies on the ground in front of you.",
+            "Enter 'pickup key' to retrieve it",
+            ""]
     return text
+
+
+def choose_path(curr_tile):
+    text = []
+
+    if len(curr_tile.paths) == 1:
+        text.append(f"There is a path to the {PRINT_DIR[curr_tile.paths[0]]}")
+    else:
+        text.append(f"There are paths to the {', '.join(map(str, [PRINT_DIR[d] for d in curr_tile.paths]))}.")
+
+    text.append(f"Would you like to move forward ({', '.join(map(str, curr_tile.paths))})?")
+    text.append("")
+
+    return text
+
+
+def creature_interact(curr_tile, player):
+    return curr_tile.creature.interact(player)
+    # if curr_tile.creature.game.won:
+    #     curr_tile.despawn_creature()
 
 
 class Dungeon:
@@ -38,8 +54,8 @@ class Dungeon:
         currTile = self.map[player.pos[0]][player.pos[1]]
         usedStairs = 0
 
-        if currTile.hasCreature:
-            self.creatureInteract(currTile, player)
+        if currTile.has_creature:
+            text.extend(creature_interact(currTile, player))
 
         if currTile.has_key:
             text.extend(key_interact())
@@ -49,19 +65,14 @@ class Dungeon:
 
         if currTile.stairs is not None:
             if self.acknowledgeStairs:
-                usedStairs = self.stairInteract(currTile, player)
+                usedStairs = self.stair_interact(currTile, player)
             else:
                 self.acknowledgeStairs = True
 
         if not usedStairs:
-            text.extend(self.choosePath(currTile, player))
+            text.extend(choose_path(currTile))
 
         return text
-
-    def creatureInteract(self, currTile, player):
-        currTile.creature.interact(player)
-        if currTile.creature.game.won:
-            currTile.despawnCreature()
 
     def door_interact(self, player):
         text = []
@@ -91,10 +102,10 @@ class Dungeon:
 
         return text
 
-    def stairInteract(self, currTile, player):
+    def stair_interact(self, curr_tile, player):
         usedStairs = 0
-        if currTile.stairs == "u":
-            self.checkClear()
+        if curr_tile.stairs == "u":
+            self.check_clear()
             print("On the far side of the room is a staircase leading upwards.")
             decided = False
             while not decided:
@@ -105,14 +116,14 @@ class Dungeon:
                     self.level = self.level + 1
                     decided = True
                     self.acknowledgeStairs = False
-                    self.setupNewFloor(player)
+                    self.setup_new_floor(player)
                 elif goUp == "n":
                     print("You stay where you are. There is more to explore here first.")
                     decided = True
                 else:
                     print("Please answer yes or no (y/n).")
 
-        elif currTile.stairs == "d":
+        elif curr_tile.stairs == "d":
             print("On the far side of the room is a staircase leading down.")
             decided = False
             while not decided:
@@ -122,7 +133,7 @@ class Dungeon:
                     print("You return to the chambers of your past torment. Hopefully for a good reason...")
                     self.level = self.level - 1
                     decided = True
-                    self.setupNewFloor(player)
+                    self.setup_new_floor(player)
                 elif goDown == "n":
                     print("You stay where you are. Maybe you can still find the way out of here...")
                     decided = True
@@ -130,23 +141,24 @@ class Dungeon:
                     print("Please answer yes or no (y/n).")
 
         else:
-            raise ValueError("Ryan: stairs must lead up or down (u/d)... currently: %s" % (currTile.stairs))
+            raise ValueError("Ryan: stairs must lead up or down (u/d)... currently: %s" % curr_tile.stairs)
         return usedStairs
 
-    def checkClear(self):
+    def check_clear(self):
         cleared = True
         for rowNum, row in enumerate(self.map):
             for colNum, tile in enumerate(row):
-                if tile.hasCreature or len(tile.doors) != 0 or tile.has_key:
+                if tile.has_creature or len(tile.doors) != 0 or tile.has_key:
                     cleared = False
                     break
-            if cleared == False:
+            if not cleared:
                 break
 
         if cleared:
             print("You have cleared all obstacles on this floor. Congratulations!")
             print(
-                f"If you would like to return to this state when starting the game simply enter the following passphrase: {self.passphrases[self.level]}")
+                f"If you would like to return to this state when starting the game simply enter the following "
+                f"passphrase: {self.passphrases[self.level]}")
             print("This will clear all floors up to and including this one, and place you on the floor above.")
             print("Carry on noble adventurer!")
         else:
@@ -154,22 +166,9 @@ class Dungeon:
             print("If you do clear the floor (all puzzles completed, doors opened, and keys grabbed)")
             print("you will be rewarded with the ability to warp to the end of this floor when the game is started!")
 
-    def choosePath(self, currTile, player):
-        text = []
-
-        if len(currTile.paths) == 1:
-            text.append(f"There is a path to the {PRINT_DIR[currTile.paths[0]]}")
-        else:
-            text.append(f"There are paths to the {', '.join(map(str, [PRINT_DIR[d] for d in currTile.paths]))}.")
-
-        text.append(f"Would you like to move forward ({', '.join(map(str, currTile.paths))})?")
-
-        return text
-
-
     # this opens the given door and it's companion (door in adjacent tile on the same wall)
-    # necesary b/c doors come in pairs to make them 2 sided and tiles are independant.
-    def openDoor(self, tile, direction, player):
+    # necessary b/c doors come in pairs to make them 2 sided and tiles are independent.
+    def open_door(self, tile, direction, player):
         text = list()
 
         for door in tile.doors:
@@ -191,7 +190,7 @@ class Dungeon:
 
         if canOpen:
             tile.despawn_door(door.direction)
-            adjacentTile = self.getAdjacentTile(player.pos, door.direction)
+            adjacentTile = self.get_adjacent_tile(player.pos, door.direction)
             adjacentTile.despawn_door(OPPOSITE_DIRECTIONS[door.direction])
             text.append("The door slides open on rusty hinges.")
             text.append("Your eyes close instinctively at as the grating sound hits your ears.")
@@ -203,15 +202,15 @@ class Dungeon:
 
         return text
 
-    def spawnDoor(self, tile, door, currPos):
-        tile.spawnDoor(door.direction, door.type)
+    def spawn_door(self, tile, door, curr_pos):
+        tile.spawn_door(door.direction, door.type)
         tile.removePath(door.direction)
 
-        adjacentTile = self.getAdjacentTile(currPos, door.direction)
-        adjacentTile.spawnDoor(OPPOSITE_DIRECTIONS[door.direction], door.type)
+        adjacentTile = self.get_adjacent_tile(curr_pos, door.direction)
+        adjacentTile.spawn_door(OPPOSITE_DIRECTIONS[door.direction], door.type)
         adjacentTile.removePath(OPPOSITE_DIRECTIONS[door.direction])
 
-    def getAdjacentTile(self, pos, direction):
+    def get_adjacent_tile(self, pos, direction):
         if direction == "n" and pos[0] <= np.shape(self.map)[0] - 1:
             tile = self.map[pos[0] + 1][pos[1]]
         elif direction == "e" and pos[1] <= np.shape(self.map)[1] - 1:
@@ -225,64 +224,59 @@ class Dungeon:
         return tile
 
     # Setting up after a level change
-    def setupNewFloor(self, player):
+    def setup_new_floor(self, player):
 
         self.map = self.map_arr[self.level]  # load new map
-        self.start_pos_arr[self.level - 1] = player.pos  # if you come back you return to the staris
+        self.start_pos_arr[self.level - 1] = player.pos  # if you come back you return to the stairs
         player.pos = self.start_pos_arr[self.level]  # put the player at the start of the new floor
 
         # if the goal is on this floor, set it.
-        if self.goal_pos_arr[self.level] == None:
+        if self.goal_pos_arr[self.level] is None:
             self.goalPos = None
         else:
             self.goalPos = self.goal_pos_arr[self.level]
 
     # Clear floors, allowing you to warp to a level with all puzzles up to that point completed.
     # This clears floor one, placing player on floor two.
-    def clearFloors(self, player, startingFloor):
+    def clear_floors(self, player, starting_floor):
         self.level = 0
         self.map = self.map_arr[self.level]
-        while self.level != startingFloor:
+        while self.level != starting_floor:
             # clear creatures and get keys
             for rowNum, row in enumerate(self.map):
                 for colNum, tile in enumerate(row):
-                    if tile.hasCreature:
+                    if tile.has_creature:
                         player.pos = [rowNum, colNum]
-                        tile.creature.interact(player, autoWin=True)
-                        tile.despawnCreature()
+                        tile.creature.interact(player, auto_win=True)
+                        tile.despawn_creature()
 
                     if tile.has_key:
                         player.small_keys += 1
                         tile.has_key = False
 
             # clear doors and use keys. Also save stair position so we can set that
+            stair_pos = None
             for rowNum, row in enumerate(self.map):
                 for colNum, tile in enumerate(row):
                     for doorIter, door in enumerate(tile.doors):
                         if door.type == 'w' or 't':
                             player.pos = [rowNum, colNum]
-                            self.openDoor(tile, door, player)
-                        # print('small'
-                        # print(player.smallKeys
-                        # print(player.largeKeys
-                        # print(''
+                            self.open_door(tile, door, player)
                         elif door.type == 'g':
-                            player.pos[rowNum, colNum]
-                            self.openDoor(tile, door, player)
-                        # print('large'
-                        # print(player.smallKeys
-                        # print(player.largeKeys
-                        # print(''
+                            self.open_door(tile, door, player)
 
-                    if tile.stairs != None:
-                        stairPos = [rowNum, colNum]
+                    if tile.stairs is not None:
+                        stair_pos = [rowNum, colNum]
 
             print("You have cleared floor %d" % (self.level + 1))
             print()
 
-            player.pos = stairPos  # put the player on the stairs
-            self.level = self.level + 1  # move up
-            self.setupNewFloor(player)
+            if stair_pos is None:
+                raise ValueError("Did not find a staircase on a floor that was trying to be cleared...")
+            else:
+                player.pos = stair_pos  # put the player on the stairs
+                self.level = self.level + 1  # move up
+                self.setup_new_floor(player)
 
         self.acknowledgeStairs = False
         print("Starting on floor %d!" % (self.level + 1))

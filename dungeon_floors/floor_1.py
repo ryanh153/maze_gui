@@ -2,8 +2,10 @@ from pathlib import Path
 
 import services.level_service as maze_funcs
 from dungeon_classes.tile_class import Tile
-from dungeon_classes.dungeonClass import Dungeon
-from dungeon_classes.playerClass import Player
+from dungeon_classes.dungeon_class import Dungeon
+from dungeon_classes.player_class import Player
+from dungeon_classes.word_scramble_class import WordScramble
+from dungeon_classes.thor_class import Thor
 
 
 TILE_SIZE = 50
@@ -44,7 +46,7 @@ def make_action(command):
             else:
                 text.extend(["There is no path in that direction", '', ''])
         elif cmd == 'open':
-            text.extend(dungeon.openDoor(tile, direction, player))
+            text.extend(dungeon.open_door(tile, direction, player))
             text.extend(['', ''])
         else:
             text.extend(["Command not understood", '', ''])
@@ -56,6 +58,20 @@ def make_action(command):
 
 def interact():
     return dungeon.interact(player)
+
+
+def start_mini_game(command):
+    if command == 'solve puzzle':
+        return True
+
+
+def mini_game_guess(player_guess):
+    print('guessing')
+    print(f'player position: {player.pos}')
+    tile = dungeon.map[player.pos[0]][player.pos[1]]
+    if tile.has_creature:
+        print('has creature')
+        tile.creature.game.make_guess(player_guess)
 
 
 def check_win():
@@ -131,6 +147,9 @@ def make_map():
     # keys
     floor_map[5][1].has_key = True
     floor_map[3][4].has_key = True
+
+    # Creatures
+    floor_map[5][3].spawn_creature(Thor([5, 3], WordScramble('brother')))
 
     return dungeon_map, player_pos, startPosArr, goalPosArr, passphrases
 
