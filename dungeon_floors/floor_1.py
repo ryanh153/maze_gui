@@ -7,7 +7,6 @@ from dungeon_classes.player_class import Player
 from dungeon_classes.word_scramble_class import WordScramble
 from dungeon_classes.thor_class import Thor
 
-
 TILE_SIZE = 50
 
 
@@ -57,21 +56,32 @@ def make_action(command):
 
 
 def interact():
+    print(player.pos)
+    print(player.small_keys)
+    print(player.large_keys)
     return dungeon.interact(player)
 
 
 def start_mini_game(command):
-    if command == 'solve puzzle':
+    tile = dungeon.map[player.pos[0]][player.pos[1]]
+    if command == 'solve puzzle' and tile.has_creature:
+        tile.creature.started_game = True
         return True
+    return False
 
 
 def mini_game_guess(player_guess):
-    print('guessing')
-    print(f'player position: {player.pos}')
     tile = dungeon.map[player.pos[0]][player.pos[1]]
     if tile.has_creature:
-        print('has creature')
-        tile.creature.game.make_guess(player_guess)
+        solved, text = tile.creature.interact(player, player_guess)
+        if solved:
+            tile.despawn_creature()
+        return solved, text
+
+
+def mini_game_text():
+    tile = dungeon.map[player.pos[0]][player.pos[1]]
+    return tile.creature.current_text
 
 
 def check_win():
@@ -81,7 +91,7 @@ def check_win():
 def make_map():
     # Make the map for floor 1
     player_pos = [5, 0]
-    goalPosArr = [[4, 3]]
+    goalPosArr = [[2, 0]]
     startPosArr = [player_pos]
     passphrases = [None]
 
@@ -145,11 +155,12 @@ def make_map():
     maze_funcs.make_doors_2_sided(floor_map)
 
     # keys
-    floor_map[5][1].has_key = True
-    floor_map[3][4].has_key = True
+    floor_map[2][3].has_key = True
+    floor_map[1][0].has_key = True
 
     # Creatures
-    floor_map[5][3].spawn_creature(Thor([5, 3], WordScramble('brother')))
+    floor_map[5][3].spawn_creature(Thor([5, 3], WordScramble('word')))
+    floor_map[3][2].spawn_creature(Thor([3, 2], WordScramble("brother")))
 
     return dungeon_map, player_pos, startPosArr, goalPosArr, passphrases
 

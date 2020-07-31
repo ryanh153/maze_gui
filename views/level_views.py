@@ -16,7 +16,7 @@ def test_level_post():
     command = flask.request.form['command'].strip().lower()
 
     if floor_1.start_mini_game(command):
-        return flask.render_template('mini_games/word_scramble.html')
+        return flask.render_template('mini_games/word_scramble.html', text=floor_1.mini_game_text())
 
     text = floor_1.make_action(command)
     if floor_1.check_win():

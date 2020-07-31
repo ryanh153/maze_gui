@@ -3,13 +3,18 @@ from dungeon_classes.base_creature_class import BaseCreature
 
 class Thor(BaseCreature):
 
-    def interact(self, player, auto_win=False):
-        text = None
+    def interact(self, player, guess=None):
         # floor 1
         if player.thor_wins == 0:
-            text = self.encounter1(auto_win)
-        # elif player.thor_wins == 1:
-        #     self.encounter2(player, auto_win)
+            if self.started_game:
+                return self.play_encounter1(player, guess)
+            else:
+                return self.begin_encounter1()
+        elif player.thor_wins == 1:
+            if self.started_game:
+                return self.play_encounter2(player, guess)
+            else:
+                return self.begin_encounter2()
         # ### floor 2
         # elif player.thor_wins == 2:
         #     self.encounter3(player, auto_win)
@@ -42,110 +47,104 @@ class Thor(BaseCreature):
         else:
             raise ValueError("Not coded!")
 
+    def begin_encounter1(self):
+        self.current_text = ["You, brave explorer, are the only one who can hope to solve this intricate and devious "
+                             "puzzle.",
+                             "In what order will you place the tiles?",
+                             '']
+
+        text = ["In the room you large confused looking man.",
+                "He wields a large hammer and you can see he has been using it on the walls, but to little avail.",
+                "\"What do you mean!\" He wails pathetically.",
+                "\"I, Thor the mighty, have wandered the maze for hours and can find no way out. All I've found "
+                "besides walls and locked doors lie in this room.",
+                "On the floor in front of him lie a row of stone tiles.",
+                "They spell \"%s\", but that doesn't make much sense." % self.game.scrambled,
+                "On the wall above the tiles are a number of square holes. There are the same number of holes as "
+                "tiles.",
+                "\"I put the tiles in the holes but they just fall back out again! It's impossible!\" Thor "
+                "screams angrily.",
+                "Enter 'solve puzzle' to attempt to help the poor man.",
+                ""]
+
         return text
 
-    def encounter1(self, auto_win):
-        if not auto_win:
-            text = ["In the room you large confused looking man.",
-                    "He weilds a large hammer and you can see he has been using it on the walls, but to little avail.",
-                    "\"What do you mean!\" He wails pathetically.",
-                    "\"I, Thor the mighty, have wandered the maze for hours and can find no way out. All I've found "
-                    "besides walls and locked doors lie in this room.",
-                    "On the floor in front of him lie a row of stone tiles.",
-                    "They spell \"%s\", but that doesn't make much sense." % self.game.scrambled,
-                    "On the wall above the tiles are a number of square holes. There are the same number of holes as "
-                    "tiles.",
-                    "\"I put the tiles in the holes but they just fall back out again! It's impossible!\" Thor "
-                    "screams angrily.",
-                    "Enter 'solve puzzle' to attempt to help the poor man.",
-                    ""]
+    def play_encounter1(self, player, guess):
+        text, solved = [], False
+        if self.game.make_guess(guess):
+            solved = True
+            self.encounter1_reward(player)
+            text.extend(["Thor stares at you dumbfounded.",
+                         "\"But that's the same thing I did! And I pushed on the tiles ten times harder to make them "
+                         "stay in place!\"",
+                         "\"It's... it's the order of the tiles\" you say. It's amazing to you that this information "
+                         "needs to be conveyed still.",
+                         "They are supposed to spell \"%s\"." % self.game.answer,
+                         "\"So that's the secret!\" Leaping forward Thor grabs the tiles in order puts them in the "
+                         "corresponding squares.",
+                         "You note that he is still making sure to shove them in at least ten times harder than you "
+                         "did, just to be safe.",
+                         "The panel opens again and Thor gleefully reaches in and grabs the key.",
+                         "\"I will conquer this devilish maze after all! Nothing can stop the almighty!\"",
+                         "He runs off to the east, too quickly for you to follow.",
+                         "Shaking your head at the hubris of the \"almighty\" you turn back to the tiles to see if "
+                         "perhaps you might be able earn a second key",
+                         "Placing them again does indeed open the panel, but there is no key this time. Somehow it "
+                         "remembers you have already taken from it.",
+                         "Shrugging you pocket your new key.",
+                         ''])
+        else:
+            text.extend(["The tiles fall back onto the floor, amazingly into the same order the were originally.",
+                         ''])
+        return solved, text
 
-            return text
+    def encounter1_reward(self, player):
+        self.started_game = False
+        player.small_keys += 1
+        player.thor_wins += 1
 
-    # 	decided = False
-    # 	while not decided:
-    # 		playGame = raw_input("Do you attempt to solve the puzzle (y/n)? ")
-    # 		print ""
-    #
-    # 		if playGame == "y":
-    # 			print "You, brave explorer, are the only one who can hope to solve this intricate and devious puzzle."
-    # 			print "In what order will you place the tiles?"
-    # 			self.game.play(player)
-    #
-    # 			print "A small panel opens next to you revealing a key."
-    # 			print "You consider it warily for a moment."
-    # 			print "Then the panel starts to close and you hastily grab it, not knowing if it will open again."
-    # 			print ""
-    # 			print "Thor stares at you dumbfounded."
-    # 			print "\"But that's the same thing I did! And I pushed on the tiles ten times harder to make them stay in place!\""
-    # 			print "\"It's... it's the order of the tiles\" you say. It's amazing to you that this information needs to be conveyed still."
-    # 			print "They are supposed to spell \"%s\"." % self.game.answer
-    # 			print "\"So that's the secret!\" Leaping forward Thor grabs the tiles in order puts them in the corresponding squares."
-    # 			print "You note that he is still making sure to shove them in at least ten times harder than you did, just to be safe."
-    # 			print "The panel opens again and Thor gleefully reaches in and grabs the key."
-    # 			print "\"I will conquer this devilish maze after all! Nothing can stop the almighty!\""
-    # 			print "He runs off to the east, too quickly for you to follow."
-    # 			print "Shaking your head at the hubris of the \"almighty\" you turn back to the tiles to see if perhaps you might be able earn a second key"
-    # 			print "Placing them again does indeed open the panel, but there is no key this time. Somehow it remembers you have already taken from it."
-    # 			print "Shrugging you pocket your new key."
-    # 			print ""
-    # 			decided = True
-    #
-    # 		elif playGame == "n":
-    # 			print "You elect not to help this man. This physically impossing yet intellectually cowering creature must fend for itself."
-    # 			print ""
-    # 			decided = True
-    #
-    # 		else:
-    # 			print "Please answer yes or no (y/n)."
-    # 			print ""
-    #
-    # # auto_win goes here
-    # if auto_win or self.game.won:
-    # 	player.smallKeys += 1
-    # 	player.thor_wins += 1
+    def begin_encounter2(self):
+        self.current_text = ["You kneel down next to Thor. \"How's it going buddy?\" you gently inquire.",
+                             "\"Not well...\" he reluctantly admits.",
+                             "\"I can't figure out what to do with the tiles. And they've grown in number!\"",
+                             "Looking down you see he is correct. Tiles are spread across the floor spelling %s" % self.game.scrambled,
+                             "\"Loki even said he'd help me out.\" Thor mutters. \"But his hint didn't make any "
+                             "sense.\"",
+                             "\"He said I was the answer, but when I spell my name there are still two tiles left!\"",
+                             "\"Perhaps you can help me again?\"",
+                             '']
 
-# def encounter2(self, player, auto_win):
-# 	if not auto_win:
-# 		print "You see Thor again. He lies on the ground on his side. He is not looking happy..."
-#
-# 		decided = False
-# 		while not decided:
-# 			playGame = raw_input("Do you attempt to help this poor man (y/n)? ")
-# 			print ""
-#
-# 			if playGame == "y":
-# 				print "You kneel down next to Thor. \"How's it going buddy?\" you gently inquire."
-# 				print "\"Not well...\" he reluctantly admits."
-# 				print "\"I can't figure out what to do with the tiles. And they've grown in number!\""
-# 				print "Looking down you see he is correct. Tiles are spread across the floor spelling %s" % self.game.scrambled
-# 				print "\"Loki even said he'd help me out.\" Thor mutters. \"But his hint didn't make any sense.\""
-# 				print "\"He said I was the answer, but when I spell my name there are still two tiles left!\""
-# 				print "\"Prehaps you can help me again?\""
-# 				self.game.play(player)
-#
-# 				print "A small panel opens next to you revealing a large golden key."
-# 				print "You hastily grab it. Its golden allure is overpowering."
-# 				print ""
-# 				print "\"Aha!\" He shouts. So Loki said I was the answer, but it was he, my brother, who was the answer.\""
-# 				print "\"Such devlish tricks\""
-# 				print "Shaking your head you decide not to stay and see if he can figure out how to spell out the word again."
-# 				print ""
-# 				decided = True
-#
-# 			elif playGame == "n":
-# 				print "You decide you don't have enough time to explain any other puzzles to someone who can't figure them out himself."
-# 				print ""
-# 				decided = True
-#
-# 			else:
-# 				print "Please answer yes or no (y/n)."
-# 				print ""
-#
-# 	# auto_win goes here
-# 	if auto_win or self.game.won:
-# 		player.smallKeys += 1
-# 		player.thor_wins += 1
+        text = ["You see Thor again. He lies on the ground on his side. He is not looking happy...",
+                '"Do you attempt to help this poor man (solve puzzle)?"',
+                '']
+        return text
+
+    def play_encounter2(self, player, guess):
+
+        text, solved = [], False
+        if self.game.make_guess(guess):
+            solved = True
+            self.encounter2_reward(player)
+            text.extend(["A small panel opens next to you revealing a large golden key."
+                         "You hastily grab it. Its golden allure is overpowering."
+                         ""
+                         "\"Aha!\" He shouts. So Loki said I was the answer, but it was he, my brother, who was the "
+                         "answer.\" "
+                         "\"Such devlish tricks\""
+                         "Shaking your head you decide not to stay and see if he can figure out how to spell out the "
+                         "word again. "
+                         ""])
+
+        else:
+            text.extend(["The tiles fall back onto the floor, amazingly into the same order the were originally.",
+                         ''])
+
+        return solved, text
+
+    def encounter2_reward(self, player):
+        self.started_game = False
+        player.large_keys += 1
+        player.thor_wins += 1
 #
 # def encounter3(self, player, auto_win):
 # 	if not auto_win:

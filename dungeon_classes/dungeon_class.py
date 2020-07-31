@@ -52,7 +52,7 @@ class Dungeon:
 
         text = []
         currTile = self.map[player.pos[0]][player.pos[1]]
-        usedStairs = 0
+        usedStairs = False
 
         if currTile.has_creature:
             text.extend(creature_interact(currTile, player))
@@ -86,7 +86,7 @@ class Dungeon:
                 text.append("It glows almost hungrily, casting more light than you would think possible.")
 
         if curr_tile.doors:
-            if not (player.small_keys and player.large_keys):
+            if not (player.small_keys or player.large_keys):
                 text.extend(["Unfortunately you have no keys.",
                              "You stand there, your keyless impotence filling the room."])
             else:
