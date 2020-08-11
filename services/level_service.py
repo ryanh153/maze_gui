@@ -1,3 +1,5 @@
+from collections import namedtuple
+
 import numpy as np
 from PIL import Image
 
@@ -8,7 +10,9 @@ BLACK = (0, 0, 0)
 
 OPPOSITE_DIRECTIONS = {"n": "s", "e": "w", "s": "n", "w": "e"}
 
-PLAYER_PADDING = 2
+Icon = namedtuple('Image', ['image', 'height', 'width', 'padding'])
+PLAYER_IMAGE = Image.open('static/img/test_char.jpg')
+PLAYER_ICON = Icon(PLAYER_IMAGE, np.shape(PLAYER_IMAGE)[0], np.shape(PLAYER_IMAGE)[1], 2)
 
 
 # Functions for generating an image from a map
@@ -61,19 +65,21 @@ def get_top_left(maze_dim, tile_size, pos):
 def erase_old_player(im_path, pos, maze_dim, tile_size):
     im_array = np.array(Image.open(im_path))
     top_left = get_top_left(maze_dim, tile_size, pos)
-    player_im = np.array(Image.open('static/img/test_char.jpg'))
-    height, width, _ = np.shape(player_im)
-    im_array[top_left[0] + tile_size - height - PLAYER_PADDING:top_left[0] + tile_size - PLAYER_PADDING,
-             top_left[1] + PLAYER_PADDING:top_left[1] + PLAYER_PADDING + width, :] = BLACK
+    im_array[top_left[0] + tile_size - PLAYER_ICON.height - PLAYER_ICON.padding:
+             top_left[0] + tile_size - PLAYER_ICON.padding,
+             top_left[1] + PLAYER_ICON.padding:
+             top_left[1] + PLAYER_ICON.padding + PLAYER_ICON.width,
+             :] = BLACK
     save_image(im_array, im_path)
 
 
 def draw_player(im_array, pos, maze_dim, tile_size):
     top_left = get_top_left(maze_dim, tile_size, pos)
-    player_im = np.array(Image.open('static/img/test_char.jpg'))
-    height, width, _ = np.shape(player_im)
-    im_array[top_left[0] + tile_size - height - PLAYER_PADDING:top_left[0] + tile_size - PLAYER_PADDING,
-             top_left[1] + PLAYER_PADDING :top_left[1] + PLAYER_PADDING + width, :] = player_im
+    im_array[top_left[0] + tile_size - PLAYER_ICON.height - PLAYER_ICON.padding:
+             top_left[0] + tile_size - PLAYER_ICON.padding,
+             top_left[1] + PLAYER_ICON.padding:
+             top_left[1] + PLAYER_ICON.padding + PLAYER_ICON.width,
+             :] = PLAYER_ICON.image
 
 
 def draw_tile(im_array, tile, tile_size, top_left):
