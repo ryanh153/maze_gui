@@ -36,7 +36,8 @@ def make_action(command):
         if cmd == 'move':
             old_pos = [p for p in player.pos]  # so we don't save a reference to player.pos
             if maze_funcs.move_player(dungeon.map, player.pos, direction):
-                maze_funcs.erase_old_player(im_path, old_pos, len(dungeon.map), TILE_SIZE)
+                old_tile = dungeon.map[old_pos[0]][old_pos[1]]
+                maze_funcs.erase_previous_tile(im_path, old_tile, old_pos, len(dungeon.map), TILE_SIZE)
                 if dungeon.map[player.pos[0]][player.pos[1]].special_text:
                     text.extend(dungeon.map[player.pos[0]][player.pos[1]].special_text)
                     text.extend(['', ''])

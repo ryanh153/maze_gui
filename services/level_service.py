@@ -11,8 +11,11 @@ BLACK = (0, 0, 0)
 OPPOSITE_DIRECTIONS = {"n": "s", "e": "w", "s": "n", "w": "e"}
 
 Icon = namedtuple('Image', ['image', 'height', 'width', 'padding'])
-PLAYER_IMAGE = Image.open('static/img/test_char.jpg')
+PLAYER_IMAGE = np.array(Image.open('static/img/test_char.jpg'))
 PLAYER_ICON = Icon(PLAYER_IMAGE, np.shape(PLAYER_IMAGE)[0], np.shape(PLAYER_IMAGE)[1], 2)
+
+KEY_IMAGE = np.array(Image.open('static/img/key.png'))[:, :, 0:3]
+KEY_ICON = Icon(KEY_IMAGE, np.shape(KEY_IMAGE)[0], np.shape(KEY_IMAGE)[1], 2)
 
 
 # Functions for generating an image from a map
@@ -33,6 +36,8 @@ def draw_current_tile(dungeon_map, player_pos, im_path, tile_size):
     draw_tile(im_array, tile, tile_size, top_left)
 
     draw_player(im_array, player_pos, maze_dim, tile_size)
+    if tile.has_key or tile.has_creature:
+        draw_key_icon(im_array, player_pos, maze_dim, tile_size)
 
     im = Image.fromarray(im_array)
     im.save(im_path)
@@ -62,7 +67,7 @@ def get_top_left(maze_dim, tile_size, pos):
     return tile_size * row, tile_size * col
 
 
-def erase_old_player(im_path, pos, maze_dim, tile_size):
+def erase_previous_tile(im_path, tile, pos, maze_dim, tile_size):
     im_array = np.array(Image.open(im_path))
     top_left = get_top_left(maze_dim, tile_size, pos)
     im_array[top_left[0] + tile_size - PLAYER_ICON.height - PLAYER_ICON.padding:
@@ -70,6 +75,13 @@ def erase_old_player(im_path, pos, maze_dim, tile_size):
              top_left[1] + PLAYER_ICON.padding:
              top_left[1] + PLAYER_ICON.padding + PLAYER_ICON.width,
              :] = BLACK
+    if not (tile.has_key or tile.has_creature):
+        im_array[top_left[0] + KEY_ICON.padding:
+                 top_left[0] + KEY_ICON.padding + KEY_ICON.height,
+                 top_left[1] + tile_size - KEY_ICON.width - KEY_ICON.padding:
+                 top_left[1] + tile_size - KEY_ICON.padding,
+                 :] = BLACK
+
     save_image(im_array, im_path)
 
 
@@ -80,6 +92,15 @@ def draw_player(im_array, pos, maze_dim, tile_size):
              top_left[1] + PLAYER_ICON.padding:
              top_left[1] + PLAYER_ICON.padding + PLAYER_ICON.width,
              :] = PLAYER_ICON.image
+
+
+def draw_key_icon(im_array, pos, maze_dim, tile_size):
+    top_left = get_top_left(maze_dim, tile_size, pos)
+    im_array[top_left[0] + KEY_ICON.padding:
+             top_left[0] + KEY_ICON.padding + KEY_ICON.height,
+             top_left[1] + tile_size - KEY_ICON.width - KEY_ICON.padding:
+             top_left[1] + tile_size - KEY_ICON.padding,
+             :] = KEY_ICON.image
 
 
 def draw_tile(im_array, tile, tile_size, top_left):
