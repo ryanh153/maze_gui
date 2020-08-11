@@ -67,24 +67,6 @@ def get_top_left(maze_dim, tile_size, pos):
     return tile_size * row, tile_size * col
 
 
-def erase_previous_tile(im_path, tile, pos, maze_dim, tile_size):
-    im_array = np.array(Image.open(im_path))
-    top_left = get_top_left(maze_dim, tile_size, pos)
-    im_array[top_left[0] + tile_size - PLAYER_ICON.height - PLAYER_ICON.padding:
-             top_left[0] + tile_size - PLAYER_ICON.padding,
-             top_left[1] + PLAYER_ICON.padding:
-             top_left[1] + PLAYER_ICON.padding + PLAYER_ICON.width,
-             :] = BLACK
-    if not (tile.has_key or tile.has_creature):
-        im_array[top_left[0] + KEY_ICON.padding:
-                 top_left[0] + KEY_ICON.padding + KEY_ICON.height,
-                 top_left[1] + tile_size - KEY_ICON.width - KEY_ICON.padding:
-                 top_left[1] + tile_size - KEY_ICON.padding,
-                 :] = BLACK
-
-    save_image(im_array, im_path)
-
-
 def draw_player(im_array, pos, maze_dim, tile_size):
     top_left = get_top_left(maze_dim, tile_size, pos)
     im_array[top_left[0] + tile_size - PLAYER_ICON.height - PLAYER_ICON.padding:
@@ -94,6 +76,18 @@ def draw_player(im_array, pos, maze_dim, tile_size):
              :] = PLAYER_ICON.image
 
 
+def erase_player(im_path, pos, maze_dim, tile_size):
+    im_array = np.array(Image.open(im_path))
+    top_left = get_top_left(maze_dim, tile_size, pos)
+    im_array[top_left[0] + tile_size - PLAYER_ICON.height - PLAYER_ICON.padding:
+             top_left[0] + tile_size - PLAYER_ICON.padding,
+             top_left[1] + PLAYER_ICON.padding:
+             top_left[1] + PLAYER_ICON.padding + PLAYER_ICON.width,
+             :] = BLACK
+
+    save_image(im_array, im_path)
+
+
 def draw_key_icon(im_array, pos, maze_dim, tile_size):
     top_left = get_top_left(maze_dim, tile_size, pos)
     im_array[top_left[0] + KEY_ICON.padding:
@@ -101,6 +95,18 @@ def draw_key_icon(im_array, pos, maze_dim, tile_size):
              top_left[1] + tile_size - KEY_ICON.width - KEY_ICON.padding:
              top_left[1] + tile_size - KEY_ICON.padding,
              :] = KEY_ICON.image
+
+
+def erase_key_icon(im_path, pos, maze_dim, tile_size):
+    im_array = np.array(Image.open(im_path))
+    top_left = get_top_left(maze_dim, tile_size, pos)
+    im_array[top_left[0] + KEY_ICON.padding:
+             top_left[0] + KEY_ICON.padding + KEY_ICON.height,
+             top_left[1] + tile_size - KEY_ICON.width - KEY_ICON.padding:
+             top_left[1] + tile_size - KEY_ICON.padding,
+             :] = BLACK
+
+    save_image(im_array, im_path)
 
 
 def draw_tile(im_array, tile, tile_size, top_left):
