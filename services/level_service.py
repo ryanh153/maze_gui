@@ -8,7 +8,7 @@ BLACK = (0, 0, 0)
 
 OPPOSITE_DIRECTIONS = {"n": "s", "e": "w", "s": "n", "w": "e"}
 
-PLAYER_PADDING = 15
+PLAYER_PADDING = 2
 
 
 # Functions for generating an image from a map
@@ -61,15 +61,19 @@ def get_top_left(maze_dim, tile_size, pos):
 def erase_old_player(im_path, pos, maze_dim, tile_size):
     im_array = np.array(Image.open(im_path))
     top_left = get_top_left(maze_dim, tile_size, pos)
-    im_array[top_left[0] + PLAYER_PADDING:top_left[0] + tile_size - PLAYER_PADDING,
-             top_left[1] + PLAYER_PADDING:top_left[1] + tile_size - PLAYER_PADDING, :] = BLACK
+    player_im = np.array(Image.open('static/img/test_char.jpg'))
+    height, width, _ = np.shape(player_im)
+    im_array[top_left[0] + tile_size - height - PLAYER_PADDING:top_left[0] + tile_size - PLAYER_PADDING,
+             top_left[1] + PLAYER_PADDING:top_left[1] + PLAYER_PADDING + width, :] = BLACK
     save_image(im_array, im_path)
 
 
 def draw_player(im_array, pos, maze_dim, tile_size):
     top_left = get_top_left(maze_dim, tile_size, pos)
-    im_array[top_left[0] + PLAYER_PADDING:top_left[0] + tile_size - PLAYER_PADDING,
-             top_left[1] + PLAYER_PADDING:top_left[1] + tile_size - PLAYER_PADDING, :] = GREEN
+    player_im = np.array(Image.open('static/img/test_char.jpg'))
+    height, width, _ = np.shape(player_im)
+    im_array[top_left[0] + tile_size - height - PLAYER_PADDING:top_left[0] + tile_size - PLAYER_PADDING,
+             top_left[1] + PLAYER_PADDING :top_left[1] + PLAYER_PADDING + width, :] = player_im
 
 
 def draw_tile(im_array, tile, tile_size, top_left):
@@ -96,7 +100,6 @@ def draw_tile_side(im_array, direction, top_left, tile_size, color):
 
 
 def draw_tile_side_short(im_array, direction, top_left, tile_size, color):
-    print(f'Drawing short {color} to the {direction}')
     if direction == 'w':
         im_array[top_left[0] + 1:top_left[0] + tile_size - 1, top_left[1], :] = BLACK
         im_array[top_left[0] + 1:top_left[0] + tile_size - 1:2, top_left[1], :] = color
