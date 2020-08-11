@@ -21,6 +21,7 @@ def make_action(command):
     if command == 'pickup key' and tile.has_key:
         player.small_keys += 1
         tile.has_key = False
+        maze_funcs.erase_key_icon(get_image_path(), player.pos, len(dungeon.map), TILE_SIZE)
         text.extend(['You pickup the a small, silver key.',
                      'It is heavily tarnished but you are confident it will still function.', '', ''])
 
