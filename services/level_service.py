@@ -76,7 +76,7 @@ def draw_tile(im_array, tile, tile_size, top_left):
     directions = ['n', 'e', 's', 'w']
     for direction in directions:
         if direction in tile.paths:
-            draw_tile_side_short(im_array, direction, top_left, tile_size, BLACK)
+            draw_tile_side_short(im_array, direction, top_left, tile_size, WHITE)
         else:
             draw_tile_side(im_array, direction, top_left, tile_size, WHITE)
 
@@ -96,14 +96,19 @@ def draw_tile_side(im_array, direction, top_left, tile_size, color):
 
 
 def draw_tile_side_short(im_array, direction, top_left, tile_size, color):
+    print(f'Drawing short {color} to the {direction}')
     if direction == 'w':
-        im_array[top_left[0] - 1:top_left[0] + tile_size - 1, top_left[1], :] = color
+        im_array[top_left[0] + 1:top_left[0] + tile_size - 1, top_left[1], :] = BLACK
+        im_array[top_left[0] + 1:top_left[0] + tile_size - 1:2, top_left[1], :] = color
     if direction == 'e':
-        im_array[top_left[0] - 1:top_left[0] + tile_size - 1, top_left[1] + tile_size - 1, :] = color
+        im_array[top_left[0] + 1:top_left[0] + tile_size - 1, top_left[1] + tile_size - 1, :] = BLACK
+        im_array[top_left[0] + 1:top_left[0] + tile_size - 1:2, top_left[1] + tile_size - 1, :] = color
     if direction == 'n':
-        im_array[top_left[0], top_left[1] - 1:top_left[1] + tile_size - 1, :] = color
+        im_array[top_left[0], top_left[1] + 1:top_left[1] + tile_size - 1, :] = BLACK
+        im_array[top_left[0], top_left[1] + 1:top_left[1] + tile_size - 1:2, :] = color
     if direction == 's':
-        im_array[top_left[0] + tile_size - 1, top_left[1] - 1:top_left[1] + tile_size - 1, :] = color
+        im_array[top_left[0] + tile_size - 1, top_left[1] + 1:top_left[1] + tile_size - 1, :] = BLACK
+        im_array[top_left[0] + tile_size - 1, top_left[1] + 1:top_left[1] + tile_size - 1:2, :] = color
 
 
 # functions to aid in map creation
