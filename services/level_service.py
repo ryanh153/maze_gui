@@ -12,10 +12,10 @@ GREY = (220, 220, 220)
 OPPOSITE_DIRECTIONS = {"n": "s", "e": "w", "s": "n", "w": "e"}
 
 Icon = namedtuple('Image', ['image', 'height', 'width', 'padding'])
-PLAYER_IMAGE = np.array(Image.open('static/img/test_char.jpg'))
+PLAYER_IMAGE = np.array(Image.open('static/img/char_clear.png'))[:, :, 0:3]
 PLAYER_ICON = Icon(PLAYER_IMAGE, np.shape(PLAYER_IMAGE)[0], np.shape(PLAYER_IMAGE)[1], 2)
 
-KEY_IMAGE = np.array(Image.open('static/img/key.png'))[:, :, 0:3]
+KEY_IMAGE = np.array(Image.open('static/img/key2_scaled.png'))[:, :, 0:3]
 KEY_ICON = Icon(KEY_IMAGE, np.shape(KEY_IMAGE)[0], np.shape(KEY_IMAGE)[1], 2)
 
 
