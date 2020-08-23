@@ -14,13 +14,13 @@ OPPOSITE_DIRECTIONS = {"n": "s", "e": "w", "s": "n", "w": "e"}
 
 Icon = namedtuple('Image', ['image', 'height', 'width', 'padding'])
 PLAYER_IMAGE = np.array(Image.open('static/img/player_image.png'))[:, :, 0:3]
-PLAYER_ICON = Icon(PLAYER_IMAGE, np.shape(PLAYER_IMAGE)[0], np.shape(PLAYER_IMAGE)[1], 2)
+PLAYER_ICON = Icon(PLAYER_IMAGE, np.shape(PLAYER_IMAGE)[0], np.shape(PLAYER_IMAGE)[1], 1)
 
 SILVER_KEY_IMAGE = np.array(Image.open('static/img/silver_key.png'))[:, :, 0:3]
-SILVER_KEY_ICON = Icon(SILVER_KEY_IMAGE, np.shape(SILVER_KEY_IMAGE)[0], np.shape(SILVER_KEY_IMAGE)[1], 2)
+SILVER_KEY_ICON = Icon(SILVER_KEY_IMAGE, np.shape(SILVER_KEY_IMAGE)[0], np.shape(SILVER_KEY_IMAGE)[1], 1)
 
 GOLD_KEY_IMAGE = np.array(Image.open('static/img/gold_key.png'))[:, :, 0:3]
-GOLD_KEY_ICON = Icon(GOLD_KEY_IMAGE, np.shape(GOLD_KEY_IMAGE)[0], np.shape(GOLD_KEY_IMAGE)[1], 2)
+GOLD_KEY_ICON = Icon(GOLD_KEY_IMAGE, np.shape(GOLD_KEY_IMAGE)[0], np.shape(GOLD_KEY_IMAGE)[1], 1)
 
 
 # Functions for generating an image from a map

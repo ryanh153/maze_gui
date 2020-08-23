@@ -102,6 +102,7 @@ class Audumbla(BaseCreature):
         self.current_text = ["The cows eyes stare into you soul. Their emptiness reflecting your progress thus far.",
                              "You somehow get the feeling Audumbla believes your progress will remain dreadfully low.",
                              "Hoping to prove this primordial cow, and your parents, wrong you step forward.",
+                             "Enter the order you wish to place the tiles or \"exit\" to return to the map.",
                              '']
 
         text = ["In the room you see a mighty cow. On the floor next to it lies a piece of parchment.",
@@ -155,6 +156,7 @@ class Audumbla(BaseCreature):
 
         self.current_text = ["The cow stands before you again",
                              "You scan the ground for another set of instructions but see none.",
+                             "Enter the order you wish to place the tiles or \"exit\" to return to the map.",
                              '']
 
         text = ["\"Let's dance you and I.\" you cackle.",

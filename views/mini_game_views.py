@@ -18,7 +18,13 @@ def word_scramble():
 @blueprint.route('/word_scramble_post', methods=['POST'])
 def word_scramble_post():
     player_guess = flask.request.form['player_guess'].strip().lower()
-    solved, text = floor_1.mini_game_guess(player_guess)
+    if player_guess == 'exit':
+        tile = floor_1.get_current_tile()
+        tile.creature.started_game = False
+        text = floor_1.interact()
+        return flask.render_template('levels/test_level.html', im_path=floor_1.get_image_path(), text=text)
+    else:
+        solved, text = floor_1.mini_game_guess(player_guess)
 
     if solved:
         text.extend(floor_1.interact())
@@ -40,7 +46,13 @@ def bull_cow_game():
 @blueprint.route('/bull_cow_game_post', methods=['POST'])
 def bull_cow_game_post():
     player_guess = flask.request.form['player_guess'].strip().lower()
-    solved, text = floor_1.mini_game_guess(player_guess)
+    if player_guess == 'exit':
+        tile = floor_1.get_current_tile()
+        tile.creature.started_game = False
+        text = floor_1.interact()
+        return flask.render_template('levels/test_level.html', im_path=floor_1.get_image_path(), text=text)
+    else:
+        solved, text = floor_1.mini_game_guess(player_guess)
 
     if solved:
         text.extend(floor_1.interact())

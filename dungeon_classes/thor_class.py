@@ -72,7 +72,7 @@ class Thor(BaseCreature):
 
         self.current_text = ["You, brave explorer, are the only one who can hope to solve this intricate and devious "
                              "puzzle.",
-                             "In what order will you place the tiles?",
+                             "Enter the order you wish to place the tiles or \"exit\" to return to the map.",
                              '']
 
         text = ["In the room you large confused looking man.",
@@ -134,6 +134,7 @@ class Thor(BaseCreature):
                              "sense.\"",
                              "\"He said I was the answer, but when I spell my name there are still two tiles left!\"",
                              "\"Perhaps you can help me again?\"",
+                             "Enter the order you wish to place the tiles or \"exit\" to return to the map.",
                              '']
 
         text = ["You see Thor again. He lies on the ground on his side. He is not looking happy...",
