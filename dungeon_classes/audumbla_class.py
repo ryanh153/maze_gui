@@ -3,6 +3,10 @@ from dungeon_classes.base_creature_class import BaseCreature
 
 class Audumbla(BaseCreature):
 
+    def __init__(self, pos, game):
+        super(Audumbla, self).__init__(pos, game)
+        self.name = 'Audumbla'
+
     def interact(self, player, guess=None):
         # floor 1
         if player.audumbla_wins == 0:

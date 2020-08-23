@@ -13,12 +13,8 @@
     <div class="level_display">
         <div class="row">
 
-            <div class="col-lg-6">
-                {% for image in letter_tiles %}
-                    <div class="single_tile">
-                        <img src={{ image | safe }} alt="">
-                    </div>
-                {% endfor %}
+            <div class="col-lg-6 cow">
+                <img src="static/img/cow.png" alt="">
             </div>
 
             <div class="col-lg-6 text_display">
@@ -28,7 +24,7 @@
                     {% endfor %}
                 </p>
 
-                <form action="{{url_for('mini_games.word_scramble_post')}}" method="POST">
+                <form action="{{url_for('mini_games.bull_cow_game_post')}}" method="POST">
                     <input placeholder="Enter Solution" type="text" name="player_guess" autofocus="autofocus" autocomplete="off">
                     <button type="submit"></button>
                 </form>

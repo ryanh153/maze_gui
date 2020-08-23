@@ -61,14 +61,11 @@ def make_action(command):
 
 
 def interact():
-    print(player.pos)
-    print(player.small_keys)
-    print(player.large_keys)
     return dungeon.interact(player)
 
 
 def start_mini_game(command):
-    tile = dungeon.map[player.pos[0]][player.pos[1]]
+    tile = get_current_tile()
     if command == 'solve puzzle' and tile.has_creature:
         tile.creature.started_game = True
         return True
@@ -76,7 +73,7 @@ def start_mini_game(command):
 
 
 def mini_game_guess(player_guess):
-    tile = dungeon.map[player.pos[0]][player.pos[1]]
+    tile = get_current_tile()
     if tile.has_creature:
         solved, text = tile.creature.interact(player, player_guess)
         if solved:
@@ -92,6 +89,10 @@ def mini_game_text():
 
 def check_win():
     return player.pos == dungeon.goal_pos_arr[0]
+
+
+def get_current_tile():
+    return dungeon.map[player.pos[0]][player.pos[1]]
 
 
 def make_map():

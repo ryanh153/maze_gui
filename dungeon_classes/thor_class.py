@@ -3,6 +3,10 @@ from dungeon_classes.base_creature_class import BaseCreature
 
 class Thor(BaseCreature):
 
+    def __init__(self, pos, game):
+        super(Thor, self).__init__(pos, game)
+        self.name = 'Thor'
+
     def interact(self, player, guess=None):
         # floor 1
         if player.thor_wins == 0:

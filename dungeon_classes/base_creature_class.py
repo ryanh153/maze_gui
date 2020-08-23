@@ -6,3 +6,4 @@ class BaseCreature:
 		self.game = game
 		self.started_game = False
 		self.current_text = ''
+		self.name = None

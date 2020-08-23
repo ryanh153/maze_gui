@@ -38,3 +38,9 @@ div.level_display button {
     font-size: 0px;
 }
 
+div.single_tile {
+    float: left;
+    width: 20%;
+    padding: 3px;
+}
+
