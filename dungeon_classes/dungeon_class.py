@@ -82,7 +82,7 @@ class Dungeon:
             if door.type == "w":
                 text.append(f"There is a wooden door to the {PRINT_DIR[door.direction]}.")
             elif door.type == "g":
-                text.append(f"There is a large, golden door to the{PRINT_DIR[door.direction]}")
+                text.append(f"There is a large, golden door to the {PRINT_DIR[door.direction]}")
                 text.append("It glows almost hungrily, casting more light than you would think possible.")
 
         if curr_tile.doors:

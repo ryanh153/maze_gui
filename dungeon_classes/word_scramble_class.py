@@ -11,7 +11,6 @@ class WordScramble:
         wordList = list(word)
         random.shuffle(wordList)
         self.scrambled = ''.join(wordList)
-        self.won = False
 
     def make_guess(self, guess):
         return self.answer == guess

@@ -4,8 +4,12 @@ import services.level_service as maze_funcs
 from dungeon_classes.tile_class import Tile
 from dungeon_classes.dungeon_class import Dungeon
 from dungeon_classes.player_class import Player
-from dungeon_classes.word_scramble_class import WordScramble
+
 from dungeon_classes.thor_class import Thor
+from dungeon_classes.word_scramble_class import WordScramble
+
+from dungeon_classes.bull_cow_class import BCGame
+from dungeon_classes.audumbla_class import Audumbla
 
 TILE_SIZE = 50
 
@@ -156,13 +160,11 @@ def make_map():
     floor_map[2][1].spawn_door('w', 'g')
     maze_funcs.make_doors_2_sided(floor_map)
 
-    # keys
-    floor_map[2][3].has_key = True
-    floor_map[1][0].has_key = True
-
     # Creatures
     floor_map[5][3].spawn_creature(Thor([5, 3], WordScramble('word')))
     floor_map[3][2].spawn_creature(Thor([3, 2], WordScramble("brother")))
+    floor_map[2][3].spawn_creature(Audumbla([2, 3], BCGame('yggdrasil')))
+    floor_map[1][0].spawn_creature(Audumbla([1, 0], BCGame('nordic')))
 
     return dungeon_map, player_pos, startPosArr, goalPosArr, passphrases
 

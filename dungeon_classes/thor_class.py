@@ -48,6 +48,8 @@ class Thor(BaseCreature):
             raise ValueError("Not coded!")
 
     def begin_encounter1(self):
+        """Set text to be displayed at the top on each turn (self.current text) and display setup to game"""
+
         self.current_text = ["You, brave explorer, are the only one who can hope to solve this intricate and devious "
                              "puzzle.",
                              "In what order will you place the tiles?",
@@ -143,7 +145,7 @@ class Thor(BaseCreature):
 
     def encounter2_reward(self, player):
         self.started_game = False
-        player.large_keys += 1
+        player.small_keys += 1
         player.thor_wins += 1
 #
 # def encounter3(self, player, auto_win):
