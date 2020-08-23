@@ -48,6 +48,50 @@ class Audumbla(BaseCreature):
         else:
             raise ValueError("Not coded!")
 
+    def next_reward(self, player):
+        if player.audumbla_wins in [0]:
+            return 'small'
+        elif player.audumbla_wins in [1]:
+            return 'large'
+        else:
+            raise ValueError("There is no next reward!")
+
+    def incorrect_guess_feedback(self, guess):
+        bulls, cows, text = 0, 0, []
+
+        for i, char in enumerate(guess):
+            if char in self.game.answer:
+                if char == self.game.answer[i]:
+                    bulls += 1
+                else:
+                    cows += 1
+
+        if cows == 0 and bulls == 0:
+            text.extend(["The cow stares at you blankly. Judgement flowing off it in palpable waves."])
+        else:
+            if bulls == 1:
+                text.extend(["The cow licks a block of salt in front of it once."])
+            elif bulls > 1:
+                text.extend(["The cow licks a block of salt in front of it %d times" % bulls])
+
+            if cows == 1:
+                text.extend(["The cow stomps it front left hoof once"])
+            elif cows > 1:
+                text.extend(["The cow stomps it front left hoof %d times" % cows])
+
+            text.extend(["You take a step back to process this new information.",
+                         ''])
+
+        return text
+
+    def reward(self, player):
+        self.started_game = False
+        if self.next_reward(player) == 'small':
+            player.small_keys += 1
+        else:
+            player.large_keys += 1
+        player.audumbla_wins += 1
+
     def begin_encounter1(self):
         """Set text to be displayed at the top on each turn (self.current text) and display setup to game"""
 
@@ -78,7 +122,7 @@ class Audumbla(BaseCreature):
         text, solved = [], False
         if self.game.make_guess(guess):
             solved = True
-            self.encounter1_reward(player)
+            self.reward(player)
             text.extend(["The cow takes a step forward. You flinch but hold your ground.",
                          "It leans forward and licks your palm.",
                          "Looking down you see a shiny silver key in your palm.",
@@ -102,39 +146,6 @@ class Audumbla(BaseCreature):
 
         return solved, text
 
-    def incorrect_guess_feedback(self, guess):
-        bulls, cows, text = 0, 0, []
-
-        for i, char in enumerate(guess):
-            if char in self.game.answer:
-                if char == self.game.answer[i]:
-                    bulls += 1
-                else:
-                    cows += 1
-
-        if cows == 0 and bulls == 0:
-            text.extend(["The cow stares at you blankly. Judgement flowing off it in palpable waves."])
-        else:
-            if bulls == 1:
-                text.extend(["The cow licks a block of salt in front of it once."])
-            elif bulls > 1:
-                text.extend(["The cow licks a block of salt in front of it %d times" % bulls])
-
-            if cows == 1:
-                text.extend(["The cow stomps it front left hoof once"])
-            elif cows > 1:
-                text.extend(["The cow stomps it front left hoof %d times" % cows])
-
-            text.extend(["You take a step back to process this new information.",
-                         ''])
-
-        return text
-
-    def encounter1_reward(self, player):
-        self.started_game = False
-        player.small_keys += 1
-        player.audumbla_wins += 1
-
     def begin_encounter2(self):
         """Set text to be displayed at the top on each turn (self.current text) and display setup to game"""
 
@@ -154,7 +165,7 @@ class Audumbla(BaseCreature):
         text, solved = [], False
         if self.game.make_guess(guess):
             solved = True
-            self.encounter2_reward(player)
+            self.reward(player)
             text.extend(["The cow takes a step forward. This time you stand your ground, cool and confident.",
                          "The cow leans forward and licks your palm.",
                          "Looking down you see a giant golden key in your hand. What could this be for?",
@@ -170,11 +181,6 @@ class Audumbla(BaseCreature):
                 text.extend(self.incorrect_guess_feedback(guess))
 
         return solved, text
-
-    def encounter2_reward(self, player):
-        self.started_game = False
-        player.large_keys += 1
-        player.audumbla_wins += 1
 
     # def encounter2(self, player, autoWin):
     # 	if not autoWin:

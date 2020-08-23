@@ -47,6 +47,22 @@ class Thor(BaseCreature):
         else:
             raise ValueError("Not coded!")
 
+    def next_reward(self, player):
+        if player.thor_wins in [0, 1]:
+            return 'small'
+        elif player.thor_wins in []:
+            return 'large'
+        else:
+            raise ValueError("There is no next reward!")
+
+    def reward(self, player):
+        self.started_game = False
+        if self.next_reward(player) == 'small':
+            player.small_keys += 1
+        else:
+            player.large_keys += 1
+        player.thor_wins += 1
+
     def begin_encounter1(self):
         """Set text to be displayed at the top on each turn (self.current text) and display setup to game"""
 

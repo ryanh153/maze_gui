@@ -11,7 +11,7 @@ from dungeon_classes.word_scramble_class import WordScramble
 from dungeon_classes.bull_cow_class import BCGame
 from dungeon_classes.audumbla_class import Audumbla
 
-TILE_SIZE = 50
+TILE_SIZE = 75
 
 
 # These functions are called externally so we make this floor's properties global
@@ -56,7 +56,7 @@ def make_action(command):
             text.extend(["Command not understood", '', ''])
             return text
 
-    maze_funcs.draw_current_tile(dungeon.map, player.pos, im_path, TILE_SIZE)
+    maze_funcs.draw_current_tile(dungeon.map, player, im_path, TILE_SIZE)
     return text
 
 
@@ -179,7 +179,7 @@ def initialize():
     dungeon_map, player_pos, start_pos_arr, goal_pos_arr, passphrases = make_map()
 
     im_path = get_image_path()
-    maze_funcs.make_black_map(dungeon_map[0], player_pos, im_path)
+    maze_funcs.make_black_map(dungeon_map[0], im_path, TILE_SIZE)
 
     # Create the player
     player = Player(player_pos)
@@ -188,4 +188,4 @@ def initialize():
     dungeon = Dungeon(player, goal_pos_arr, start_pos_arr, passphrases, dungeon_map)
 
     # Draw the player's starting room
-    maze_funcs.draw_current_tile(dungeon.map, player.pos, im_path, TILE_SIZE)
+    maze_funcs.draw_current_tile(dungeon.map, player, im_path, TILE_SIZE)

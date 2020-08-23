@@ -8,19 +8,23 @@ BROWN = (153, 102, 51)
 GREEN = (0, 204, 0)
 BLACK = (0, 0, 0)
 GREY = (220, 220, 220)
+GOLD = (255, 215, 0)
 
 OPPOSITE_DIRECTIONS = {"n": "s", "e": "w", "s": "n", "w": "e"}
 
 Icon = namedtuple('Image', ['image', 'height', 'width', 'padding'])
-PLAYER_IMAGE = np.array(Image.open('static/img/char_clear.png'))[:, :, 0:3]
+PLAYER_IMAGE = np.array(Image.open('static/img/player_image.png'))[:, :, 0:3]
 PLAYER_ICON = Icon(PLAYER_IMAGE, np.shape(PLAYER_IMAGE)[0], np.shape(PLAYER_IMAGE)[1], 2)
 
-KEY_IMAGE = np.array(Image.open('static/img/key2_scaled.png'))[:, :, 0:3]
-KEY_ICON = Icon(KEY_IMAGE, np.shape(KEY_IMAGE)[0], np.shape(KEY_IMAGE)[1], 2)
+SILVER_KEY_IMAGE = np.array(Image.open('static/img/silver_key.png'))[:, :, 0:3]
+SILVER_KEY_ICON = Icon(SILVER_KEY_IMAGE, np.shape(SILVER_KEY_IMAGE)[0], np.shape(SILVER_KEY_IMAGE)[1], 2)
+
+GOLD_KEY_IMAGE = np.array(Image.open('static/img/gold_key.png'))[:, :, 0:3]
+GOLD_KEY_ICON = Icon(GOLD_KEY_IMAGE, np.shape(GOLD_KEY_IMAGE)[0], np.shape(GOLD_KEY_IMAGE)[1], 2)
 
 
 # Functions for generating an image from a map
-def make_black_map(dungeon_map, player_pos, im_path, tile_size=50):
+def make_black_map(dungeon_map, im_path, tile_size):
     im_size = len(dungeon_map) * tile_size
     im_array = np.zeros([im_size, im_size, 3], dtype=np.uint8)
 
@@ -28,23 +32,28 @@ def make_black_map(dungeon_map, player_pos, im_path, tile_size=50):
     im.save(im_path)
 
 
-def draw_current_tile(dungeon_map, player_pos, im_path, tile_size):
+def draw_current_tile(dungeon_map, player, im_path, tile_size):
     im_array = np.array(Image.open(im_path))
     maze_dim = len(dungeon_map)
 
-    top_left = (tile_size * (maze_dim - player_pos[0] - 1), tile_size * player_pos[1])
-    tile = dungeon_map[player_pos[0]][player_pos[1]]
+    top_left = (tile_size * (maze_dim - player.pos[0] - 1), tile_size * player.pos[1])
+    tile = dungeon_map[player.pos[0]][player.pos[1]]
     draw_tile(im_array, tile, tile_size, top_left)
 
-    draw_player(im_array, player_pos, maze_dim, tile_size)
-    if tile.has_key or tile.has_creature:
-        draw_key_icon(im_array, player_pos, maze_dim, tile_size)
+    draw_player(im_array, player.pos, maze_dim, tile_size)
+    if tile.has_key:
+        draw_silver_key(im_array, player.pos, maze_dim, tile_size)
+    if tile.has_creature:
+        if tile.creature.next_reward(player) == 'small':
+            draw_silver_key(im_array, player.pos, maze_dim, tile_size)
+        else:
+            draw_gold_key(im_array, player.pos, maze_dim, tile_size)
 
     im = Image.fromarray(im_array)
     im.save(im_path)
 
 
-def make_full_map(dungeon_map, player_pos, im_path, tile_size=50):
+def make_full_map(dungeon_map, player_pos, im_path, tile_size):
     maze_dim = len(dungeon_map)
     im_size = maze_dim * tile_size
     im_array = np.zeros([im_size, im_size, 3], dtype=np.uint8)
@@ -89,22 +98,31 @@ def erase_player(im_path, pos, maze_dim, tile_size):
     save_image(im_array, im_path)
 
 
-def draw_key_icon(im_array, pos, maze_dim, tile_size):
+def draw_silver_key(im_array, pos, maze_dim, tile_size):
     top_left = get_top_left(maze_dim, tile_size, pos)
-    im_array[top_left[0] + KEY_ICON.padding:
-             top_left[0] + KEY_ICON.padding + KEY_ICON.height,
-             top_left[1] + tile_size - KEY_ICON.width - KEY_ICON.padding:
-             top_left[1] + tile_size - KEY_ICON.padding,
-             :] = KEY_ICON.image
+    im_array[top_left[0] + SILVER_KEY_ICON.padding:
+             top_left[0] + SILVER_KEY_ICON.padding + SILVER_KEY_ICON.height,
+    top_left[1] + tile_size - SILVER_KEY_ICON.width - SILVER_KEY_ICON.padding:
+             top_left[1] + tile_size - SILVER_KEY_ICON.padding,
+             :] = SILVER_KEY_ICON.image
+
+
+def draw_gold_key(im_array, pos, maze_dim, tile_size):
+    top_left = get_top_left(maze_dim, tile_size, pos)
+    im_array[top_left[0] + GOLD_KEY_ICON.padding:
+             top_left[0] + GOLD_KEY_ICON.padding + GOLD_KEY_ICON.height,
+    top_left[1] + tile_size - GOLD_KEY_ICON.width - GOLD_KEY_ICON.padding:
+             top_left[1] + tile_size - GOLD_KEY_ICON.padding,
+             :] = GOLD_KEY_ICON.image
 
 
 def erase_key_icon(im_path, pos, maze_dim, tile_size):
     im_array = np.array(Image.open(im_path))
     top_left = get_top_left(maze_dim, tile_size, pos)
-    im_array[top_left[0] + KEY_ICON.padding:
-             top_left[0] + KEY_ICON.padding + KEY_ICON.height,
-             top_left[1] + tile_size - KEY_ICON.width - KEY_ICON.padding:
-             top_left[1] + tile_size - KEY_ICON.padding,
+    im_array[top_left[0] + SILVER_KEY_ICON.padding:
+             top_left[0] + SILVER_KEY_ICON.padding + SILVER_KEY_ICON.height,
+    top_left[1] + tile_size - SILVER_KEY_ICON.width - SILVER_KEY_ICON.padding:
+             top_left[1] + tile_size - SILVER_KEY_ICON.padding,
              :] = BLACK
 
     save_image(im_array, im_path)
@@ -119,7 +137,8 @@ def draw_tile(im_array, tile, tile_size, top_left):
             draw_tile_side(im_array, direction, top_left, tile_size, WHITE)
 
     for door in tile.doors:
-        draw_tile_side(im_array, door.direction, top_left, tile_size, BROWN)
+        color = BROWN if door.type == 'w' else GOLD
+        draw_tile_side(im_array, door.direction, top_left, tile_size, color)
 
 
 def draw_tile_side(im_array, direction, top_left, tile_size, color):
