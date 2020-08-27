@@ -71,3 +71,7 @@ div.final_text p {
     width: 800px;
     font-size: 24px;
 }
+
+div.home_btn {
+    padding: 25px;
+}

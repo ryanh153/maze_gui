@@ -24,6 +24,12 @@
             <input placeholder="Code" type="text" name="user_code" required>
             <button type="submit">Submit</button>
         </form>
+
+        <div class="home_btn">
+            <form action="{{url_for('main.index')}}" method="GET">
+                <button type="submit">Home</button>
+            </form>
+        </div>
     </div>
 
 {% endblock %}
