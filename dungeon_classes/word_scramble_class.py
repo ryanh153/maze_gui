@@ -8,9 +8,10 @@ class WordScramble:
         word = word.lower()
         self.answer = word
 
-        wordList = list(word)
-        random.shuffle(wordList)
-        self.scrambled = ''.join(wordList)
+        word_list = list(word)
+        while list(word) == word_list:
+            random.shuffle(word_list)
+        self.scrambled = ''.join(word_list)
 
     def make_guess(self, guess):
         return self.answer == guess

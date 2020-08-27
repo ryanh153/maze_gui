@@ -20,7 +20,7 @@ def choose_path(curr_tile):
     else:
         text.append(f"There are paths to the {', '.join(map(str, [PRINT_DIR[d] for d in curr_tile.paths]))}.")
 
-    text.append(f"Would you like to move forward ({', '.join(map(str, curr_tile.paths))})?")
+    text.append(f"Would you like to move forward (move {'/'.join(map(str, curr_tile.paths))})?")
     text.append("")
 
     return text
@@ -99,6 +99,7 @@ class Dungeon:
                     text.append("You have one large key.")
                 else:
                     text.append(f"You have {player.large_keys} large keys.")
+                text.append(f"Would you like to try and open it (open {'/'.join(d.direction for d in curr_tile.doors)})?")
 
         return text
 

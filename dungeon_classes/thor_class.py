@@ -75,11 +75,11 @@ class Thor(BaseCreature):
                              "Enter the order you wish to place the tiles or \"exit\" to return to the map.",
                              '']
 
-        text = ["In the room you large confused looking man.",
+        text = ["In the room you see a large confused looking man.",
                 "He wields a large hammer and you can see he has been using it on the walls, but to little avail.",
                 "\"What do you mean!\" He wails pathetically.",
-                "\"I, Thor the mighty, have wandered the maze for hours and can find no way out. All I've found "
-                "besides walls and locked doors lie in this room.",
+                "\"I, Thor the mighty, have wandered the maze for hours and can find no way out. \"All I've found "
+                "besides walls and locked doors lie in this room.\"",
                 "On the floor in front of him lie a row of stone tiles.",
                 "They spell \"%s\", but that doesn't make much sense." % self.game.scrambled,
                 "On the wall above the tiles are a number of square holes. There are the same number of holes as "
@@ -100,9 +100,9 @@ class Thor(BaseCreature):
                          "\"But that's the same thing I did! And I pushed on the tiles ten times harder to make them "
                          "stay in place!\"",
                          "\"It's... it's the order of the tiles\" you say. It's amazing to you that this information "
-                         "needs to be conveyed still.",
-                         "They are supposed to spell \"%s\"." % self.game.answer,
-                         "\"So that's the secret!\" Leaping forward Thor grabs the tiles in order puts them in the "
+                         "needs to be conveyed.",
+                         "\"They are supposed to spell \'%s\'.\"" % self.game.answer,
+                         "\"So that's the secret!\" Leaping forward Thor grabs the tiles in order and puts them in the "
                          "corresponding squares.",
                          "You note that he is still making sure to shove them in at least ten times harder than you "
                          "did, just to be safe.",
@@ -116,6 +116,7 @@ class Thor(BaseCreature):
                          "Shrugging you pocket your new key.",
                          ''])
         else:
+            text.extend(self.current_text)
             text.extend(["The tiles fall back onto the floor, amazingly into the same order the were originally.",
                          ''])
         return solved, text
@@ -129,16 +130,16 @@ class Thor(BaseCreature):
         self.current_text = ["You kneel down next to Thor. \"How's it going buddy?\" you gently inquire.",
                              "\"Not well...\" he reluctantly admits.",
                              "\"I can't figure out what to do with the tiles. And they've grown in number!\"",
-                             "Looking down you see he is correct. Tiles are spread across the floor spelling %s" % self.game.scrambled,
+                             "Looking down you see he is correct. Tiles are spread across the floor spelling %s." % self.game.scrambled,
                              "\"Loki even said he'd help me out.\" Thor mutters. \"But his hint didn't make any "
-                             "sense.\"",
-                             "\"He said I was the answer, but when I spell my name there are still two tiles left!\"",
-                             "\"Perhaps you can help me again?\"",
+                             "sense.",
+                             "He said I was the answer, but when I spell my name there are still two tiles left!",
+                             "Perhaps you can help me again?\"",
                              "Enter the order you wish to place the tiles or \"exit\" to return to the map.",
                              '']
 
-        text = ["You see Thor again. He lies on the ground on his side. He is not looking happy...",
-                '"Do you attempt to help this poor man (solve puzzle)?"',
+        text = ["You see Thor again. He is lying on the ground in the fetal position. He does not look happy...",
+                'Do you attempt to help this poor man (solve puzzle)?',
                 '']
         return text
 
@@ -148,17 +149,18 @@ class Thor(BaseCreature):
         if self.game.make_guess(guess):
             solved = True
             self.encounter2_reward(player)
-            text.extend(["A small panel opens next to you revealing a large golden key."
+            text.extend(["A small panel opens next to you revealing another silver key."
                          "You hastily grab it. Its golden allure is overpowering."
                          ""
-                         "\"Aha!\" He shouts. So Loki said I was the answer, but it was he, my brother, who was the "
-                         "answer.\" "
-                         "\"Such devlish tricks\""
+                         "\"Aha!\" he shouts. \"So Loki said I was the answer but it was he, my brother, who was the "
+                         "answer. "
+                         "Such devlish tricks\" "
                          "Shaking your head you decide not to stay and see if he can figure out how to spell out the "
                          "word again. "
                          ""])
 
         else:
+            text.extend(self.current_text)
             text.extend(["The tiles fall back onto the floor, amazingly into the same order the were originally.",
                          ''])
 

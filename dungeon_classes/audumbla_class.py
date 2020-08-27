@@ -99,23 +99,23 @@ class Audumbla(BaseCreature):
     def begin_encounter1(self):
         """Set text to be displayed at the top on each turn (self.current text) and display setup to game"""
 
-        self.current_text = ["The cows eyes stare into you soul. Their emptiness reflecting your progress thus far.",
+        self.current_text = ["The cow's eyes stare into you soul. Their emptiness reflecting your progress thus far.",
                              "You somehow get the feeling Audumbla believes your progress will remain dreadfully low.",
                              "Hoping to prove this primordial cow, and your parents, wrong you step forward.",
-                             "Enter the order you wish to place the tiles or \"exit\" to return to the map.",
+                             "Enter the word you think she is thinking of or \"exit\" to return to the map.",
                              '']
 
         text = ["In the room you see a mighty cow. On the floor next to it lies a piece of parchment.",
-                "You bend over and pick it up. Written in smooth, dark ink are a strange set of instructions.",
+                "You bend over and pick it up. Written in smooth, dark ink is a strange set of instructions.",
                 "",
                 "Before you lies Audumbla, the most ancient and powerful cow in the 9 realms.",
-                "The cow's mind is deep and troubled. For though it can think of words it cannot speak them.",
+                "The cow's mind is deep and troubled for though it can think of words it cannot speak them.",
                 "If you be brave of heart, help the cow in her plight by speaking the word that she is thinking.",
                 "To do this you must step up to her and speak a word whose length is equal to the number of children "
                 "spawned by Aegir and Ran.",
                 "The cow will lick the block of salt in front of it once for every letter in your word that is also "
                 "in her word, and in the correct position.",
-                "She will then stomp her hoof once for every other letter in your word that is in her word, "
+                "She will then stomp her hoof once for every letter in your word that is in her word, "
                 "but not in the correct position.",
                 "If you please the cow you will be rewarded.",
                 "Enter 'solve puzzle' face this strange challenge.",
@@ -130,18 +130,19 @@ class Audumbla(BaseCreature):
             self.reward(player)
             text.extend(["The cow takes a step forward. You flinch but hold your ground.",
                          "It leans forward and licks your palm.",
-                         "Looking down you see a shiny silver key in your palm.",
+                         "Looking down you see a shiny silver key.",
                          "Success! You have defeated a mute bovine creature in a game of words and wits. Take that "
                          "world!",
                          "",
-                         "The cow bows it's head deeply. Clearly out of respect for you, and not to lick the salt "
+                         "The cow bows it's head deeply. Clearly out of respect for you and not to lick the salt "
                          "block one more time (although it does this as well).",
-                         "It then fades. Seeming to slide out of existance as easily as a primordial knife through "
-                         "primordial cow butter.",
+                         "It then fades, seeming to slide out of existence as easily as a primordial knife through "
+                         "ancient cow butter.",
                          "You look around the room for a few seconds before deciding there is nothing more to be done "
                          "here.",
                          ""])
         else:
+            text.extend(self.current_text)
             if len(guess) != len(self.game.answer):  # Wrong number of letters, can't really play
                 text.extend(["The cow looks at you imploringly. Perhaps you did not remember your norse mythology as "
                              "well as you had though...",
@@ -154,15 +155,16 @@ class Audumbla(BaseCreature):
     def begin_encounter2(self):
         """Set text to be displayed at the top on each turn (self.current text) and display setup to game"""
 
-        self.current_text = ["The cow stands before you again",
-                             "You scan the ground for another set of instructions but see none.",
-                             "Enter the order you wish to place the tiles or \"exit\" to return to the map.",
+        self.current_text = ["\"Let's dance you and I.\" you cackle.",
+                             "You look at the cow, hoping your witty banter has thrown it off guard.",
+                             "The cow blinks 6 times and then simply stares at you.",
+                             "Only mildly unnerved you decide it's time to begin guessing.",
+                             "Enter the word you think she is thinking of or \"exit\" to return to the map.",
                              '']
 
-        text = ["\"Let's dance you and I.\" you cackle.",
-                "You look at the cow, hoping your witty banter has thrown it off guard.",
-                "The cow blinks 6 times and then simply stares at you.",
-                "Only mildly unnerved you decide it's time to begin guessing.",
+        text = ["The cow stands before you again.",
+                "You scan the ground for another set of instructions but see none.",
+                "Do you attempt to meet the cow's challenge again (solve puzzle)?",
                 '']
 
         return text
@@ -179,6 +181,7 @@ class Audumbla(BaseCreature):
                          "After a few seconds you look up to find the cow, unsurprisingly, gone.",
                          ""])
         else:
+            text.extend(self.current_text)
             if len(guess) != len(self.game.answer):  # Wrong number of letters, can't really play
                 text.extend(["The cow looks at you imploringly. Perhaps something about your guess does not allow her "
                              "to give feedback",
