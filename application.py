@@ -1,13 +1,13 @@
 import flask
 
 
-app = flask.Flask(__name__)
+application = flask.Flask(__name__)
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
 def main():
     register_blueprints()
-    app.run(debug=True)
+    application.run(debug=True)
 
 
 def register_blueprints():
@@ -15,9 +15,9 @@ def register_blueprints():
     from views import level_views
     from views import mini_game_views
 
-    app.register_blueprint(main_views.blueprint)
-    app.register_blueprint(level_views.blueprint)
-    app.register_blueprint(mini_game_views.blueprint)
+    application.register_blueprint(main_views.blueprint)
+    application.register_blueprint(level_views.blueprint)
+    application.register_blueprint(mini_game_views.blueprint)
 
 
 # @app.after_request
@@ -31,6 +31,6 @@ def register_blueprints():
 #     return request
 
 
-# main()
-if __name__ == "__main__":
-    main()
+main()
+# if __name__ == "__main__":
+#     main()
