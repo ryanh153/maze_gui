@@ -31,4 +31,5 @@ def add_header(request):
     return request
 
 
-main()
+if __name__ == "__main__":
+    app.run(debug=True)
