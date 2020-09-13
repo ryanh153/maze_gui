@@ -31,5 +31,8 @@ def add_header(request):
     return request
 
 
+# main()
+print(__name__)
 if __name__ == "__main__":
+    register_blueprints()
     app.run(debug=True)
