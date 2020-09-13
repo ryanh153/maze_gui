@@ -20,18 +20,17 @@ def register_blueprints():
     app.register_blueprint(mini_game_views.blueprint)
 
 
-# @app.after_request
-# def add_header(request):
-#     """
-#     Force re-load after any request (forces re-load of map image)
-#     """
-#     request.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-#     request.headers["Pragma"] = "no-cache"
-#     request.headers["Expires"] = "0"
-#     return request
+@app.after_request
+def add_header(request):
+    """
+    Force re-load after any request (forces re-load of map image)
+    """
+    request.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    request.headers["Pragma"] = "no-cache"
+    request.headers["Expires"] = "0"
+    return request
 
 
 # main()
-print(__name__)
 if __name__ == "__main__":
     main()
