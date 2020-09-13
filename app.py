@@ -31,6 +31,6 @@ def add_header(request):
     return request
 
 
-# main()
-if __name__ == "__main__":
-    main()
+main()
+# if __name__ == "__main__":
+#     main()
