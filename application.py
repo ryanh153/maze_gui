@@ -34,6 +34,8 @@ def add_header(request):
 # print('about to call main')
 # main()
 print('above if check')
+register_blueprints()
 if __name__ == "__main__":
     print('about to call main')
-    main()
+    application.run(debug=False)
+    # main()
