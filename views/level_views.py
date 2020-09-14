@@ -14,6 +14,7 @@ def test_level():
 @blueprint.route('/test_level_post', methods=['POST'])
 def test_level_post():
     command = flask.request.form['command'].strip().lower()
+    print(f'level post')
 
     if floor_1.start_mini_game(command):
         tile = floor_1.get_current_tile()

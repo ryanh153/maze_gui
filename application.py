@@ -20,7 +20,6 @@ def add_header(request):
     """
     Force re-load after any request (forces re-load of map image)
     """
-    print("made request")
     request.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     request.headers["Pragma"] = "no-cache"
     request.headers["Expires"] = "0"

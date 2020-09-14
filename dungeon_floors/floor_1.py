@@ -17,6 +17,7 @@ TILE_SIZE = 75
 # These functions are called externally so we make this floor's properties global
 # so they can be called without knowledge of which floor they're being called on
 def make_action(command):
+    print(f'make action\npos: {player.pos}\ndungeon size: {len(dungeon.map)}')
     text = []
     im_path = get_image_path()
     tile = dungeon.map[player.pos[0]][player.pos[1]]
