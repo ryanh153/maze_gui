@@ -31,8 +31,9 @@ def add_header(request):
     request.headers["Expires"] = "0"
     return request
 
-print('about to call main')
-main()
-# if __name__ == "__main__":
-#     print('about to call main')
-#     main()
+# print('about to call main')
+# main()
+print('above if check')
+if __name__ == "__main__":
+    print('about to call main')
+    main()
