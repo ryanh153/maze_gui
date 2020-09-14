@@ -5,11 +5,6 @@ application = flask.Flask(__name__)
 application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
-def main():
-    register_blueprints()
-    application.run(debug=False)
-
-
 def register_blueprints():
     from views import main_views
     from views import level_views
@@ -31,11 +26,9 @@ def add_header(request):
     request.headers["Expires"] = "0"
     return request
 
-# print('about to call main')
-# main()
-print('above if check')
+
+# blueprints must be registered in remote as well so it can't go inside if statement
 register_blueprints()
+
 if __name__ == "__main__":
-    print('about to call main')
     application.run(debug=False)
-    # main()
