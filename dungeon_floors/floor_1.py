@@ -12,12 +12,14 @@ from dungeon_classes.bull_cow_class import BCGame
 from dungeon_classes.audumbla_class import Audumbla
 
 TILE_SIZE = 75
+dungeon, player = None, None
 
 
 # These functions are called externally so we make this floor's properties global
 # so they can be called without knowledge of which floor they're being called on
 def make_action(command):
-    print(f'make action\npos: {player.pos}\ndungeon size: {len(dungeon.map)}')
+    global dungeon, player
+    print(f'make action\npos: {player.pos}\ndungeon: {dungeon}')
     text = []
     im_path = get_image_path()
     tile = dungeon.map[player.pos[0]][player.pos[1]]
@@ -62,6 +64,7 @@ def make_action(command):
 
 
 def interact():
+    global dungeon, player
     return dungeon.interact(player)
 
 
@@ -74,6 +77,7 @@ def start_mini_game(command):
 
 
 def mini_game_guess(player_guess):
+    global dungeon, player
     tile = get_current_tile()
     if tile.has_creature:
         solved, text = tile.creature.interact(player, player_guess)
@@ -84,15 +88,18 @@ def mini_game_guess(player_guess):
 
 
 def mini_game_text():
+    global dungeon, player
     tile = dungeon.map[player.pos[0]][player.pos[1]]
     return tile.creature.current_text
 
 
 def check_win():
+    global dungeon, player
     return player.pos == dungeon.goal_pos_arr[0]
 
 
 def get_current_tile():
+    global dungeon, player
     return dungeon.map[player.pos[0]][player.pos[1]]
 
 
