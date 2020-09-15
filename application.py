@@ -2,6 +2,7 @@ import flask
 
 
 application = flask.Flask(__name__)
+application.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
@@ -30,4 +31,4 @@ def add_header(request):
 register_blueprints()
 
 if __name__ == "__main__":
-    application.run(debug=False)
+    application.run(debug=True)

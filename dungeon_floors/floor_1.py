@@ -12,13 +12,11 @@ from dungeon_classes.bull_cow_class import BCGame
 from dungeon_classes.audumbla_class import Audumbla
 
 TILE_SIZE = 75
-dungeon, player = None, None
 
 
 # These functions are called externally so we make this floor's properties global
 # so they can be called without knowledge of which floor they're being called on
-def make_action(command):
-    global dungeon, player
+def make_action(command, dungeon, player):
     print(f'make action\npos: {player.pos}\ndungeon: {dungeon}')
     text = []
     im_path = get_image_path()
@@ -63,22 +61,20 @@ def make_action(command):
     return text
 
 
-def interact():
-    global dungeon, player
+def interact(dungeon, player):
     return dungeon.interact(player)
 
 
-def start_mini_game(command):
-    tile = get_current_tile()
+def start_mini_game(command, dungeon, player):
+    tile = get_current_tile(dungeon, player)
     if command == 'solve puzzle' and tile.has_creature:
         tile.creature.started_game = True
         return True
     return False
 
 
-def mini_game_guess(player_guess):
-    global dungeon, player
-    tile = get_current_tile()
+def mini_game_guess(player_guess, dungeon, player):
+    tile = get_current_tile(dungeon, player)
     if tile.has_creature:
         solved, text = tile.creature.interact(player, player_guess)
         if solved:
@@ -87,19 +83,16 @@ def mini_game_guess(player_guess):
         return solved, text
 
 
-def mini_game_text():
-    global dungeon, player
+def mini_game_text(dungeon, player):
     tile = dungeon.map[player.pos[0]][player.pos[1]]
     return tile.creature.current_text
 
 
-def check_win():
-    global dungeon, player
+def check_win(dungeon, player):
     return player.pos == dungeon.goal_pos_arr[0]
 
 
-def get_current_tile():
-    global dungeon, player
+def get_current_tile(dungeon, player):
     return dungeon.map[player.pos[0]][player.pos[1]]
 
 
@@ -184,7 +177,6 @@ def get_image_path():
 
 
 def initialize():
-    global dungeon, player
     dungeon_map, player_pos, start_pos_arr, goal_pos_arr, passphrases = make_map()
 
     im_path = get_image_path()
@@ -198,3 +190,5 @@ def initialize():
 
     # Draw the player's starting room
     maze_funcs.draw_current_tile(dungeon.map, player, im_path, TILE_SIZE)
+
+    return dungeon, player
