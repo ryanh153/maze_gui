@@ -1,0 +1,39 @@
+{% extends "shared/_layout.html" %}
+{% block add_title %}
+<title>Test Level</title>
+{% endblock %}
+
+{% block add_css %}
+    <link rel="stylesheet" href="/static/css/_level_layout.css">
+{% endblock %}
+
+{% block main_content %}
+    <div class="level_title">
+        <h1>Spooktoberfest</h1>
+    </div>
+
+    <div class="level_display">
+        <div class="row">
+
+            <div class="col-lg-6 maze_image">
+                <img src="/static/img/curr_level.png">
+            </div>
+
+            <div class="col-lg-6 text_display">
+                <p>
+                    {% for line in text %}
+                        {{ line | safe }}<br>
+                    {% endfor %}
+                </p>
+
+                <form action="{{url_for('level.spooktober_level_post')}}" method="POST">
+                    <input placeholder="Input Command" type="text" name="command" autofocus="autofocus" autocomplete="off">
+                    <button type="submit"></button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}

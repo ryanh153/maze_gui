@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import services.level_service as maze_funcs
 from dungeon_classes.tile_class import Tile
 from dungeon_classes.dungeon_class import Dungeon
@@ -17,8 +15,8 @@ TILE_SIZE = 75
 def make_map():
     # Make the map for floor 1
     player_pos = [5, 0]
-    goalPosArr = [[2, 0]]
-    startPosArr = [player_pos]
+    goal_pos_arr = [[2, 0]]
+    start_pos_arr = [player_pos]
     passphrases = [None]
 
     floor_map = [[Tile() for _ in range(6)] for _ in range(6)]
@@ -86,7 +84,7 @@ def make_map():
     floor_map[2][3].spawn_creature(Audumbla([2, 3], BCGame('yggdrasil')))
     floor_map[1][0].spawn_creature(Audumbla([1, 0], BCGame('nordic')))
 
-    return dungeon_map, player_pos, startPosArr, goalPosArr, passphrases
+    return dungeon_map, player_pos, start_pos_arr, goal_pos_arr, passphrases
 
 
 def initialize():
