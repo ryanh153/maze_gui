@@ -3,8 +3,8 @@ class Player:
 	def __init__(self, position):
 
 		self.pos = position
-		self.small_keys = 0
-		self.large_keys = 0
+		self.small_keys = 100
+		self.large_keys = 100
 		self.thor_wins = 0
 		self.audumbla_wins = 0
 		self.math_game_wins = 0

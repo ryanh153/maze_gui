@@ -26,8 +26,9 @@ GOLD_KEY_ICON = Icon(GOLD_KEY_IMAGE, np.shape(GOLD_KEY_IMAGE)[0], np.shape(GOLD_
 
 # Functions for generating an image from a map
 def make_black_map(dungeon_map, im_path, tile_size):
-    im_size = len(dungeon_map) * tile_size
-    im_array = np.zeros([im_size, im_size, 3], dtype=np.uint8)
+    width, height = len(dungeon_map[0]) * tile_size, len(dungeon_map) * tile_size
+    print(f'width is {width/tile_size} tiles, height is {height/tile_size} tiles')
+    im_array = np.zeros([width, height, 3], dtype=np.uint8)
 
     im = Image.fromarray(im_array)
     im.save(im_path)
