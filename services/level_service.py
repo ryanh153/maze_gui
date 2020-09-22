@@ -1,4 +1,5 @@
 from collections import namedtuple
+from pathlib import Path
 
 import numpy as np
 from PIL import Image
@@ -209,3 +210,89 @@ def move_player(dungeon_map, player_pos, direction):
         return True
     else:
         return False
+
+
+# These functions are called externally so we make this floor's properties global
+# so they can be called without knowledge of which floor they're being called on
+def make_action(command, dungeon, player, tile_size):
+    text = []
+    im_path = get_image_path()
+    tile = dungeon.map[player.pos[0]][player.pos[1]]
+
+    # key pickup
+    if command == 'pickup key' and tile.has_key:
+        player.small_keys += 1
+        tile.has_key = False
+        erase_key_icon(get_image_path(), player.pos, len(dungeon.map), tile_size)
+        text.extend(['You pickup the a small, silver key.',
+                     'It is heavily tarnished but you are confident it will still function.', '', ''])
+
+    # move or open
+    else:
+        command = command.split(' ')
+        if len(command) != 2:
+            text.extend(["Command not understood", '', ''])
+            return text
+
+        cmd = command[0].lower()
+        direction = command[1].lower()
+        if cmd == 'move':
+            old_pos = [p for p in player.pos]  # so we don't save a reference to player.pos
+            if move_player(dungeon.map, player.pos, direction):
+                erase_player(im_path, old_pos, len(dungeon.map), tile_size)
+                if dungeon.map[player.pos[0]][player.pos[1]].special_text:
+                    text.extend(dungeon.map[player.pos[0]][player.pos[1]].special_text)
+                    text.extend(['', ''])
+                else:
+                    text.extend(["You enter a dimly lit room", '', ''])
+            else:
+                text.extend(["There is no path in that direction", '', ''])
+        elif cmd == 'open':
+            text.extend(dungeon.open_door(tile, direction, player))
+            text.extend(['', ''])
+        else:
+            text.extend(["Command not understood", '', ''])
+            return text
+
+    draw_current_tile(dungeon.map, player, im_path, tile_size)
+    return text
+
+
+def interact(dungeon, player):
+    return dungeon.interact(player)
+
+
+def start_mini_game(command, dungeon, player):
+    tile = get_current_tile(dungeon, player)
+    if command == 'solve puzzle' and tile.has_creature:
+        tile.creature.started_game = True
+        return True
+    return False
+
+
+def mini_game_guess(player_guess, dungeon, player, tile_size):
+    tile = get_current_tile(dungeon, player)
+    if tile.has_creature:
+        solved, text = tile.creature.interact(player, player_guess)
+        if solved:
+            tile.despawn_creature()
+            erase_key_icon(get_image_path(), player.pos, len(dungeon.map), tile_size)
+        return solved, text
+
+
+def mini_game_text(dungeon, player):
+    tile = dungeon.map[player.pos[0]][player.pos[1]]
+    return tile.creature.current_text
+
+
+def check_win(dungeon, player):
+    return player.pos == dungeon.goal_pos_arr[0]
+
+
+def get_current_tile(dungeon, player):
+    return dungeon.map[player.pos[0]][player.pos[1]]
+
+
+def get_image_path():
+    # make the map image and designate it as the current level image
+    return Path('static/img/curr_level.png').absolute()
