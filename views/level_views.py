@@ -26,7 +26,7 @@ def test_level_post():
             letter_tiles = [f'static/img/letters/{letter.upper()}.png' for letter in tile.creature.game.scrambled]
             store_data(dungeon, player)
             return render_template('mini_games/word_scramble.html', text=maze_funcs.mini_game_text(dungeon, player),
-                                         letter_tiles=letter_tiles)
+                                   letter_tiles=letter_tiles)
         elif tile.creature.name == 'Audumbla':
             store_data(dungeon, player)
             return render_template('mini_games/bull_cow_game.html', text=maze_funcs.mini_game_text(dungeon, player))
@@ -63,7 +63,7 @@ def spooktober_level_post():
             letter_tiles = [f'static/img/letters/{letter.upper()}.png' for letter in tile.creature.game.scrambled]
             store_data(dungeon, player)
             return render_template('mini_games/word_scramble.html', text=maze_funcs.mini_game_text(dungeon, player),
-                                         letter_tiles=letter_tiles)
+                                   letter_tiles=letter_tiles)
         elif tile.creature.name == 'Audumbla':
             store_data(dungeon, player)
             return render_template('mini_games/bull_cow_game.html', text=maze_funcs.mini_game_text(dungeon, player))

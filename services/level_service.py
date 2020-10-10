@@ -44,10 +44,12 @@ def draw_current_tile(dungeon_map, player, im_path, tile_size):
     if tile.has_key:
         draw_silver_key(im_array, player.pos, maze_dim, tile_size)
     if tile.has_creature:
-        if tile.creature.next_reward(player) == 'small':
+        if tile.creature.reward == 'small':
             draw_silver_key(im_array, player.pos, maze_dim, tile_size)
-        else:
+        elif tile.creature.reward == 'large':
             draw_gold_key(im_array, player.pos, maze_dim, tile_size)
+        else:
+            raise ValueError("Not a valid reward")
 
     im = Image.fromarray(im_array)
     im.save(im_path)
@@ -214,6 +216,7 @@ def move_player(dungeon_map, player_pos, direction):
 # These functions are called externally so we make this floor's properties global
 # so they can be called without knowledge of which floor they're being called on
 def make_action(command, dungeon, player, tile_size):
+    print('action')
     text = []
     im_path = get_image_path()
     tile = dungeon.map[player.pos[0]][player.pos[1]]
@@ -281,7 +284,7 @@ def mini_game_guess(player_guess, dungeon, player, tile_size):
 
 def mini_game_text(dungeon, player):
     tile = dungeon.map[player.pos[0]][player.pos[1]]
-    return tile.creature.current_text
+    return tile.creature.main_text
 
 
 def check_win(dungeon, player):

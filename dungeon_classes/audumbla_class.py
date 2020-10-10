@@ -3,22 +3,65 @@ from dungeon_classes.base_creature_class import BaseCreature
 
 class Audumbla(BaseCreature):
 
-    def __init__(self, pos, game):
-        super(Audumbla, self).__init__(pos, game)
+    def __init__(self, pos, game, pre_text, main_text, post_text, reward):
+        super(Audumbla, self).__init__(pos, game, pre_text, main_text, None, post_text, reward)
         self.name = 'Audumbla'
 
     def interact(self, player, guess=None):
-        # floor 1
-        if player.audumbla_wins == 0:
-            if self.started_game:
-                return self.play_encounter1(player, guess)
+        if not self.started_game:
+            return self.pre_text
+        else:
+            if self.game.make_guess(guess):
+                self.give_reward(player)
+                return True, self.post_text
             else:
-                return self.begin_encounter1()
-        if player.audumbla_wins == 1:
-            if self.started_game:
-                return self.play_encounter2(player, guess)
+                return False, self.main_text + self.incorrect_guess_feedback(guess)
+
+    def incorrect_guess_feedback(self, guess):
+        bulls, cows, text = 0, 0, []
+
+        if len(guess) != len(self.game.answer):  # Wrong number of letters, can't really play
+            text.extend(["The cow looks at you imploringly. Perhaps you did not remember your norse mythology as "
+                         "well as you had though...",
+                         ""])
+        else:
+            for i, char in enumerate(guess):
+                if char in self.game.answer:
+                    if char == self.game.answer[i]:
+                        bulls += 1
+                    else:
+                        cows += 1
+
+            if cows == 0 and bulls == 0:
+                text.extend(["The cow stares at you blankly. Judgement flowing off it in palpable waves."])
             else:
-                return self.begin_encounter2()
+                if bulls == 1:
+                    text.extend(["The cow licks a block of salt in front of it once."])
+                elif bulls > 1:
+                    text.extend(["The cow licks a block of salt in front of it %d times" % bulls])
+
+                if cows == 1:
+                    text.extend(["The cow stomps it front left hoof once"])
+                elif cows > 1:
+                    text.extend(["The cow stomps it front left hoof %d times" % cows])
+
+                text.extend(["You take a step back to process this new information.",
+                             ''])
+
+        return text
+
+    # def interact(self, player, guess=None):
+    #     # floor 1
+    #     if player.audumbla_wins == 0:
+    #         if self.started_game:
+    #             return self.play_encounter1(player, guess)
+    #         else:
+    #             return self.begin_encounter1()
+    #     if player.audumbla_wins == 1:
+    #         if self.started_game:
+    #             return self.play_encounter2(player, guess)
+    #         else:
+    #             return self.begin_encounter2()
 
         # # floor 2
         # elif player.audumbla_wins == 2:
@@ -49,147 +92,119 @@ class Audumbla(BaseCreature):
         # elif player.audumbla_wins == 14:
         # 	self.encounter15(player, autoWin)
 
-        else:
-            raise ValueError("Not coded!")
+        # else:
+        #     raise ValueError("Not coded!")
 
-    def next_reward(self, player):
-        if player.audumbla_wins in [0]:
-            return 'small'
-        elif player.audumbla_wins in [1]:
-            return 'large'
-        else:
-            raise ValueError("There is no next reward!")
+    # def next_reward(self, player):
+    #     if player.audumbla_wins in [0]:
+    #         return 'small'
+    #     elif player.audumbla_wins in [1]:
+    #         return 'large'
+    #     else:
+    #         raise ValueError("There is no next reward!")
 
-    def incorrect_guess_feedback(self, guess):
-        bulls, cows, text = 0, 0, []
+    # def reward(self, player):
+    #     self.started_game = False
+    #     if self.next_reward(player) == 'small':
+    #         player.small_keys += 1
+    #     else:
+    #         player.large_keys += 1
+    #     player.audumbla_wins += 1
 
-        for i, char in enumerate(guess):
-            if char in self.game.answer:
-                if char == self.game.answer[i]:
-                    bulls += 1
-                else:
-                    cows += 1
+    # def begin_encounter1(self):
+    #     """Set text to be displayed at the top on each turn (self.current text) and display setup to game"""
+    #
+    #     self.current_text = ["The cow's eyes stare into you soul. Their emptiness reflecting your progress thus far.",
+    #                          "You somehow get the feeling Audumbla believes your progress will remain dreadfully low.",
+    #                          "Hoping to prove this primordial cow, and your parents, wrong you step forward.",
+    #                          "Enter the word you think she is thinking of or \"exit\" to return to the map.",
+    #                          '']
+    #
+    #     text = ["In the room you see a mighty cow. On the floor next to it lies a piece of parchment.",
+    #             "You bend over and pick it up. Written in smooth, dark ink is a strange set of instructions.",
+    #             "",
+    #             "Before you lies Audumbla, the most ancient and powerful cow in the 9 realms.",
+    #             "The cow's mind is deep and troubled for though it can think of words it cannot speak them.",
+    #             "If you be brave of heart, help the cow in her plight by speaking the word that she is thinking.",
+    #             "To do this you must step up to her and speak a word whose length is equal to the number of children "
+    #             "spawned by Aegir and Ran.",
+    #             "The cow will lick the block of salt in front of it once for every letter in your word that is also "
+    #             "in her word, and in the correct position.",
+    #             "She will then stomp her hoof once for every letter in your word that is in her word, "
+    #             "but not in the correct position.",
+    #             "If you please the cow you will be rewarded.",
+    #             "Enter 'solve puzzle' face this strange challenge.",
+    #             ""]
+    #
+    #     return text
+    #
+    # def play_encounter1(self, player, guess):
+    #     text, solved = [], False
+    #     if self.game.make_guess(guess):
+    #         solved = True
+    #         self.reward(player)
+    #         text.extend(["The cow takes a step forward. You flinch but hold your ground.",
+    #                      "It leans forward and licks your palm.",
+    #                      "Looking down you see a shiny silver key.",
+    #                      "Success! You have defeated a mute bovine creature in a game of words and wits. Take that "
+    #                      "world!",
+    #                      "",
+    #                      "The cow bows it's head deeply. Clearly out of respect for you and not to lick the salt "
+    #                      "block one more time (although it does this as well).",
+    #                      "It then fades, seeming to slide out of existence as easily as a primordial knife through "
+    #                      "ancient cow butter.",
+    #                      "You look around the room for a few seconds before deciding there is nothing more to be done "
+    #                      "here.",
+    #                      ""])
+    #     else:
+    #         text.extend(self.main)
+    #         if len(guess) != len(self.game.answer):  # Wrong number of letters, can't really play
+    #             text.extend(["The cow looks at you imploringly. Perhaps you did not remember your norse mythology as "
+    #                          "well as you had though...",
+    #                          ""])
+    #         else:  # Play a round
+    #             text.extend(self.incorrect_guess_feedback(guess))
+    #
+    #     return solved, text
 
-        if cows == 0 and bulls == 0:
-            text.extend(["The cow stares at you blankly. Judgement flowing off it in palpable waves."])
-        else:
-            if bulls == 1:
-                text.extend(["The cow licks a block of salt in front of it once."])
-            elif bulls > 1:
-                text.extend(["The cow licks a block of salt in front of it %d times" % bulls])
-
-            if cows == 1:
-                text.extend(["The cow stomps it front left hoof once"])
-            elif cows > 1:
-                text.extend(["The cow stomps it front left hoof %d times" % cows])
-
-            text.extend(["You take a step back to process this new information.",
-                         ''])
-
-        return text
-
-    def reward(self, player):
-        self.started_game = False
-        if self.next_reward(player) == 'small':
-            player.small_keys += 1
-        else:
-            player.large_keys += 1
-        player.audumbla_wins += 1
-
-    def begin_encounter1(self):
-        """Set text to be displayed at the top on each turn (self.current text) and display setup to game"""
-
-        self.current_text = ["The cow's eyes stare into you soul. Their emptiness reflecting your progress thus far.",
-                             "You somehow get the feeling Audumbla believes your progress will remain dreadfully low.",
-                             "Hoping to prove this primordial cow, and your parents, wrong you step forward.",
-                             "Enter the word you think she is thinking of or \"exit\" to return to the map.",
-                             '']
-
-        text = ["In the room you see a mighty cow. On the floor next to it lies a piece of parchment.",
-                "You bend over and pick it up. Written in smooth, dark ink is a strange set of instructions.",
-                "",
-                "Before you lies Audumbla, the most ancient and powerful cow in the 9 realms.",
-                "The cow's mind is deep and troubled for though it can think of words it cannot speak them.",
-                "If you be brave of heart, help the cow in her plight by speaking the word that she is thinking.",
-                "To do this you must step up to her and speak a word whose length is equal to the number of children "
-                "spawned by Aegir and Ran.",
-                "The cow will lick the block of salt in front of it once for every letter in your word that is also "
-                "in her word, and in the correct position.",
-                "She will then stomp her hoof once for every letter in your word that is in her word, "
-                "but not in the correct position.",
-                "If you please the cow you will be rewarded.",
-                "Enter 'solve puzzle' face this strange challenge.",
-                ""]
-
-        return text
-
-    def play_encounter1(self, player, guess):
-        text, solved = [], False
-        if self.game.make_guess(guess):
-            solved = True
-            self.reward(player)
-            text.extend(["The cow takes a step forward. You flinch but hold your ground.",
-                         "It leans forward and licks your palm.",
-                         "Looking down you see a shiny silver key.",
-                         "Success! You have defeated a mute bovine creature in a game of words and wits. Take that "
-                         "world!",
-                         "",
-                         "The cow bows it's head deeply. Clearly out of respect for you and not to lick the salt "
-                         "block one more time (although it does this as well).",
-                         "It then fades, seeming to slide out of existence as easily as a primordial knife through "
-                         "ancient cow butter.",
-                         "You look around the room for a few seconds before deciding there is nothing more to be done "
-                         "here.",
-                         ""])
-        else:
-            text.extend(self.current_text)
-            if len(guess) != len(self.game.answer):  # Wrong number of letters, can't really play
-                text.extend(["The cow looks at you imploringly. Perhaps you did not remember your norse mythology as "
-                             "well as you had though...",
-                             ""])
-            else:  # Play a round
-                text.extend(self.incorrect_guess_feedback(guess))
-
-        return solved, text
-
-    def begin_encounter2(self):
-        """Set text to be displayed at the top on each turn (self.current text) and display setup to game"""
-
-        self.current_text = ["\"Let's dance you and I.\" you cackle.",
-                             "You look at the cow, hoping your witty banter has thrown it off guard.",
-                             "The cow blinks 6 times and then simply stares at you.",
-                             "Only mildly unnerved you decide it's time to begin guessing.",
-                             "Enter the word you think she is thinking of or \"exit\" to return to the map.",
-                             '']
-
-        text = ["The cow stands before you again.",
-                "You scan the ground for another set of instructions but see none.",
-                "Do you attempt to meet the cow's challenge again (solve puzzle)?",
-                '']
-
-        return text
-
-    def play_encounter2(self, player, guess):
-        text, solved = [], False
-        if self.game.make_guess(guess):
-            solved = True
-            self.reward(player)
-            text.extend(["The cow takes a step forward. This time you stand your ground, cool and confident.",
-                         "The cow leans forward and licks your palm.",
-                         "Looking down you see a giant golden key in your hand. What could this be for?",
-                         "",
-                         "After a few seconds you look up to find the cow, unsurprisingly, gone.",
-                         ""])
-        else:
-            text.extend(self.current_text)
-            if len(guess) != len(self.game.answer):  # Wrong number of letters, can't really play
-                text.extend(["The cow looks at you imploringly. Perhaps something about your guess does not allow her "
-                             "to give feedback",
-                             ""])
-            else:  # Play a round
-                text.extend(self.incorrect_guess_feedback(guess))
-
-        return solved, text
+    # def begin_encounter2(self):
+    #     """Set text to be displayed at the top on each turn (self.current text) and display setup to game"""
+    #
+    #     self.current_text = ["\"Let's dance you and I.\" you cackle.",
+    #                          "You look at the cow, hoping your witty banter has thrown it off guard.",
+    #                          "The cow blinks 6 times and then simply stares at you.",
+    #                          "Only mildly unnerved you decide it's time to begin guessing.",
+    #                          "Enter the word you think she is thinking of or \"exit\" to return to the map.",
+    #                          '']
+    #
+    #     text = ["The cow stands before you again.",
+    #             "You scan the ground for another set of instructions but see none.",
+    #             "Do you attempt to meet the cow's challenge again (solve puzzle)?",
+    #             '']
+    #
+    #     return text
+    #
+    # def play_encounter2(self, player, guess):
+    #     text, solved = [], False
+    #     if self.game.make_guess(guess):
+    #         solved = True
+    #         self.reward(player)
+    #         text.extend(["The cow takes a step forward. This time you stand your ground, cool and confident.",
+    #                      "The cow leans forward and licks your palm.",
+    #                      "Looking down you see a giant golden key in your hand. What could this be for?",
+    #                      "",
+    #                      "After a few seconds you look up to find the cow, unsurprisingly, gone.",
+    #                      ""])
+    #     else:
+    #         text.extend(self.current_text)
+    #         if len(guess) != len(self.game.answer):  # Wrong number of letters, can't really play
+    #             text.extend(["The cow looks at you imploringly. Perhaps something about your guess does not allow her "
+    #                          "to give feedback",
+    #                          ""])
+    #         else:  # Play a round
+    #             text.extend(self.incorrect_guess_feedback(guess))
+    #
+    #     return solved, text
 
     # def encounter2(self, player, autoWin):
     # 	if not autoWin:
