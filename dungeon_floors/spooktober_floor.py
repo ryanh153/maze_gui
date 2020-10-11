@@ -45,6 +45,52 @@ def make_map():
         floor_map[r][c].spawn_door(d, 'g')
     maze_funcs.make_doors_2_sided(floor_map)
 
+    # Example doors
+    wood = [(6, 8, 's'), (5, 8, 'w')]
+    for r, c, d in wood:
+        floor_map[r][c].spawn_door(d, 'w')
+
+    # 2 sided doors
+    maze_funcs.make_doors_2_sided(floor_map)
+
+    # Creatures
+
+    # Example thor
+    pos = [6, 8]
+    game = WordScramble('example')
+    reward = 'small'
+    pre_text = ["Would you like to play a game (solve puzzle)?", '']
+    main_text = ["Enter the letters in the correct order", '']
+    fail_text = ["Incorrect", '']
+    post_text = ["Correct! You are rewarded with a silver key!", '']
+    floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, pre_text, main_text, fail_text, post_text, reward))
+
+    pos = [6, 6]
+    game = WordScramble('maniacally')
+    reward = 'small'
+    pre_text = ["Would you like to play a game (solve puzzle)?", '']
+    main_text = ["Enter the letters in the correct order", '']
+    fail_text = ["Incorrect", '']
+    post_text = ["Correct! You are rewarded with a silver key!", '']
+    floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, pre_text, main_text, fail_text, post_text, reward))
+
+    # Example BC
+    pos = [5, 8]
+    game = BCGame('test')
+    reward = 'small'
+    pre_text = ['Would you like to play a game (solve puzzle)', '']
+    main_text = ['Guess the word the cow is thinking of. It has 4 letters', '']
+    post_text = ["Correct! You are rewarded with a silver key!", '']
+    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, pre_text, main_text, post_text, reward))
+
+    pos = [4, 6]
+    game = BCGame('spectral')
+    reward = 'small'
+    pre_text = ['Would you like to play a game (solve puzzle)', '']
+    main_text = ['Guess the word the cow is thinking of. It has 8 letters', '']
+    post_text = ["Correct! You are rewarded with a silver key!", '']
+    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, pre_text, main_text, post_text, reward))
+
     dungeon_map = [floor_map]
 
     return dungeon_map, player_pos, start_pos_arr, goal_pos_arr, passphrases

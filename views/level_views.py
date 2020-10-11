@@ -24,6 +24,7 @@ def test_level_post():
         tile = maze_funcs.get_current_tile(dungeon, player)
         if tile.creature.name == 'Thor':
             letter_tiles = [f'static/img/letters/{letter.upper()}.png' for letter in tile.creature.game.scrambled]
+            print(f'tiles: {letter_tiles}')
             store_data(dungeon, player)
             return render_template('mini_games/word_scramble.html', text=maze_funcs.mini_game_text(dungeon, player),
                                    letter_tiles=letter_tiles)
