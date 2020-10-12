@@ -19,4 +19,4 @@ class BaseCreature:
 		elif self.reward == 'large':
 			player.large_keys += 1
 		else:
-			raise ValueError("Not a valid reward")
+			print("You get... nothing!")

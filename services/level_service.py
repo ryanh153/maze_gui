@@ -49,7 +49,7 @@ def draw_current_tile(dungeon_map, player, im_path, tile_size):
         elif tile.creature.reward == 'large':
             draw_gold_key(im_array, player.pos, maze_dim, tile_size)
         else:
-            raise ValueError("Not a valid reward")
+            print("Drawing tile with puzzle but no reward")
 
     im = Image.fromarray(im_array)
     im.save(im_path)
@@ -226,13 +226,13 @@ def make_action(command, dungeon, player, tile_size):
         tile.has_key = False
         erase_key_icon(get_image_path(), player.pos, len(dungeon.map), tile_size)
         text.extend(['You pickup the a small, silver key.',
-                     'It is heavily tarnished but you are confident it will still function.', '', ''])
+                     'It is heavily tarnished but you are confident it will still function.', ''])
 
     # move or open
     else:
         command = command.split(' ')
         if len(command) != 2:
-            text.extend(["Command not understood", '', ''])
+            text.extend(["Command not understood", ''])
             return text
 
         cmd = command[0].lower()
@@ -243,16 +243,16 @@ def make_action(command, dungeon, player, tile_size):
                 erase_player(im_path, old_pos, len(dungeon.map), tile_size)
                 if dungeon.map[player.pos[0]][player.pos[1]].special_text:
                     text.extend(dungeon.map[player.pos[0]][player.pos[1]].special_text)
-                    text.extend(['', ''])
+                    text.extend([''])
                 else:
-                    text.extend(["You enter a dimly lit room", '', ''])
+                    text.extend(["You enter a dimly lit room", ''])
             else:
-                text.extend(["There is no path in that direction", '', ''])
+                text.extend(["There is no path in that direction", ''])
         elif cmd == 'open':
             text.extend(dungeon.open_door(tile, direction, player))
-            text.extend(['', ''])
+            text.extend([''])
         else:
-            text.extend(["Command not understood", '', ''])
+            text.extend(["Command not understood", ''])
             return text
 
     draw_current_tile(dungeon.map, player, im_path, tile_size)

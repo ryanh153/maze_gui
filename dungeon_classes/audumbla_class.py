@@ -21,8 +21,7 @@ class Audumbla(BaseCreature):
         bulls, cows, text = 0, 0, []
 
         if len(guess) != len(self.game.answer):  # Wrong number of letters, can't really play
-            text.extend(["The cow looks at you imploringly. Perhaps you did not remember your norse mythology as "
-                         "well as you had though...",
+            text.extend(["The cow looks at you imploringly. Perhaps you should choose your words more carefully.",
                          ""])
         else:
             for i, char in enumerate(guess):
