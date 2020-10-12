@@ -19,4 +19,5 @@ class BaseCreature:
 		elif self.reward == 'large':
 			player.large_keys += 1
 		else:
-			print("You get... nothing!")
+			player.letter_tiles.append(self.reward)
+			print(f'Rewarded: Player has {player.letter_tiles}')

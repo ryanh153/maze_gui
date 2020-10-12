@@ -220,6 +220,15 @@ def make_action(command, dungeon, player, tile_size):
     im_path = get_image_path()
     tile = dungeon.map[player.pos[0]][player.pos[1]]
 
+    # check for spooktober end
+    print(player.letter_tiles)
+    print(player.pos)
+    print(command)
+    print()
+    if len(player.letter_tiles) == 5 and player.pos == [1, 7] and command == "quoth":
+        player.pos = [1, 8] # TODO: Use goal pos from dungeon?
+        return
+
     # key pickup
     if command == 'pickup key' and tile.has_key:
         player.small_keys += 1

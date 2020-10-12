@@ -28,7 +28,7 @@ def make_map():
              ['es', 'ew', 'w', 's', 'es', 'nw', 'e', 'ew', 'ew', 'new', 'nw', 'es', 'w', 'es', 'w', 'ns'],
              ['ne', 'esw', 'w', 'ns', 'ns', '', '', '', '', '', '', 'nes', 'ew', 'nsw', 'es', 'nw'],
              ['', 'ne', 'sw', 'ns', 'ne', 'w', '', '', '', '', 'e', 'nw', 's', 'ns', 'n', ''],
-             ['', '', 'ne', 'nw', 's', 's', 's', 'sw', 'e', 'e', 'ew', 'ew', 'nesw', 'nw', '', ''],
+             ['', '', 'ne', 'nw', 's', 's', 's', 's', '', 'e', 'ew', 'ew', 'nesw', 'nw', '', ''],
              ['', '', '', 'n', 'ne', 'nw', 'ne', 'nw', 'e', 'ew', 'ew', 'w', 'n', '', '', '']]
     paths.reverse()  # since we index from bottom
 
@@ -46,7 +46,13 @@ def make_map():
     maze_funcs.make_doors_2_sided(floor_map)
 
     # add special text
-
+    floor_map[1][7].special_text = ["Upon entereing the room you are immediately enraptured by the effulgent door on "
+                                    "the far side of the room. It fills and entire wall and is made of purely of "
+                                    "ivory and gold with the exception of an ebony raven at its center. Above the "
+                                    "raven in the same flowing script as on the tiles you have collected are the "
+                                    "words. What is my name? Below the raven are five empty slots in which you may "
+                                    "place tiles. If you have all the tiles you may enter the order in which you wish "
+                                    "to place them. Otherwise your journey is not over yet.", '']
     # Creatures
 
     # set up common text fields
@@ -134,8 +140,12 @@ def make_map():
     pos = [1, 9]
     solution = next(solutions)
     game = WordScramble(solution)
-    reward = None
-    scramble_post_text6 = scramble_post_template[0:-3] + ["You receive no reward. Disappointing, but you soldier on."] + \
+    reward = 'H'
+    scramble_post_text6 = scramble_post_template[0:-3] + [f"Looking down you see not another key, but another tile, "
+                                                          f"this one made of ivory gold. Inscribed on it in a flowing "
+                                                          f"script is the letter '{reward}'. You pocket the tile. "
+                                                          f"Certainly "
+                                                          f"it's purpose will be made clear soon.", ''] + \
                           scramble_post_template[-2::]
     floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text, scramble_main_text, scramble_fail_text,
                                                   scramble_post_text6, reward))
@@ -152,8 +162,12 @@ def make_map():
     pos = [7, 2]
     solution = next(solutions)
     game = WordScramble(solution)
-    reward = None
-    scramble_post_text8 = scramble_post_template[0:-3] + ["On the ground in front of you is... nothing."] + \
+    reward = 'Q'
+    scramble_post_text8 = scramble_post_template[0:-3] + [f"Looking down you see not another key, but another tile, "
+                                                          f"this one made of ivory gold. Inscribed on it in a flowing "
+                                                          f"script is the letter '{reward}'. You pocket the tile. "
+                                                          f"Certainly "
+                                                          f"it's purpose will be made clear soon.", ''] + \
                           scramble_post_template[-2::]
     floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text, scramble_main_text, scramble_fail_text,
                                                   scramble_post_text8, reward))
@@ -170,10 +184,14 @@ def make_map():
     pos = [8, 12]
     solution = next(solutions)
     game = BCGame(solution)
-    reward = None
+    reward = 'U'
     bc_main_text = [f"Guess the word the cow is thinking of or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
-    bc_post_text1 = bc_post_template[::-2] + ["Looking down you see... nothing. You must have imagined it.", '']
+    bc_post_text1 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
+                                              f"this one made of ivory gold. Inscribed on it in a flowing "
+                                              f"script is the letter '{reward}'. You pocket the tile. "
+                                              f"Certainly "
+                                              f"it's purpose will be made clear soon.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text1, reward))
 
     pos = [7, 15]
@@ -188,10 +206,14 @@ def make_map():
     pos = [4, 12]
     solution = next(solutions)
     game = BCGame(solution)
-    reward = None
+    reward = 'T'
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
-    bc_post_text3 = bc_post_template[::-2] + ["Looking down you see... nothing. You must have imagined it.", '']
+    bc_post_text3 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
+                                              f"this one made of ivory gold. Inscribed on it in a flowing "
+                                              f"script is the letter '{reward}'. You pocket the tile. "
+                                              f"Certainly "
+                                              f"it's purpose will be made clear soon.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text3, reward))
 
     pos = [0, 8]
@@ -206,10 +228,14 @@ def make_map():
     pos = [8, 6]
     solution = next(solutions)
     game = BCGame(solution)
-    reward = None
+    reward = 'O'
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
-    bc_post_text5 = bc_post_template[::-2] + ["Looking down you see... nothing. You must have imagined it.", '']
+    bc_post_text5 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
+                                              f"this one made of ivory gold. Inscribed on it in a flowing "
+                                              f"script is the letter '{reward}'. You pocket the tile. "
+                                              f"Certainly "
+                                              f"it's purpose will be made clear soon.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text5, reward))
 
     pos = [6, 2]
