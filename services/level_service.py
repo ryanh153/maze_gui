@@ -23,6 +23,9 @@ SILVER_KEY_ICON = Icon(SILVER_KEY_IMAGE, np.shape(SILVER_KEY_IMAGE)[0], np.shape
 GOLD_KEY_IMAGE = np.array(Image.open('static/img/gold_key.png'))[:, :, 0:3]
 GOLD_KEY_ICON = Icon(GOLD_KEY_IMAGE, np.shape(GOLD_KEY_IMAGE)[0], np.shape(GOLD_KEY_IMAGE)[1], 1)
 
+REWARD_TILE_IMAGE = np.array(Image.open('static/img/reward_tile.png'))[:, :, 0:3]
+REWARD_TILE_ICON = Icon(REWARD_TILE_IMAGE, np.shape(REWARD_TILE_IMAGE)[0], np.shape(REWARD_TILE_IMAGE)[1], 2)
+
 
 # Functions for generating an image from a map
 def make_black_map(dungeon_map, im_path, tile_size):
@@ -48,8 +51,10 @@ def draw_current_tile(dungeon_map, player, im_path, tile_size):
             draw_silver_key(im_array, player.pos, maze_dim, tile_size)
         elif tile.creature.reward == 'large':
             draw_gold_key(im_array, player.pos, maze_dim, tile_size)
+        elif len(tile.creature.reward) == 1 and isinstance(tile.creature.reward, str):
+            draw_reward_tile(im_array, player.pos, maze_dim, tile_size)
         else:
-            print("Drawing tile with puzzle but no reward")
+            raise ValueError("Drawing tile with puzzle but no reward")
 
     im = Image.fromarray(im_array)
     im.save(im_path)
@@ -113,9 +118,18 @@ def draw_gold_key(im_array, pos, maze_dim, tile_size):
     top_left = get_top_left(maze_dim, tile_size, pos)
     im_array[top_left[0] + GOLD_KEY_ICON.padding:
              top_left[0] + GOLD_KEY_ICON.padding + GOLD_KEY_ICON.height,
-    top_left[1] + tile_size - GOLD_KEY_ICON.width - GOLD_KEY_ICON.padding:
+             top_left[1] + tile_size - GOLD_KEY_ICON.width - GOLD_KEY_ICON.padding:
              top_left[1] + tile_size - GOLD_KEY_ICON.padding,
              :] = GOLD_KEY_ICON.image
+
+
+def draw_reward_tile(im_array, pos, maze_dim, tile_size):
+    top_left = get_top_left(maze_dim, tile_size, pos)
+    im_array[top_left[0] + REWARD_TILE_ICON.padding:
+             top_left[0] + REWARD_TILE_ICON.padding + REWARD_TILE_ICON.height,
+             top_left[1] + tile_size - REWARD_TILE_ICON.width - REWARD_TILE_ICON.padding:
+             top_left[1] + tile_size - REWARD_TILE_ICON.padding,
+             :] = REWARD_TILE_ICON.image
 
 
 def erase_key_icon(im_path, pos, maze_dim, tile_size):
@@ -123,7 +137,7 @@ def erase_key_icon(im_path, pos, maze_dim, tile_size):
     top_left = get_top_left(maze_dim, tile_size, pos)
     im_array[top_left[0] + SILVER_KEY_ICON.padding:
              top_left[0] + SILVER_KEY_ICON.padding + SILVER_KEY_ICON.height,
-    top_left[1] + tile_size - SILVER_KEY_ICON.width - SILVER_KEY_ICON.padding:
+             top_left[1] + tile_size - SILVER_KEY_ICON.width - SILVER_KEY_ICON.padding:
              top_left[1] + tile_size - SILVER_KEY_ICON.padding,
              :] = BLACK
 

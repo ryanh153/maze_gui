@@ -46,7 +46,7 @@ def make_map():
     maze_funcs.make_doors_2_sided(floor_map)
 
     # add special text
-    floor_map[1][7].special_text = ["Upon entereing the room you are immediately enraptured by the effulgent door on "
+    floor_map[1][7].special_text = ["Upon entering the room you are immediately enraptured by the effulgent door on "
                                     "the far side of the room. It fills and entire wall and is made of purely of "
                                     "ivory and gold with the exception of an ebony raven at its center. Above the "
                                     "raven in the same flowing script as on the tiles you have collected are the "

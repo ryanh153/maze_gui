@@ -54,6 +54,10 @@ class Dungeon:
         currTile = self.map[player.pos[0]][player.pos[1]]
         usedStairs = False
 
+        if player.pos == [7, 6]:
+            text.extend([f"You have tiles with the letters {', '.join(player.letter_tiles[:-1])} and "
+                         f"{player.letter_tiles[-1]} inscribed on them", ""])
+
         if currTile.has_creature:
             text.extend(creature_interact(currTile, player))
 
