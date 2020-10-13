@@ -80,10 +80,12 @@ def make_map():
                         'As its tongue pulls away you you feel a familiar shape in your palm.',
                         '']
 
-    solutions = ['ghastly', 'morbid', 'odious', 'ebony', 'spectral', 'ominous', 'debauch', 'atrocity', 'effulgent',
-                 'impunity', 'phantasm', 'sepulchre', 'immolation', 'plutonian', 'malodorous', 'pestilence',
-                 'sagacious', 'masquerade']
-    # solutions = ['one', 'two',]
+    # solutions = ['ghastly', 'morbid', 'odious', 'ebony', 'spectral', 'ominous', 'debauch', 'atrocity', 'effulgent',
+    #              'impunity', 'phantasm', 'sepulchre', 'immolation', 'plutonian', 'malodorous', 'pestilence',
+    #              'sagacious', 'masquerade']
+    solutions = ['puzzle', 'exercise', 'milkweed', 'chocolate', 'salmon', 'stoneface', 'rexford', 'shenandoah',
+                 'kindergarten', 'fairy', 'track', 'wine', 'candle', 'doodle', 'quilt', 'massage', 'teaching',
+                 'mountain']
     solutions = iter(solutions)
 
     pos = [6, 6]
