@@ -31,6 +31,7 @@ def word_scramble_post():
     else:
         solved, text = maze_funcs.mini_game_guess(player_guess, dungeon, player, floor_1.TILE_SIZE)
 
+    print(f'mini game input was:\n{player_guess}\n')
     print(f'mini text is:\n{text}\n')
 
     if solved:
