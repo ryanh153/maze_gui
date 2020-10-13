@@ -31,4 +31,4 @@ def add_header(request):
 register_blueprints()
 
 if __name__ == "__main__":
-    application.run(debug=True)
+    application.run(debug=False)
