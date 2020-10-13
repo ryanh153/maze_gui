@@ -54,9 +54,14 @@ class Dungeon:
         currTile = self.map[player.pos[0]][player.pos[1]]
         usedStairs = False
 
-        if player.pos == [7, 6]:
-            text.extend([f"You have tiles with the letters {', '.join(player.letter_tiles[:-1])} and "
-                         f"{player.letter_tiles[-1]} inscribed on them", ""])
+        if player.pos == [1, 7]:
+            if len(player.letter_tiles) > 2:
+                text.extend([f"You have tiles with the letters {', '.join(player.letter_tiles[:-1])} and "
+                             f"{player.letter_tiles[-1]} inscribed on them.", ""])
+            elif (len(player.letter_tiles)) == 1:
+                text.extend([f"You have only the {player.letter_tiles[0]} tile.", ""])
+            else:
+                text.exten(["You have no tiles.", ""])
 
         if currTile.has_creature:
             text.extend(creature_interact(currTile, player))
@@ -103,7 +108,8 @@ class Dungeon:
                     text.append("You have one large key.")
                 else:
                     text.append(f"You have {player.large_keys} large keys.")
-                text.append(f"Would you like to try and open it (open {'/'.join(d.direction for d in curr_tile.doors)})?")
+                text.append(
+                    f"Would you like to try and open it (open {'/'.join(d.direction for d in curr_tile.doors)})?")
 
         return text
 
