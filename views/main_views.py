@@ -28,3 +28,8 @@ def code_entered():
 @blueprint.route('/congratulations')
 def congratulations():
     return flask.render_template('main/congratulations.html')
+
+
+@blueprint.route('/spooktober_end')
+def spooktober_end():
+    return flask.render_template('main/spooktober_end.html')

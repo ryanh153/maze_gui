@@ -46,8 +46,9 @@ def make_map():
     maze_funcs.make_doors_2_sided(floor_map)
 
     # add special text
-    floor_map[1][7].special_text = ["Upon entering the room you are immediately enraptured by the effulgent door on "
-                                    "the far side of the room. It fills and entire wall and is made of purely of "
+    floor_map[1][7].special_text = ["Upon entering the room you are immediately enraptured by the ominously effulgent "
+                                    "door on "
+                                    "the far side of the room. It fills an entire wall and is made of only of "
                                     "ivory and gold with the exception of an ebony raven at its center. Above the "
                                     "raven in the same flowing script as on the tiles you have collected are the "
                                     "words. What is my name? Below the raven are five empty slots in which you may "
@@ -56,8 +57,9 @@ def make_map():
     # Creatures
 
     # set up common text fields
-    scramble_pre_text = ["On the floor you see a set of jumbled tiles.",
-                         "Perhaps if you put them into the proper order there will be a reward.",
+    scramble_pre_text = ["On the floor you see a set of jumbled tiles. On the far wall are a number of slots into "
+                         "which the tiles fit.",
+                         "Perhaps if you insert them in the proper order there will be a reward.",
                          "Would you like to try (solve puzzle)?", '']
     scramble_main_text = ["Enter the letters in the correct order or enter 'exit' to stop playing.", '']
     scramble_fail_text = ["The tiles spontaneously throw themselves into the same jumbled pile they were in when you "
@@ -93,7 +95,8 @@ def make_map():
                           "make "
                           "up the far wall have even fallen out and lie strewn across the floor. Upon "
                           "closer inspection you realize that some of these bricks are not the normal blank "
-                          "masonry but contain the faint outline of a letter. Maybe if you place them back in the "
+                          "masonry that makes up the dungeon but contain the faint outline of a letter. Maybe if you "
+                          "place them back in the "
                           "wall in the correct order they will give you some clue as to the origin of your current "
                           "confinement (solve puzzle).", '']
     scramble_post_text1 = scramble_post_template[0:-3] + ["On the ground in front of you is a small silver key."] + \
@@ -114,9 +117,14 @@ def make_map():
     solution = next(solutions)
     game = WordScramble(solution)
     reward = 'large'
+
+    scramble_pre_text3 = ["As you enter the room you feel inundated with waves of unbridled rage that come from all "
+                          "sides. The walls themselves pulse with tempestuous fury and a dark red glow hangs in the "
+                          "air. Through this you see a set of tiles on the floor and a familiar set of holes in the "
+                          "far wall. Do you attempt to use them despite the dark presence (solve puzzle)?", '']
     scramble_post_text3 = scramble_post_template[0:-3] + ["On the ground in front of you is a glittering golden key."] + \
                           scramble_post_template[-2::]
-    floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text, scramble_main_text, scramble_fail_text,
+    floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text3, scramble_main_text, scramble_fail_text,
                                                   scramble_post_text3, reward))
 
     pos = [2, 14]
@@ -132,9 +140,13 @@ def make_map():
     solution = next(solutions)
     game = WordScramble(solution)
     reward = 'small'
+    scramble_pre_text5 = ['As you enter this room you are aware of an otherworldly and altogether unholy presence. '
+                          'Looking around you see nothing of form or substance but are sure that suspended in the '
+                          'surrounding ether is an intelligence not of this world. Looking down you see a set '
+                          'of jumbled tiles. Do you attempt to use them (solve puzzle)?', '']
     scramble_post_text5 = scramble_post_template[0:-3] + ["On the ground in front of you is a small silver key."] + \
                           scramble_post_template[-2::]
-    floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text, scramble_main_text, scramble_fail_text,
+    floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text5, scramble_main_text, scramble_fail_text,
                                                   scramble_post_text5, reward))
 
     pos = [1, 9]
@@ -154,9 +166,22 @@ def make_map():
     solution = next(solutions)
     game = WordScramble(solution)
     reward = 'small'
+    scramble_pre_text7 = ['Your senses are immediately assailed by a cataclysm of conflicting smells that induce a '
+                          'singularly unpleasant sensation in your stomach. Looking around you see why. The floor and '
+                          'walls '
+                          'are smeared with the wretched remnants of a thousand days of unrestrained revelry. '
+                          'Shattered '
+                          'bottles are piled in the corners and enough of their contents has been spilled on the '
+                          'floor to more than fill the few unbroken vessels that remain on a squat three legged table '
+                          'that stands in the room\'s center. Mixed with this is the end result of the the '
+                          'consumptions of such copious amounts of drink and food. You try not to think about its '
+                          'journey to its current state. Next to '
+                          'the bottles though you see the familiar shape '
+                          'of stone tiles and know that you will likely have to stomach the room and it\'s odorous '
+                          'contents long enough to place them. Do you do this now (solve puzzle)?']
     scramble_post_text7 = scramble_post_template[0:-3] + ["On the ground in front of you is a small silver key."] + \
                           scramble_post_template[-2::]
-    floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text, scramble_main_text, scramble_fail_text,
+    floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text7, scramble_main_text, scramble_fail_text,
                                                   scramble_post_text7, reward))
 
     pos = [7, 2]
@@ -176,9 +201,14 @@ def make_map():
     solution = next(solutions)
     game = WordScramble(solution)
     reward = 'small'
+    scramble_pre_text9 = ['As you enter the room you notice a soft glow that comes from the air itself. You can\'t '
+                          'put your finger on the source but it throws the roughly hewn walls into a sharper relief. '
+                          'In these walls you see a series of square holes. Knowing what you will fine you cast your '
+                          'eyes downward and they immediately seize upon a small set of tiles. Do you try and place '
+                          'them in the holes (solve puzzle)? Maybe the additional light will make things easier.']
     scramble_post_text9 = scramble_post_template[0:-3] + ["On the ground in front of you is a small silver key."] + \
                           scramble_post_template[-2::]
-    floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text, scramble_main_text, scramble_fail_text,
+    floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text9, scramble_main_text, scramble_fail_text,
                                                   scramble_post_text9, reward))
 
     pos = [8, 12]
@@ -253,7 +283,7 @@ def make_map():
     reward = 'large'
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
-    bc_post_text7 = bc_post_template[::-2] + ["Looking down you see a glittering golen key.", '']
+    bc_post_text7 = bc_post_template[::-2] + ["Looking down you see a glittering golden key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text7, reward))
 
     pos = [3, 2]

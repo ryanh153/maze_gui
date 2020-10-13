@@ -78,7 +78,7 @@ def spooktober_level_post():
     text = maze_funcs.make_action(command, dungeon, player, spooktober_floor.TILE_SIZE)
     if maze_funcs.check_win(dungeon, player):
         store_data(dungeon, player)
-        return render_template('main/congratulations.html')
+        return render_template('main/spooktober_end.html')
 
     text.extend(maze_funcs.interact(dungeon, player))
     store_data(dungeon, player)
