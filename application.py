@@ -1,9 +1,11 @@
-import flask
+from flask import Flask, session
+from flask_session import Session
 
 
-application = flask.Flask(__name__)
-application.secret_key = b'_6#y2L"F4Q8z\n\xec]/'
+application = Flask(__name__)
 application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+application.config['SESSION_TYPE'] = 'filesystem'
+Session(application)
 
 
 def register_blueprints():

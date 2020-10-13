@@ -67,6 +67,10 @@ def spooktober_level_post():
         if tile.creature.name == 'Thor':
             letter_tiles = [f'static/img/letters/{letter.upper()}.png' for letter in tile.creature.game.scrambled]
             store_data(dungeon, player)
+            print(f'We got a start command')
+            print(f'Player is at: {player.pos}')
+            print(f'At pos [6, 6] creature? {dungeon.map[6][6].has_creature}')
+            print(f'At that pos has the game started? {dungeon.map[6][6].creature.started_game}')
             return render_template('mini_games/word_scramble.html', text=maze_funcs.mini_game_text(dungeon, player),
                                    letter_tiles=letter_tiles)
         elif tile.creature.name == 'Audumbla':
