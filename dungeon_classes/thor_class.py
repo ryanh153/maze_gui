@@ -8,10 +8,6 @@ class Thor(BaseCreature):
         self.name = 'Thor'
 
     def interact(self, player, guess=None):
-        print(f'T started? {self.started_game}')
-        print(self.pre_text)
-        print(self.post_text)
-        print(self.main_text + self.fail_text)
         if not self.started_game:
             return self.pre_text
         else:

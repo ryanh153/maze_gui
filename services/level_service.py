@@ -296,12 +296,8 @@ def start_mini_game(command, dungeon, player):
 
 def mini_game_guess(player_guess, dungeon, player, tile_size):
     tile = get_current_tile(dungeon, player)
-    print(f'Do we have a creature?: {tile.has_creature}')
-    print(f'player at: {player.pos}')
-    print(f'Tile is: {tile}')
     if tile.has_creature:
         solved, text = tile.creature.interact(player, player_guess)
-        print(f'solved: {solved}, text: {text}')
         if solved:
             tile.despawn_creature()
             erase_key_icon(get_image_path(), player.pos, len(dungeon.map), tile_size)
