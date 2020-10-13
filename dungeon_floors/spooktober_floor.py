@@ -14,7 +14,7 @@ TILE_SIZE = 75
 
 def make_map():
     player_pos = [6, 7]
-    goal_pos_arr = [[1, 8]]
+    goal_pos_arr = [[6, 8]]
     start_pos_arr = [player_pos]
     passphrases = [None]
 
@@ -63,7 +63,7 @@ def make_map():
                          "Would you like to try (solve puzzle)?", '']
     scramble_main_text = ["Enter the letters in the correct order or enter 'exit' to stop playing.", '']
     scramble_fail_text = ["The tiles spontaneously throw themselves into the same jumbled pile they were in when you "
-                          "entered the room."
+                          "entered the room. "
                           "Perhaps that wasn't correct..",
                           '']
     scramble_post_template = ["The tiles glow with an eerie light that steadily grows until it nearly blinds you. You "
@@ -83,7 +83,7 @@ def make_map():
     solutions = ['ghastly', 'morbid', 'odious', 'ebony', 'spectral', 'ominous', 'debauch', 'atrocity', 'effulgent',
                  'impunity', 'phantasm', 'sepulchre', 'immolation', 'plutonian', 'malodorous', 'pestilence',
                  'sagacious', 'masquerade']
-    # solutions = []
+    # solutions = ['one', 'two',]
     solutions = iter(solutions)
 
     pos = [6, 6]
@@ -174,11 +174,11 @@ def make_map():
                           'bottles are piled in the corners and enough of their contents has been spilled on the '
                           'floor to more than fill the few unbroken vessels that remain on a squat three legged table '
                           'that stands in the room\'s center. Mixed with this is the end result of the the '
-                          'consumptions of such copious amounts of drink and food. You try not to think about its '
+                          'consumption of such copious amounts of drink and food. You try not to think about its '
                           'journey to its current state. Next to '
                           'the bottles though you see the familiar shape '
-                          'of stone tiles and know that you will likely have to stomach the room and it\'s odorous '
-                          'contents long enough to place them. Do you do this now (solve puzzle)?']
+                          'of stone tiles and know you will likely have to stomach the room and it\'s odorous '
+                          'contents long enough to place them. Do you do this now (solve puzzle)?', '']
     scramble_post_text7 = scramble_post_template[0:-3] + ["On the ground in front of you is a small silver key."] + \
                           scramble_post_template[-2::]
     floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text7, scramble_main_text, scramble_fail_text,
@@ -205,7 +205,7 @@ def make_map():
                           'put your finger on the source but it throws the roughly hewn walls into a sharper relief. '
                           'In these walls you see a series of square holes. Knowing what you will fine you cast your '
                           'eyes downward and they immediately seize upon a small set of tiles. Do you try and place '
-                          'them in the holes (solve puzzle)? Maybe the additional light will make things easier.']
+                          'them in the holes (solve puzzle)? Maybe the additional light will make things easier.', '']
     scramble_post_text9 = scramble_post_template[0:-3] + ["On the ground in front of you is a small silver key."] + \
                           scramble_post_template[-2::]
     floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text9, scramble_main_text, scramble_fail_text,
