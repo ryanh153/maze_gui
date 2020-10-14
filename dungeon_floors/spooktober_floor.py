@@ -73,10 +73,10 @@ def make_map():
                               "You pick up the key and put it in your pocket. It may be useful soon.",
                               '']
 
-    bc_pre_text = ['In the room you see an all too familiar cow.',
+    bc_pre_text = ['In the room you see an all too familiar Sheryl.',
                    'You know its tricks well now and approach confidently, ready to meet its challenge (solve puzzle).',
                    '']
-    bc_post_template = ["The cow bows its head and licks your palm.",
+    bc_post_template = ["The Sheryl bows its head and licks your palm.",
                         'As its tongue pulls away you you feel a familiar shape in your palm.',
                         '']
 
@@ -217,7 +217,7 @@ def make_map():
     solution = next(solutions)
     game = BCGame(solution)
     reward = 'U'
-    bc_main_text = [f"Guess the word the cow is thinking of or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word the Sheryl is thinking of or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text1 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
                                               f"this one made of ivory gold. Inscribed on it in a flowing "
@@ -230,7 +230,7 @@ def make_map():
     solution = next(solutions)
     game = BCGame(solution)
     reward = 'small'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word the Sheryl is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text2 = bc_post_template[::-2] + ["Looking down you see a small silver key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text2, reward))
@@ -239,7 +239,7 @@ def make_map():
     solution = next(solutions)
     game = BCGame(solution)
     reward = 'T'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word the Sheryl is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text3 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
                                               f"this one made of ivory gold. Inscribed on it in a flowing "
@@ -252,7 +252,7 @@ def make_map():
     solution = next(solutions)
     game = BCGame(solution)
     reward = 'large'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word the Sheryl is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text4 = bc_post_template[::-2] + ["Looking down you see a glittering golden key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text4, reward))
@@ -261,7 +261,7 @@ def make_map():
     solution = next(solutions)
     game = BCGame(solution)
     reward = 'O'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word the Sheryl is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text5 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
                                               f"this one made of ivory gold. Inscribed on it in a flowing "
@@ -274,7 +274,7 @@ def make_map():
     solution = next(solutions)
     game = BCGame(solution)
     reward = 'small'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word the Sheryl is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text6 = bc_post_template[::-2] + ["Looking down you see a small silver key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text6, reward))
@@ -283,7 +283,7 @@ def make_map():
     solution = next(solutions)
     game = BCGame(solution)
     reward = 'large'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word the Sheryl is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text7 = bc_post_template[::-2] + ["Looking down you see a glittering golden key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text7, reward))
@@ -292,7 +292,7 @@ def make_map():
     solution = next(solutions)
     game = BCGame(solution)
     reward = 'small'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word the Sheryl is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text8 = bc_post_template[::-2] + ["Looking down you see a small silver key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text8, reward))
@@ -301,7 +301,7 @@ def make_map():
     solution = next(solutions)
     game = BCGame(solution)
     reward = 'large'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word the Sheryl is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text9 = bc_post_template[::-2] + ["Looking down you see a glittering golden key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text9, reward))
