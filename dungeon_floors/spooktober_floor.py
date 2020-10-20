@@ -281,7 +281,7 @@ def make_map():
     solution = next(solutions)  # impunity
     game = BCGame(solution)
     reward = 'U'
-    bc_pre_text1 = ["In front of you you see the almighty Cowthulu. It's great and terrible mind can envision "
+    bc_pre_text1 = ["In front of you you see the almighty Cowthulhu. It's great and terrible mind can envision "
                     "enumerable examples of human suffering and is prepared to unleash them all upon you. Unless, "
                     "that is, you can guess the word it is thinking of. Do you dare try undertake such a task (solve "
                     "puzzle)?", '']
@@ -298,7 +298,7 @@ def make_map():
     solution = next(solutions)  # phantasm
     game = BCGame(solution)
     reward = 'small'
-    bc_pre_text2 = ["You see Cowthulu in the center of an eerily lit room. The presence of a low, creeping fog makes "
+    bc_pre_text2 = ["You see Cowthulhu in the center of an eerily lit room. The presence of a low, creeping fog makes "
                     "it seems like the supernatural entity is floating a few inches off the floor. Do you attempt "
                     "to engage the bewildering beast despite these new theatrics (solve puzzle)?", '']
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
@@ -310,7 +310,10 @@ def make_map():
     solution = next(solutions)  # sepulchre
     game = BCGame(solution)
     reward = 'T'
-    bc_pre_text3 = ["", '']
+    bc_pre_text3 = ["Cowthulhu stands before on a low hummock. From it's slightly raised vantage point it's ominous "
+                    "eyes that cast both a ruddy light into the room and an umbral darkness into you soul stare "
+                    "directly into you. You take a step forward and stand before your challenger. Do you attempt to "
+                    "solve its pernicious puzzle (solve puzzle)?", '']
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text3 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
@@ -318,21 +321,33 @@ def make_map():
                                               f"script is the letter '{reward}'. You pocket the tile. "
                                               f"Certainly "
                                               f"it's purpose will be made clear soon.", '']
-    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text3, reward))
+    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text3, bc_main_text, bc_post_text3, reward))
 
     pos = [0, 8]
-    solution = next(solutions)
+    solution = next(solutions)  # immolation
     game = BCGame(solution)
     reward = 'large'
+    bc_pre_text4 = ["Cowthulhu presence looms before. Its dark, piercing gaze cuts through and you feel as though "
+                    "your very soul is on trial in a demonic. Your impending judgement causes you to begin perspiring. "
+                    "The room itself begins to feel more infernal. Wait... that's not just because of the impending "
+                    "judgement of Cowthulhu the room is slowly getting hotter, you're sure of it now. Hopefully you can "
+                    "solve the current conundrum before you are forced from the room by the hellish heat "
+                    "(solve puzzle).", '']
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text4 = bc_post_template[::-2] + ["Looking down you see a glittering golden key.", '']
-    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text4, reward))
+    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text4, bc_main_text, bc_post_text4, reward))
 
     pos = [8, 6]
-    solution = next(solutions)
+    solution = next(solutions)  # plutonian
     game = BCGame(solution)
     reward = 'O'
+    bc_pre_text5 = ["In the middle of the winding hallway in which you find yourself you see a familiar form. "
+                    "Cowthulhu stands before you. You grow worried that it will not let you pass; that it will bar "
+                    "passage deeper into this dark dimension. However as you walk forward beast seems to slide into "
+                    "some hidden dimension and become a dark silhouette. Maybe you should solve the puzzle anyways "
+                    "though. The creature may give you guidance or safe passage. Probably not, but maybe "
+                    "(solve puzzle).", '']
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text5 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
@@ -340,19 +355,28 @@ def make_map():
                                               f"script is the letter '{reward}'. You pocket the tile. "
                                               f"Certainly "
                                               f"it's purpose will be made clear soon.", '']
-    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text5, reward))
+    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text5, bc_main_text, bc_post_text5, reward))
 
     pos = [6, 2]
-    solution = next(solutions)
+    solution = next(solutions)  # malodorous
     game = BCGame(solution)
     reward = 'small'
+    bc_pre_text6 = ["As you enter this room a you are overwhelmed by a conglomeration of sensorial inputs that is "
+                    "singularly unpleasant. The air feels moist and clings to your skin. The shadows in the corners "
+                    "constantly shift and slither into a series of malformed half monsters. There is a constant low "
+                    "voice but its ethereal nature prevents you from quite making out its words. The ghoulish taste of "
+                    "death lingers on your tongue with every breath. But worst of all is the smell. It is truly "
+                    "revolting and you know whoever is putting you through this Miltonian nightmare has truly outdone "
+                    "themselves here. So strong are all of these sensory signals that you have failed to notice "
+                    "Cowthulhu who stands in the center of the room. Do you attempt to answer its call now before "
+                    "you are overwhelmed (solve puzzle)?", '']
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text6 = bc_post_template[::-2] + ["Looking down you see a small silver key.", '']
-    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text6, reward))
+    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text6, bc_main_text, bc_post_text6, reward))
 
     pos = [10, 3]
-    solution = next(solutions)
+    solution = next(solutions)  # pestilence
     game = BCGame(solution)
     reward = 'large'
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
@@ -361,7 +385,7 @@ def make_map():
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text7, reward))
 
     pos = [3, 2]
-    solution = next(solutions)
+    solution = next(solutions)  # sagacious
     game = BCGame(solution)
     reward = 'small'
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
@@ -370,7 +394,7 @@ def make_map():
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text8, reward))
 
     pos = [4, 2]
-    solution = next(solutions)
+    solution = next(solutions)  # masquerade
     game = BCGame(solution)
     reward = 'large'
     bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
