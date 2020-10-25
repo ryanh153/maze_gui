@@ -91,10 +91,6 @@ def make_map():
     # Creatures
 
     # set up common text fields
-    scramble_pre_text = ["On the floor you see a set of jumbled tiles. On the far wall are a number of slots into "
-                         "which the tiles fit.",
-                         "Perhaps if you insert them in the proper order there will be a reward.",
-                         "Would you like to try (solve puzzle)?", '']
     scramble_main_text = ["Enter the letters in the correct order or enter 'exit' to stop playing.", '']
     scramble_fail_text = ["The tiles spontaneously throw themselves into the same jumbled pile they were in when you "
                           "entered the room. "
@@ -107,19 +103,14 @@ def make_map():
                               "You pick up the key and put it in your pocket. It may be useful soon.",
                               '']
 
-    bc_pre_text = ['In the room you see an all too familiar cow.',
-                   'You know its tricks well now and approach confidently, ready to meet its challenge (solve puzzle).',
-                   '']
-    bc_post_template = ["The cow bows its head and licks your palm.",
+    bc_post_template = ["Cowthulhu bows its head and licks your palm.",
                         'As its tongue pulls away you you feel a familiar shape in your palm.',
                         '']
 
     solutions = ['ghastly', 'morbid', 'odious', 'ebony', 'spectral', 'ominous', 'debauch', 'atrocity', 'effulgent',
                  'impunity', 'phantasm', 'sepulchre', 'immolation', 'plutonian', 'malodorous', 'pestilence',
                  'sagacious', 'masquerade']
-    # solutions = ['puzzle', 'exercise', 'milkweed', 'chocolate', 'salmon', 'stoneface', 'rexford', 'shenandoah',
-    #              'kindergarten', 'fairy', 'track', 'wine', 'candle', 'doodle', 'quilt', 'massage', 'teaching',
-    #              'mountain']
+
     solutions = iter(solutions)
 
     pos = [6, 6]
@@ -285,7 +276,7 @@ def make_map():
                     "enumerable examples of human suffering and is prepared to unleash them all upon you. Unless, "
                     "that is, you can guess the word it is thinking of. Do you dare try undertake such a task (solve "
                     "puzzle)?", '']
-    bc_main_text = [f"Guess the word the cow is thinking of or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word Cowthulhu is thinking of or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text1 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
                                               f"this one made of ivory gold. Inscribed on it in a flowing "
@@ -301,7 +292,7 @@ def make_map():
     bc_pre_text2 = ["You see Cowthulhu in the center of an eerily lit room. The presence of a low, creeping fog makes "
                     "it seems like the supernatural entity is floating a few inches off the floor. Do you attempt "
                     "to engage the bewildering beast despite these new theatrics (solve puzzle)?", '']
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text2 = bc_post_template[::-2] + ["Looking down you see a small silver key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text2, bc_main_text, bc_post_text2, reward))
@@ -311,10 +302,10 @@ def make_map():
     game = BCGame(solution)
     reward = 'T'
     bc_pre_text3 = ["Cowthulhu stands before on a low hummock. From it's slightly raised vantage point it's ominous "
-                    "eyes that cast both a ruddy light into the room and an umbral darkness into you soul stare "
+                    "eyes that cast both a ruddy light into the room and an umbrous darkness into you soul stare "
                     "directly into you. You take a step forward and stand before your challenger. Do you attempt to "
                     "solve its pernicious puzzle (solve puzzle)?", '']
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text3 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
                                               f"this one made of ivory gold. Inscribed on it in a flowing "
@@ -333,9 +324,10 @@ def make_map():
                     "judgement of Cowthulhu the room is slowly getting hotter, you're sure of it now. Hopefully you can "
                     "solve the current conundrum before you are forced from the room by the hellish heat "
                     "(solve puzzle).", '']
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
-    bc_post_text4 = bc_post_template[::-2] + ["Looking down you see a glittering golden key.", '']
+    bc_post_text4 = bc_post_template[::-2] + [
+        "Looking down you see a glittering golden key and you reach down and pick it up.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text4, bc_main_text, bc_post_text4, reward))
 
     pos = [8, 6]
@@ -348,7 +340,7 @@ def make_map():
                     "some hidden dimension and become a dark silhouette. Maybe you should solve the puzzle anyways "
                     "though. The creature may give you guidance or safe passage. Probably not, but maybe "
                     "(solve puzzle).", '']
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text5 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
                                               f"this one made of ivory gold. Inscribed on it in a flowing "
@@ -370,7 +362,7 @@ def make_map():
                     "themselves here. So strong are all of these sensory signals that you have failed to notice "
                     "Cowthulhu who stands in the center of the room. Do you attempt to answer its call now before "
                     "you are overwhelmed (solve puzzle)?", '']
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text6 = bc_post_template[::-2] + ["Looking down you see a small silver key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text6, bc_main_text, bc_post_text6, reward))
@@ -379,28 +371,46 @@ def make_map():
     solution = next(solutions)  # pestilence
     game = BCGame(solution)
     reward = 'large'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_pre_text7 = ["As you enter this room you notice that everything in it looks sickly. The walls are covered in "
+                    "rot and in places where bricks have fallen away you see a putrid, pulsing mass. Even Cowthulhu, "
+                    "who stands at the rooms center, has fallen to the rooms vile curse and is covered in pustules "
+                    "and open sores. Do you try and help Cowthulhu and hope it will remove the blight from the "
+                    "chamber (solve puzzle)?"]
+    bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
-    bc_post_text7 = bc_post_template[::-2] + ["Looking down you see a glittering golden key.", '']
-    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text7, reward))
+    bc_post_text7 = bc_post_template[::-2] + ["Looking down you see a glittering golden key. After picking it up you "
+                                              "look around the room. Cowthulhu is gone but the rot does appear to "
+                                              "have left and the room has returned to its nominal state of simply dim "
+                                              "and unsettling. You hope Cowthulhu is also feeling better.", '']
+    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text7, bc_main_text, bc_post_text7, reward))
 
     pos = [3, 2]
     solution = next(solutions)  # sagacious
     game = BCGame(solution)
     reward = 'small'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_pre_text8 = ["In the center of the room stands Cowthulhu. You don't notice anything strange about the mighty "
+                    "beast this time but you feel wary and watched. Do you attempt to discern the creatures inner "
+                    "thoughts once more (solve puzzle)?"]
+    bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
-    bc_post_text8 = bc_post_template[::-2] + ["Looking down you see a small silver key.", '']
-    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text8, reward))
+    bc_post_text8 = bc_post_template[::-2] + ["Looking down you see a small silver key. You pick it up and smile. You "
+                                              "know you can't have many more of these to collect.", '']
+    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text8, bc_main_text, bc_post_text8, reward))
 
     pos = [4, 2]
     solution = next(solutions)  # masquerade
     game = BCGame(solution)
     reward = 'large'
-    bc_main_text = [f"Guess the word the cow is thinking of. or enter 'exit' to stop playing.",
+    bc_pre_text9 = ["Cowthulhu stands at the center of the room. On the walls around it are an assortment of colored "
+                    "tapestries that, despite their array of colors, give off a somber and crepuscular air. The "
+                    "shadows from them seem longer and more sinister than can be logically explained. Tenebrous "
+                    "tendrils reach out from them, twisting across the floor towards you. Swallowing the fear that "
+                    "has chilled you blood you step farther into the room. Do you talk to Cowthulhu (solve puzzle)?"]
+    bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
-    bc_post_text9 = bc_post_template[::-2] + ["Looking down you see a glittering golden key.", '']
-    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text, bc_main_text, bc_post_text9, reward))
+    bc_post_text9 = bc_post_template[::-2] + [
+        "Looking down you see a glittering golden key and you reach down and pick it up.", '']
+    floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text9, bc_main_text, bc_post_text9, reward))
 
     dungeon_map = [floor_map]
 
