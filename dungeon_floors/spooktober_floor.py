@@ -48,7 +48,7 @@ def make_map():
     # add special text
     floor_map[1][7].special_text = ["Upon entering the room you are immediately enraptured by the ominously effulgent "
                                     "door on "
-                                    "the far side of the room. It fills an entire wall and is made only of "
+                                    "the far side of the chamber. It fills an entire wall and is made only of "
                                     "ivory and gold with the exception of an ebony raven at its center. Above the "
                                     "raven in the same flowing script as on the tiles you have collected are the "
                                     "words \"What is my name?\" Below the raven are five empty slots in which you may "
@@ -82,11 +82,6 @@ def make_map():
                                      "where such academic questions may be pursued at a more languid pace."]
 
     floor_map[10][6].special_text = ["Well this is just ridiculous.", '']  # second golden door in like 3 tiles
-
-    floor_map[5][3].special_text = ["You enter the room and are immediately aware of three wooden doors, one in each "
-                                    "wall. \"Well this isn't good\" you mutter to yourself looking at your "
-                                    "exceptionally small collection of keys. Hopefully there will be chances to "
-                                    "resupply soon.", '']
 
     # Creatures
 
@@ -165,7 +160,7 @@ def make_map():
     reward = 'small'
     scramble_pre_text3 = ["You enter a room full of a darkness so deep and complete that you are immediately "
                           "disoriented. Unsure of how the inky void you are in can even be connected to the room "
-                          "you just left are nevertheless determined to find your way through. You lower yourself "
+                          "you just left you are nevertheless determined to find your way through. You lower yourself "
                           "slowly onto your hands and knees. The damp, mossy earth that makes up the floor sends a "
                           "chill through you as you begin to methodically map your surroundings. As you pick your "
                           "way along a winding wall that seems longer than you thought possible you encounter a square "
@@ -187,7 +182,8 @@ def make_map():
     solution = next(solutions)  # spectral
     game = WordScramble(solution)
     reward = 'small'
-    scramble_pre_text5 = ['As you enter this room you are aware of an otherworldly and altogether unholy presence. '
+    scramble_pre_text5 = ['As you enter this room you are immediately aware of an otherworldly and altogether unholy '
+                          'presence. '
                           'Looking around you see nothing of form or substance but are sure that suspended in the '
                           'surrounding ether is an intelligence not of this world. Looking down you see a set '
                           'of jumbled tiles. Do you attempt to use them (solve puzzle)?', '']
@@ -243,7 +239,8 @@ def make_map():
     solution = next(solutions)  # atrocity
     game = WordScramble(solution)
     reward = 'Q'
-    scramble_pre_text8 = ["Tucked in a corer of this sprawling labyrinth you find another dead end. Cursing your luck "
+    scramble_pre_text8 = ["Entering yet another room in this sprawling labyrinth you find a dead end. Cursing your "
+                          "luck "
                           "and whatever demoniac deity deigned to drudge up such a diabolical damnation you see "
                           "another set of lettered tiles. Do you continue to painstakingly ponder these pernicious "
                           "puzzles (solve puzzle)?", '']
@@ -275,8 +272,10 @@ def make_map():
     solution = next(solutions)  # impunity
     game = BCGame(solution)
     reward = 'U'
-    bc_pre_text1 = ["In front of you you see the almighty Cowthulhu. It's great and terrible mind can envision "
-                    "enumerable examples of human suffering and it is prepared to unleash them all upon you. Unless, "
+    bc_pre_text1 = ["In front of you you see the almighty Cowthulhu. You are sure it's great and terrible mind can "
+                    "envision "
+                    "enumerable examples of human suffering and that it is prepared to unleash them all upon you. "
+                    "Unless, "
                     "that is, you can guess the word it is thinking of. Do you dare try to undertake such a task ("
                     "solve puzzle)?", '']
     bc_main_text = [f"Guess the word Cowthulhu is thinking of or enter 'exit' to stop playing.",
@@ -304,7 +303,7 @@ def make_map():
     solution = next(solutions)  # sepulchre
     game = BCGame(solution)
     reward = 'T'
-    bc_pre_text3 = ["Cowthulhu stands before on a low hummock. From it's slightly raised vantage point its ominous "
+    bc_pre_text3 = ["Cowthulhu stands before you on a low hummock. From it's slightly raised vantage point its ominous "
                     "eyes cast both a ruddy light into the room and an umbrous darkness into you soul. You take a "
                     "step forward and stand before your challenger. Do you attempt to "
                     "solve its perplexing puzzle (solve puzzle)?", '']
@@ -332,7 +331,7 @@ def make_map():
     bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text4 = bc_post_template[::-2] + [
-        "Looking down you see a glittering golden key and you reach down and pick it up.", '']
+        "Looking down you see a glittering golden key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text4, bc_main_text, bc_post_text4, reward))
 
     pos = [8, 6]
@@ -340,8 +339,9 @@ def make_map():
     game = BCGame(solution)
     reward = 'O'
     bc_pre_text5 = ["In the middle of the winding hallway in which you find yourself you see a familiar form. "
-                    "Cowthulhu stands before you. You grow worried that it will not let you pass; that it will bar "
-                    "passage deeper into this dark dimension. However as you walk forward the beast seems to slide "
+                    "Cowthulhu stands before you. You grow worried that it will not let you pass and that your "
+                    "progress "
+                    "in this dark dimension will come to a halt. However, as you walk forward the beast seems to slide "
                     "into "
                     "some hidden dimension and become a dark silhouette. Maybe you should solve the puzzle anyways "
                     "though. The creature may give you guidance or safe passage. Probably not, but maybe. You should "
@@ -385,9 +385,10 @@ def make_map():
                     "chamber (solve puzzle)?"]
     bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
-    bc_post_text7 = bc_post_template[::-2] + ["Looking down you see a glittering golden key. After picking it up you "
-                                              "look around the room. Cowthulhu is gone but the rot does appear to "
-                                              "have left and the room has returned to its nominal state of simply dim "
+    bc_post_text7 = bc_post_template[::-2] + ["Looking down you see a glittering golden key. After pocketing your "
+                                              "well deserved prize you "
+                                              "look around the room. Cowthulhu is gone and the rot appears to "
+                                              "have left returning the room to its nominal state of simply dim "
                                               "and unsettling. You hope Cowthulhu is also feeling better.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text7, bc_main_text, bc_post_text7, reward))
 
@@ -400,7 +401,8 @@ def make_map():
                     "thoughts once more (solve puzzle)?"]
     bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
-    bc_post_text8 = bc_post_template[::-2] + ["Looking down you see a small silver key. You pick it up and smile. You "
+    bc_post_text8 = bc_post_template[::-2] + ["Looking down you see a small silver key. Pocketing the key you smile. "
+                                              "You "
                                               "know you can't have many more of these to collect.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text8, bc_main_text, bc_post_text8, reward))
 
@@ -410,7 +412,7 @@ def make_map():
     reward = 'large'
     bc_pre_text9 = ["Cowthulhu stands at the center of the room. On the walls around it are an assortment of colored "
                     "tapestries. Their edges almost touch and their colors, blue, purple, green, orange, white, "
-                    "violet, and deep scarlet, seem to flow into one another. Despite their array of colors they "
+                    "violet, and deep scarlet, seem to flow into one another. Despite this array of colors they "
                     "give off a somber and crepuscular air. The "
                     "shadows from them seem longer and more sinister than can be logically explained. Tenebrous "
                     "tendrils reach out from them, twisting across the floor towards you. Swallowing the fear that "
@@ -418,7 +420,7 @@ def make_map():
     bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text9 = bc_post_template[::-2] + [
-        "Looking down you see a glittering golden key and you reach down and pick it up.", '']
+        "Looking down you see a glittering golden key.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text9, bc_main_text, bc_post_text9, reward))
 
     dungeon_map = [floor_map]

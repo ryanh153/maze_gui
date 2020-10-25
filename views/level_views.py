@@ -87,10 +87,8 @@ def spooktober_level_post():
 
 
 def store_data(dungeon, player):
-    print('Storing dungeon and player')
     session['dungeon'], session['player'] = jsonpickle.encode(dungeon), jsonpickle.encode(player)
 
 
 def retrieve_data():
-    print(f'Session data\n{session}')
     return jsonpickle.decode(session['dungeon']), jsonpickle.decode(session['player'])
