@@ -13,7 +13,7 @@ TILE_SIZE = 75
 
 
 def make_map():
-    player_pos = [6, 7]
+    player_pos = [1, 7]
     goal_pos_arr = [[1, 8]]
     start_pos_arr = [player_pos]
     passphrases = [None]
