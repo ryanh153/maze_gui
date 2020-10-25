@@ -49,7 +49,7 @@ def spooktober_level():
     dungeon, player = spooktober_floor.initialize()
     store_data(dungeon, player)
     starting_text = ["You awaken in a dimly lit room. Despite being at least 12 feet wide in every "
-                     "direction it feels constricting and charnel. You hesitate to move forward but "
+                     "direction it feels constricting and charnel. You hesitate to move forward, but "
                      "the longer you remain motionless the more you feel a sense of unexplained "
                      "urgency build up around you, almost as if it emanated from the walls themselves.", '']
     starting_text.extend(maze_funcs.interact(dungeon, player))
@@ -87,8 +87,10 @@ def spooktober_level_post():
 
 
 def store_data(dungeon, player):
+    print('Storing dungeon and player')
     session['dungeon'], session['player'] = jsonpickle.encode(dungeon), jsonpickle.encode(player)
 
 
 def retrieve_data():
+    print(f'Session data\n{session}')
     return jsonpickle.decode(session['dungeon']), jsonpickle.decode(session['player'])
