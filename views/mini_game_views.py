@@ -27,14 +27,14 @@ def word_scramble_post():
         tile.creature.started_game = False
         text = maze_funcs.interact(dungeon, player)
         store_data(dungeon, player)
-        return flask.render_template('levels/test_level.html', im_path=maze_funcs.get_image_path(), text=text)
+        return flask.render_template('levels/spooktober_level.html', im_path=maze_funcs.get_image_path(), text=text)
     else:
         solved, text = maze_funcs.mini_game_guess(player_guess, dungeon, player, floor_1.TILE_SIZE)
 
     if solved:
         text.extend(maze_funcs.interact(dungeon, player))
         store_data(dungeon, player)
-        return flask.render_template('levels/test_level.html', im_path=maze_funcs.get_image_path(), text=text)
+        return flask.render_template('levels/spooktober_level.html', im_path=maze_funcs.get_image_path(), text=text)
     else:
         tile = maze_funcs.get_current_tile(dungeon, player)
         letter_tiles = [f'static/img/letters/{letter.upper()}.png' for letter in tile.creature.game.scrambled]
@@ -60,14 +60,14 @@ def bull_cow_game_post():
         tile.creature.started_game = False
         text = maze_funcs.interact(dungeon, player)
         store_data(dungeon, player)
-        return flask.render_template('levels/test_level.html', im_path=maze_funcs.get_image_path(), text=text)
+        return flask.render_template('levels/spooktober_level.html', im_path=maze_funcs.get_image_path(), text=text)
     else:
         solved, text = maze_funcs.mini_game_guess(player_guess, dungeon, player, floor_1.TILE_SIZE)
 
     if solved:
         text.extend(maze_funcs.interact(dungeon, player))
         store_data(dungeon, player)
-        return flask.render_template('levels/test_level.html', im_path=maze_funcs.get_image_path(), text=text)
+        return flask.render_template('levels/spooktober_level.html', im_path=maze_funcs.get_image_path(), text=text)
     else:
         store_data(dungeon, player)
         return flask.render_template('mini_games/bull_cow_game.html', im_path=maze_funcs.get_image_path(), text=text)
