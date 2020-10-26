@@ -9,7 +9,7 @@ class Player:
 		self.audumbla_wins = 0
 		self.math_game_wins = 0
 		self.loki_wins = 0
-		self.letter_tiles = ['Q', 'U', 'O', 'T', 'H']
+		self.letter_tiles = []
 
 	def move(self, direction):
 		if direction == "n":
