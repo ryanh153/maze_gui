@@ -173,7 +173,7 @@ def make_map():
                 "If you please the cow you will be rewarded.",
                 "Enter 'solve puzzle' face this strange challenge.",
                 ""]
-    main_text = ["The cow's eyes stare into you soul. Their emptiness reflecting your progress thus far.",
+    main_text = ["The cow's eyes stare into your soul. Their emptiness reflecting your progress thus far.",
                  "You somehow get the feeling Audumbla believes your progress will remain dreadfully low.",
                  "Hoping to prove this primordial cow, and your parents, wrong you step forward.",
                  "Enter the word you think she is thinking of or \"exit\" to return to the map.",

@@ -56,7 +56,7 @@ def make_map():
                                     "to place them. Otherwise your journey is not over yet.", '']
 
     floor_map[8][8].special_text = ["You are acutely aware of the singularly constricting nature of the space you are "
-                                    "in. Its grotesquely and insipidly blanks walls pulse and pound around you "
+                                    "in. Its grotesquely and insipidly blanks walls pulse and pound around you, "
                                     "creating an inescapable "
                                     "and altogether unholy urgency for escape within you.", ""]
 
@@ -72,7 +72,7 @@ def make_map():
                                      "repetitions of this morbid mantra your heartbeat "
                                      "begins to return to a more nominal rhythm. As this transpires the beating of "
                                      "the room ebbs as "
-                                     "well until it resumes an appearance and character more like the rest of the "
+                                     "well, until it resumes an appearance and character more like the rest of the "
                                      "dungeon. After "
                                      "relegating the experience to being a mere reflection of your own nervous "
                                      "nature "
@@ -201,15 +201,15 @@ def make_map():
                           "audible click followed by a charnel sound you have only previously heard in "
                           "midnight strolls through abandoned and decrepit graveyards; old masonry falling onto "
                           "worm-eaten earth. "
-                          "Turning you see a pile of tiles by the far wall with letters "
+                          "Turning, you see a pile of tiles by the far wall with letters "
                           "on them. Do you try and repair the structure by putting them back into the wall in "
                           "the correct order (solve puzzle)?", '']
     scramble_post_text6 = scramble_post_template[0:-3] + [f"Looking down you see not another key, but another tile, "
-                                                          f"this one made of ivory gold. Inscribed on it in a flowing "
+                                                          f"this one made of ivory and gold. Inscribed on it in a flowing "
                                                           f"script is the letter '{reward}'. You pocket the tile. "
                                                           f"Certainly "
                                                           f"it's purpose will be made clear soon.", ''] + \
-                          scramble_post_template[-2::]
+                          scramble_post_template[-1::]
     floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text6, scramble_main_text, scramble_fail_text,
                                                   scramble_post_text6, reward))
 
@@ -222,9 +222,9 @@ def make_map():
                           'walls '
                           'are smeared with the wretched remnants of a thousand days of unrestrained revelry. '
                           'Shattered '
-                          'bottles are piled in the corners and enough of their contents has been spilled on the '
+                          'bottles are piled in the corners and enough of their contents has been spilled onto the '
                           'floor to more than fill the few unbroken vessels that remain on a squat three legged table '
-                          'that stands in the room\'s center. Mixed with this is the end result of the the '
+                          'that stands at the room\'s center. Mixed with this is the end result of the the '
                           'consumption of such copious amounts of drink and food. You try not to think about its '
                           'journey to its current state. Next to '
                           'the bottles though you see the familiar shape '
@@ -241,15 +241,16 @@ def make_map():
     reward = 'Q'
     scramble_pre_text8 = ["Entering yet another room in this sprawling labyrinth you find a dead end. Cursing your "
                           "luck "
-                          "and whatever demoniac deity deigned to drudge up such a diabolical damnation you see "
+                          "and whatever demoniac deity deigned to drudge up such a diabolical damnation you begin to "
+                          "turn around. As you do so though you see "
                           "another set of lettered tiles. Do you continue to painstakingly ponder these pernicious "
                           "puzzles (solve puzzle)?", '']
     scramble_post_text8 = scramble_post_template[0:-3] + [f"Looking down you see not another key, but another tile, "
-                                                          f"this one made of ivory gold. Inscribed on it in a flowing "
+                                                          f"this one made of ivory and gold. Inscribed on it in a flowing "
                                                           f"script is the letter '{reward}'. You pocket the tile. "
                                                           f"Certainly "
                                                           f"it's purpose will be made clear soon.", ''] + \
-                          scramble_post_template[-2::]
+                          scramble_post_template[-1::]
     floor_map[pos[0]][pos[1]].spawn_creature(Thor(pos, game, scramble_pre_text8, scramble_main_text, scramble_fail_text,
                                                   scramble_post_text8, reward))
 
@@ -257,7 +258,7 @@ def make_map():
     solution = next(solutions)  # effulgent
     game = WordScramble(solution)
     reward = 'small'
-    scramble_pre_text9 = ['As you enter the room you notice a soft glow that comes from the air itself. You can\'t '
+    scramble_pre_text9 = ['As you enter the room you notice a soft glow that seems to come from the air itself. You can\'t '
                           'put your finger on the source but it throws the roughly hewn walls into sharp relief and '
                           'in these walls you see a series of square holes. Already knowing what you will find you '
                           'cast your '
@@ -281,7 +282,7 @@ def make_map():
     bc_main_text = [f"Guess the word Cowthulhu is thinking of or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text1 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
-                                              f"this one made of ivory gold. Inscribed on it in a flowing "
+                                              f"this one made of ivory and gold. Inscribed on it in a flowing "
                                               f"script is the letter '{reward}'. You pocket the tile. "
                                               f"Certainly "
                                               f"it's purpose will be made clear soon.", '']
@@ -304,13 +305,13 @@ def make_map():
     game = BCGame(solution)
     reward = 'T'
     bc_pre_text3 = ["Cowthulhu stands before you on a low hummock. From it's slightly raised vantage point its ominous "
-                    "eyes cast both a ruddy light into the room and an umbrous darkness into you soul. You take a "
+                    "eyes cast both a ruddy light into the room and an umbrous darkness into your soul. You take a "
                     "step forward and stand before your challenger. Do you attempt to "
                     "solve its perplexing puzzle (solve puzzle)?", '']
     bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text3 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
-                                              f"this one made of ivory gold. Inscribed on it in a flowing "
+                                              f"this one made of ivory and gold. Inscribed on it in a flowing "
                                               f"script is the letter '{reward}'. You pocket the tile. "
                                               f"Certainly "
                                               f"it's purpose will be made clear soon.", '']
@@ -350,7 +351,7 @@ def make_map():
     bc_main_text = [f"Guess the word Cowthulhu is thinking of. or enter 'exit' to stop playing.",
                     f'The word has {len(solution)} letters', '']
     bc_post_text5 = bc_post_template[::-2] + [f"Looking down you see not another key, but a tile, "
-                                              f"this one made of ivory gold. Inscribed on it in a flowing "
+                                              f"this one made of ivory and gold. Inscribed on it in a flowing "
                                               f"script is the letter '{reward}'. You pocket the tile. "
                                               f"Certainly "
                                               f"it's purpose will be made clear soon.", '']
@@ -365,7 +366,7 @@ def make_map():
                     "constantly shift and slither into a series of malformed half monsters. There is a constant low "
                     "voice but its ethereal nature prevents you from quite making out its words. The ghoulish taste of "
                     "death lingers on your tongue with every breath. But worst of all is the smell. It is truly "
-                    "revolting and you know whoever is putting you through this Miltonian nightmare has truly outdone "
+                    "revolting and you know that whoever is putting you through this Miltonian nightmare has truly outdone "
                     "themselves here. So strong are all of these sensory signals that you have failed to notice "
                     "Cowthulhu, who stands in the center of the room, until now. Do you attempt to answer its call "
                     "before your body becomes overwhelmed (solve puzzle)?", '']
@@ -388,7 +389,7 @@ def make_map():
     bc_post_text7 = bc_post_template[::-2] + ["Looking down you see a glittering golden key. After pocketing your "
                                               "well deserved prize you "
                                               "look around the room. Cowthulhu is gone and the rot appears to "
-                                              "have left returning the room to its nominal state of simply dim "
+                                              "have left and the room has returned to its nominal state of simply dim "
                                               "and unsettling. You hope Cowthulhu is also feeling better.", '']
     floor_map[pos[0]][pos[1]].spawn_creature(Audumbla(pos, game, bc_pre_text7, bc_main_text, bc_post_text7, reward))
 

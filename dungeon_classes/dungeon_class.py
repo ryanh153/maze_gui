@@ -204,7 +204,7 @@ class Dungeon:
             adjacentTile = self.get_adjacent_tile(player.pos, door.direction)
             adjacentTile.despawn_door(OPPOSITE_DIRECTIONS[door.direction])
             text.append("The door slides open on rusty hinges.")
-            text.append("Your eyes close instinctively at as the grating sound hits your ears.")
+            text.append("Your eyes close instinctively as the grating sound hits your ears.")
             text.append("The sound stops and upon opening your eyes again you see that the door has disappeared.")
 
         else:
